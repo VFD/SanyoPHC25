@@ -12,17 +12,14 @@ Je n'en ai pas.
 ___
 ## Tables adresse jeux de caractère
 
-Non affichable.\
-Valeur décimal.\
-TO DO : mettre la valeur &H.
-
 La colonne "Hexa" des tables correspond au 12 octets en hexadécimal.\
 Suite à une boulette je les ai stupidement perdu... à refaire.
 
 ### Table ASCII basse
 
 Les caractères de contrôles.\
-Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
+Non affichable. Sauf si un CHR$(xxx) avant.\
+à compléter.
 
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
@@ -37,10 +34,10 @@ Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 | 7     |    | BEL  | 4FB4     |  |  |
 | 8     |    | BS   | 4FC0     |  |  |
 | 9     |    | TAB  | 4FCC     |  |  |
-| 10    |    | LF   | 4FD8     |  |  |
+| 10    |    | LF   | 4FD8     | Line Feed |  |
 | 11    |    | VT   | 4FE4     |  |  |
 | 12    |    | FF   | 4FF0     |  |  |
-| 13    |    | CR   | 4FFC     |  |  |
+| 13    |    | CR   | 4FFC     | Carriage Return |  |
 | 14    |    | SO   | 5008     |  |  |
 | 15    |    | SI   | 5014     |  |  |
 | 16    |    | DLE  | 5020     |  |  |
@@ -59,6 +56,8 @@ Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 | 29    |    | GS   | 50BC     |  |  |
 | 30    |    | RS   | 50C8     |  |  |
 | 31    |    | US   | 50D4     |  |  |
+
+Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
 
 ### Table ASCII standard
@@ -164,143 +163,145 @@ Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 | 126   |    | ~    | 55D4     |
 | 127   |    |      | 55E0     | 
 
+Pour le 127, il faudrait voir la ROM Japonnaise. Quitte à le recoder.
 
 ### Table ASCII étendue
 
 Codage de 121 caractères suplémentaire. Les 6 premiers déjà pris (128 à 133).\
-Inspiré de l'AMSTRAD et du ZX81.
+Inspiré de l'AMSTRAD et du ZX81. Plus création pixel art.\
 
 
-| ASCII | Char | Adresse  | Comment | Hexa |
-|-------|------|----------|---------|------|
-| 128   |      | 55EC     | pique (229)
-| 129   |      | 55F8     | coeur (228) - bloc HG
-| 130   |      | 5604     | trèfle (226) - bloc HD
-| 131   |      | 5610     | carreau (227) - bloc H
-| 132   |      | 561C     | rond vide (230) - bloc BG
-| 133   |      | 5628     | rond plein (231) - Bloc G
-| 134   |      | 5634     | - bloc bg hd
-| 135   |      | 5640     | - bloc
-| 136   |      | 564C     | -bloc BD
-| 137   |      | 5658     | - bloc
-| 138   |      | 5664     | -bloc D
-| 139   |      | 5670     | - bloc
-| 140   |      | 567C     | -bloc B
-| 141   |      | 5688     | -bloc
-| 142   |      | 5694     | -bloc
-| 143   |      | 56A0     | Bloc plein
-| 144   |      | 56AC     | - tableau .
-| 145   |      | 56B8     | - tableau H
-| 146   |      | 56C4     | - tableau D
-| 147   |      | 56D0     | - tableau HD
-| 148   |      | 56DC     | - tableau B
-| 149   |      | 56E8     | - tableau HB
-| 150   |      | 56F4     | - tableau DB
-| 151   |      | 5700     | - tableau HDB
-| 152   |      | 570C     | - tableau G
-| 153   |      | 5718     | - tableau HG
-| 154   |      | 5724     | - tableau DG
-| 155   |      | 5730     | - tableau HDG
-| 156   |      | 573C     | - tableau GB
-| 157   |      | 5748     | - tableau HGB
-| 158   |      | 5754     | - tableau GBD
-| 159   |      | 5760     | - tableau croix HBGD
-| 160   |      | 576C     | chapeau ^
-| 161   |      | 5778     | '
-| 162   |      | 5784     | auréole
-| 163   |      | 5790     | £
-| 164   |      | 579C     | (c)
-| 165   |      | 57A8     | P (inverse)
-| 166   |      | 57B4     | paragraphe
-| 167   |      | 57C0     | `
-| 168   |      | 57CC     | 1/4
-| 169   |      | 57D8     | 1/2
-| 170   |      | 57E4     | 1/3
-| 171   |      | 57F0     | Tombe (croix)
-| 172   |      | 57FC     | division
-| 173   |      | 5808     | char tab
-| 174   |      | 5814     | ? à l'envers
-| 175   |      | 5820     | ! à l'envers
-| 176   |      | 582C     | alpha
-| 177   |      | 5838     | beta
-| 178   |      | 5844     | .
-| 179   |      | 5850     | .
-| 180   |      | 585C     | .
-| 181   |      | 5868     | .
-| 182   |      | 5874     | .
-| 183   |      | 5880     | .
-| 184   |      | 588C     | .pi
-| 185   |      | 5898     | .
-| 186   |      | 58A4     | .
-| 187   |      | 58B0     | .
-| 188   |      | 58BC     | .
-| 189   |      | 58C8     | .
-| 190   |      | 58D4     | .
-| 191   |      | 58E0     | Omega
-| 192   |      | 58EC     | 4x4 
-| 193   |      | 58F8     | 4x4 
-| 194   |      | 5904     | 4x4 
-| 195   |      | 5910     | 4x4 
-| 196   |      | 591C     | 4x4 
-| 197   |      | 5928     | 4x4 
-| 198   |      | 5934     | escalier
-| 199   |      | 5940     | porte
-| 200   |      | 594C     | fiole
-| 201   |      | 5958     | bombe ronde | 02 05 0A 18 3C 42 8D 8D 81 81 42 3C |
-| 202   |      | 5964     | O
-| 203   |      | 5970     | X
-| 204   |      | 597C     | /
-| 205   |      | 5988     | \
-| 206   |      | 5994     | damier 2x2
-| 207   |      | 59A0     | damier 1x1
-| 208   |      | 59AC     | barre H
-| 209   |      | 59B8     | barre G
-| 210   |      | 59C4     | barre B
-| 211   |      | 59D0     | barre D
-| 212   |      | 59DC     | damier 1x1 1
-| 213   |      | 59E8     | damier 1x1 2
-| 214   |      | 59F4     | damier 1x1 3
-| 215   |      | 5A00     | damier 1x1 4
-| 216   |      | 5A0C     | damier 1x1 H
-| 217   |      | 5A18     | damier 1x1 D
-| 218   |      | 5A24     | damier 1x1 B
-| 219   |      | 5A30     | damier 1x1 G
-| 220   |      | 5A3C     | damier 1x1 HG
-| 221   |      | 5A48     | damier 1x1
-| 222   |      | 5A54     | damier 1x1
-| 223   |      | 5A60     | damier 1x1
-| 224   |      | 5A6C     | smiley :)
-| 225   |      | 5A78     | smiley :(
-| 226   |      | 5A84     | - bloc HD
-| 227   |      | 5A90     | - bloc H
-| 228   |      | 5A9C     | - bloc HG
-| 229   |      | 5AA8     | damier 1x2
-| 230   |      | 5AB4     | - bloc BG
-| 231   |      | 5AC0     | - Bloc G
-| 232   |      | 5ACC     | carré
-| 233   |      | 5AD8     | carré plein
-| 234   |      | 5AE4     | Mâle
-| 235   |      | 5AF0     | Femelle
-| 236   |      | 5AFC     | note
-| 237   |      | 5B08     | note croche
-| 238   |      | 5B14     | etoile?
-| 239   |      | 5B20     | fusée
-| 240   |      | 5B2C     | Flèche Haut
-| 241   |      | 5B38     | Flèche Bas
-| 242   |      | 5B44     | Flèche Gauche
-| 243   |      | 5B50     | Flèche Droite
-| 244   |      | 5B5C     | Triangle H
-| 245   |      | 5B68     | Triangle B
-| 246   |      | 5B74     | Triangle D
-| 247   |      | 5B80     | Triangle G
-| 248   |      | 5B8C     | homme
-| 249   |      | 5B98     | femme
-| 250   |      | 5BA4     | homme IoI 
-| 251   |      | 5BB0     | femme IoI
-| 252   |      | 5BBC     | Bombe
-| 253   |      | 5BC8     | Orage
-| 254   |      | 5BD4     | Flèche Haut bas
-| 255   |      | 5BE0     | Flèche Gauche Droite
+
+| ASCII | &H | Char | Adresse  | Comment | Hexa |
+|-------|----|------|----------|---------|------|
+| 128   |    | ♠    | 55EC     | pique (229) |  |
+| 129   |    | ♥    | 55F8     | coeur (228) - bloc HG |  |
+| 130   |    | ♣    | 5604     | trèfle (226) - bloc HD |  |
+| 131   |    | ♦    | 5610     | carreau (227) - bloc H |  |
+| 132   |    | ○    | 561C     | rond vide (230) - bloc BG |  |
+| 133   |    | ●    | 5628     | rond plein (231) - Bloc G |  |
+| 134   |    |      | 5634     | - bloc bg hd |  |
+| 135   |    |      | 5640     | - bloc |  |
+| 136   |    |      | 564C     | -bloc BD |  |
+| 137   |    |      | 5658     | - bloc |  |
+| 138   |    |      | 5664     | -bloc D |  |
+| 139   |    |      | 5670     | - bloc |  |
+| 140   |    |      | 567C     | -bloc B |  |
+| 141   |    |      | 5688     | -bloc |  |
+| 142   |    |      | 5694     | -bloc |  |
+| 143   |    |      | 56A0     | Bloc plein |  |
+| 144   |    |      | 56AC     | - tableau . |  |
+| 145   |    |      | 56B8     | - tableau H |  |
+| 146   |    |      | 56C4     | - tableau D |  |
+| 147   |    |      | 56D0     | - tableau HD |  |
+| 148   |    |      | 56DC     | - tableau B |  |
+| 149   |    |      | 56E8     | - tableau HB |  |
+| 150   |    |      | 56F4     | - tableau DB |  |
+| 151   |    |      | 5700     | - tableau HDB |  |
+| 152   |    |      | 570C     | - tableau G |  |
+| 153   |    |      | 5718     | - tableau HG |  |
+| 154   |    |      | 5724     | - tableau DG |  |
+| 155   |    |      | 5730     | - tableau HDG |  |
+| 156   |    |      | 573C     | - tableau GB |  |
+| 157   |    |      | 5748     | - tableau HGB |  |
+| 158   |    |      | 5754     | - tableau GBD |  |
+| 159   |    |      | 5760     | - tableau croix HBGD |  |
+| 160   |    |      | 576C     | chapeau ^ |  |
+| 161   |    |      | 5778     | ' |  |
+| 162   |    |      | 5784     | auréole |  |
+| 163   |    |      | 5790     | £ |  |
+| 164   |    |      | 579C     | (c) |  |
+| 165   |    |      | 57A8     | P (inverse) |  |
+| 166   |    |      | 57B4     | paragraphe |  |
+| 167   |    |      | 57C0     | \` |  |
+| 168   |    |      | 57CC     | 1/4 |  |
+| 169   |    |      | 57D8     | 1/2 |  |
+| 170   |    |      | 57E4     | 1/3 |  |
+| 171   |    |      | 57F0     | Tombe (croix) |  |
+| 172   |    |      | 57FC     | division |  |
+| 173   |    |      | 5808     | char tab |  |
+| 174   |    |      | 5814     | ? à l'envers |  |
+| 175   |    |      | 5820     | ! à l'envers |  |
+| 176   |    |      | 582C     | alpha |  |
+| 177   |    |      | 5838     | beta |  |
+| 178   |    |      | 5844     | . |  |
+| 179   |    |      | 5850     | . |  |
+| 180   |    |      | 585C     | . |  |
+| 181   |    |      | 5868     | . |  |
+| 182   |    |      | 5874     | . |  |
+| 183   |    |      | 5880     | . |  |
+| 184   |    |      | 588C     | .pi |  |
+| 185   |    |      | 5898     | . |  |
+| 186   |    |      | 58A4     | . |  |
+| 187   |    |      | 58B0     | . |  |
+| 188   |    |      | 58BC     | . |  |
+| 189   |    |      | 58C8     | . |  |
+| 190   |    |      | 58D4     | . |  |
+| 191   |    |      | 58E0     | Omega |  |
+| 192   |    |      | 58EC     | 4x4  |  |
+| 193   |    |      | 58F8     | 4x4  |  |
+| 194   |    |      | 5904     | 4x4  |  |
+| 195   |    |      | 5910     | 4x4  |  |
+| 196   |    |      | 591C     | 4x4  |  |
+| 197   |    |      | 5928     | 4x4  |  |
+| 198   |    |      | 5934     | escalier |  |
+| 199   |    |      | 5940     | porte |  |
+| 200   |    |      | 594C     | fiole |  |
+| 201   |    |      | 5958     | bombe ronde | 02 05 0A 18 3C 42 8D 8D 81 81 42 3C |
+| 202   |    |      | 5964     | O |  |
+| 203   |    |      | 5970     | X |  |
+| 204   |    |      | 597C     | / |  |
+| 205   |    |      | 5988     | \ |  |
+| 206   |    |      | 5994     | damier 2x2 |  |
+| 207   |    |      | 59A0     | damier 1x1 |  |
+| 208   |    |      | 59AC     | barre H |  |
+| 209   |    |      | 59B8     | barre G |  |
+| 210   |    |      | 59C4     | barre B |  |
+| 211   |    |      | 59D0     | barre D |  |
+| 212   |    |      | 59DC     | damier 1x1 1 |  |
+| 213   |    |      | 59E8     | damier 1x1 2 |  |
+| 214   |    |      | 59F4     | damier 1x1 3 |  |
+| 215   |    |      | 5A00     | damier 1x1 4 |  |
+| 216   |    |      | 5A0C     | damier 1x1 H |  |
+| 217   |    |      | 5A18     | damier 1x1 D |  |
+| 218   |    |      | 5A24     | damier 1x1 B |  |
+| 219   |    |      | 5A30     | damier 1x1 G |  |
+| 220   |    |      | 5A3C     | damier 1x1 HG |  |
+| 221   |    |      | 5A48     | damier 1x1 |  |
+| 222   |    |      | 5A54     | damier 1x1 |  |
+| 223   |    |      | 5A60     | damier 1x1 |  |
+| 224   |    |      | 5A6C     | smiley :) |  |
+| 225   |    |      | 5A78     | smiley :( |  |
+| 226   |    |      | 5A84     | - bloc HD |  |
+| 227   |    |      | 5A90     | - bloc H |  |
+| 228   |    |      | 5A9C     | - bloc HG |  |
+| 229   |    |      | 5AA8     | damier 1x2 |  |
+| 230   |    |      | 5AB4     | - bloc BG |  |
+| 231   |    |      | 5AC0     | - Bloc G |  |
+| 232   |    |      | 5ACC     | carré |  |
+| 233   |    |      | 5AD8     | carré plein |  |
+| 234   |    |      | 5AE4     | Mâle |  |
+| 235   |    |      | 5AF0     | Femelle |  |
+| 236   |    |      | 5AFC     | note |  |
+| 237   |    |      | 5B08     | note croche |  |
+| 238   |    |      | 5B14     | etoile? |  |
+| 239   |    |      | 5B20     | fusée |  |
+| 240   |    | ↑    | 5B2C     | Flèche Haut |  |
+| 241   |    | ↓    | 5B38     | Flèche Bas |  |
+| 242   |    | ←    | 5B44     | Flèche Gauche |  |
+| 243   |    | →    | 5B50     | Flèche Droite |  |
+| 244   |    |      | 5B5C     | Triangle H |  |
+| 245   |    |      | 5B68     | Triangle B |  |
+| 246   |    |      | 5B74     | Triangle D |  |
+| 247   |    |      | 5B80     | Triangle G |  |
+| 248   |    |      | 5B8C     | homme |  |
+| 249   |    |      | 5B98     | femme |  |
+| 250   |    |      | 5BA4     | homme IoI  |  |
+| 251   |    |      | 5BB0     | femme IoI |  |
+| 252   |    |      | 5BBC     | Bombe |  |
+| 253   |    |      | 5BC8     | Orage |  |
+| 254   |    |      | 5BD4     | Flèche Haut bas |  |
+| 255   |    |      | 5BE0     | Flèche Gauche Droite |  |
 
 
 
