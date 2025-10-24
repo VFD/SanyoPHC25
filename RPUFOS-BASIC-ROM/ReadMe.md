@@ -51,9 +51,14 @@ Programme BASIC :
 ___
 ## Espace disponible
 
-de 5BEC à 5FF0, soit 1029 octets.\
-Grosso modo nous avons de quoi loger pour 1K de programme assembleur.
+de 5BEC à 5FFF, soit 1044 octets.\
+Grosso modo nous avons de quoi loger pour 1K+ de programme assembleur.
 
+### Idées
 
+Bascule 1 vers 2 et 2 vers 1 pour les écran (quelques octets).
 
+Randomize ?
+
+...
 ___
