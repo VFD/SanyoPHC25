@@ -49,3 +49,11 @@ Programme BASIC :
 ```
 
 ___
+## Espace disponible
+
+de 5BEC à 5FF0, soit 1029 octets.\
+Grosso modo nous avons de quoi loger pour 1K de programme assembleur.
+
+
+
+___
