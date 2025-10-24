@@ -3,10 +3,10 @@
 ___
 ## Introduction
 
-Le passage de la ROM Basic du Japonnais au PAL à provoqué la mise à 0 de tout les caractère au-delà de chr$(134) inclu.\
-un PRINT CHR$(134) est l'équivalent d'un espace.
+Le passage de la ROM Basic du Japonnais au PAL à provoqué la mise à 0 de tous les caractères au-delà de chr$(134) inclu.\
+Un PRINT CHR$(134) est l'équivalent d'un espace.
 
-L'idée est donc de hacker la ROM Basic et y loger de nouveaux caractères (134 à 255).
+L'idée est donc de hacker la ROM Basic et d'y loger de nouveaux caractères (134 à 255).
 
 ___
 ## Méthode
@@ -20,7 +20,7 @@ ___
 ___
 ## Nouveau caractères
 
-Voir table.
+Voir (table)[Table.md].
 
 
 ___
