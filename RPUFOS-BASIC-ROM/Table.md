@@ -447,7 +447,7 @@ ___
 
 LPRINT des chars.
 
-Dump de la ROM basic, pour lee jeu de caractères.
+Dump de la ROM basic, pour le jeu de caractères.
 
 ```basic
 10 A=&H55EC
@@ -557,13 +557,13 @@ EFFACE_BAS_E2:
 
 En hexa injecté 192 octets:
 
--- -- -- -- -- -- -- -- -- -- -- -- 21 20 60 11
-00 60 01 E0 0C ED B0 21 E0 60 06 20 3E 20 77 23
-10 D8 C9 21 DF 61 11 FF 61 01 E0 0C ED B8 21 00
-20 60 06 20 3E 20 77 23 D8 C9 21 20 E0 11 00 E0
-30 01 E0 0C ED B0 21 E0 E0 06 20 3E 20 77 23 D8
-40 C9 21 DF E0 11 FF E0 01 E0 0C ED B8 21 00 E0
-50 06 20 3E 20 77 23 D8 C9
+-- -- -- -- -- -- -- -- -- -- -- -- 21 20 60 11\
+00 60 01 E0 0C ED B0 21 E0 60 06 20 3E 20 77 23\
+10 D8 C9 21 DF 61 11 FF 61 01 E0 0C ED B8 21 00\
+20 60 06 20 3E 20 77 23 D8 C9 21 20 E0 11 00 E0\
+30 01 E0 0C ED B0 21 E0 E0 06 20 3E 20 77 23 D8\
+40 C9 21 DF E0 11 FF E0 01 E0 0C ED B8 21 00 E0\
+50 06 20 3E 20 77 23 D8 C9\
 
 Grosso modo 200 octets pour du scroll assembleur. C'est interressant.
 
