@@ -394,7 +394,9 @@ LD (0x7000), A    ; Stocker le résultat dans une variable à 0x7000
 RET               ; Retour de la sous-routine
 ```
 
+___
 
+1 vers 2 écrans
 
 ```basic
 1000 POKE &HFB58,247:20:POKE &HFB56,1:CLEAR 50,&HF800:RETURN
@@ -415,7 +417,7 @@ EXEC &Hxxxx: CLEAR 50,&HF800
 3E F7 32 58 FB 3E 01 32 56 FB C9
 
 
-2 vers 1
+2 vers 1 écran
 
 ```basic
 1000 CLEAR 50,&HE000:POKE &HFB58,223:POKE &HFB56,20:RETURN
@@ -433,6 +435,7 @@ on aurait CLEAR 50,&HE000: EXEC &Hxxxx
 
 3E DF 32 58 FB 3E 14 32 56 FB C9
 
+___
 
 ### Inspiration
 
@@ -443,6 +446,8 @@ ___
 
 
 LPRINT des chars.
+
+Dump de la ROM basic, pour lee jeu de caractères.
 
 ```basic
 10 A=&H55EC
@@ -463,6 +468,10 @@ LPRINT des chars.
 
 
 ___
+
+### Scrolling purement théorique.
+
+Au final un peu faux car il faudrait aussi modifier la partie attribut de l'écran texte.
 
 Scroll screen 1 et 2, haut bas. 1 ligne de texte.
 
@@ -556,6 +565,8 @@ En hexa injecté 192 octets:
 40 C9 21 DF E0 11 FF E0 01 E0 0C ED B8 21 00 E0
 50 06 20 3E 20 77 23 D8 C9
 
+Grosso modo 200 octets pour du scroll assembleur. C'est interressant.
 
+Etude à revoir.
 
-
+___
