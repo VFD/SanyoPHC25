@@ -462,3 +462,86 @@ LPRINT des chars.
 ```
 
 
+___
+
+Scroll screen 1 et 2, haut bas. 1 ligne de texte.
+
+| Routine | Adresse | Appel | BASIC |
+|---------|---------|-------|-------|
+| Scroll haut écran 1 | &H5BEC | EXEC &H5BEC |
+| Scroll bas écran 1  | &H5C1C | EXEC &H5C1C |
+| Scroll haut écran 2 | &H5C4C | EXEC &H5C4C |
+| Scroll bas écran 2  | &H5C7C | EXEC &H5C7C |
+
+
+```asm
+        ORG 5BECh          ; Adresse de départ en ROM
+
+NB_LIGNES     EQU 16
+NB_COLS       EQU 32
+TAILLE_LIGNE  EQU NB_COLS
+TAILLE_ECRAN  EQU NB_LIGNES * NB_COLS
+
+VRAM1         EQU 06000h
+VRAM2         EQU 0E000h
+
+; --- Scroll vers le haut écran 1 ---
+SCROLL_HAUT_E1:
+        LD HL, VRAM1 + TAILLE_LIGNE
+        LD DE, VRAM1
+        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
+        LDIR
+        LD HL, VRAM1 + TAILLE_ECRAN - TAILLE_LIGNE
+        LD B, TAILLE_LIGNE
+        LD A, ' '
+EFFACE_HAUT_E1:
+        LD (HL), A
+        INC HL
+        DJNZ EFFACE_HAUT_E1
+        RET
+
+; --- Scroll vers le bas écran 1 ---
+SCROLL_BAS_E1:
+        LD HL, VRAM1 + TAILLE_ECRAN - TAILLE_LIGNE - 1
+        LD DE, VRAM1 + TAILLE_ECRAN - 1
+        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
+        LDDR
+        LD HL, VRAM1
+        LD B, TAILLE_LIGNE
+        LD A, ' '
+EFFACE_BAS_E1:
+        LD (HL), A
+        INC HL
+        DJNZ EFFACE_BAS_E1
+        RET
+
+; --- Scroll vers le haut écran 2 ---
+SCROLL_HAUT_E2:
+        LD HL, VRAM2 + TAILLE_LIGNE
+        LD DE, VRAM2
+        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
+        LDIR
+        LD HL, VRAM2 + TAILLE_ECRAN - TAILLE_LIGNE
+        LD B, TAILLE_LIGNE
+        LD A, ' '
+EFFACE_HAUT_E2:
+        LD (HL), A
+        INC HL
+        DJNZ EFFACE_HAUT_E2
+        RET
+
+; --- Scroll vers le bas écran 2 ---
+SCROLL_BAS_E2:
+        LD HL, VRAM2 + TAILLE_ECRAN - TAILLE_LIGNE - 1
+        LD DE, VRAM2 + TAILLE_ECRAN - 1
+        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
+        LDDR
+        LD HL, VRAM2
+        LD B, TAILLE_LIGNE
+        LD A, ' '
+EFFACE_BAS_E2:
+        LD (HL), A
+        INC HL
+        DJNZ EFFACE_BAS_E2
+        RET
+```
