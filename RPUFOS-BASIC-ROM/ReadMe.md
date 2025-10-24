@@ -13,15 +13,19 @@ ___
 
 - Trouver l'emplacement de l'encodage des caractères
 - Designe des nouveaux caractère en 8x12 (matrice des caractères)
-  - Création d'un outil simple (HTML, CSS, Javascript)
+  - Création d'un outil simple (HTML, CSS, Javascript) pour recoder : [GRID](grid.html)
 - Encoder les caractère dans la ROM
 - Tester
+
+Le générateur peut être adapté à la dimension que l'on souhaite.
 
 ___
 ## Nouveau caractères
 
 Voir [table](Table.md).
 
+Il s'agit ici d'une première version qui peut évoluer.\
+Validation Team RPUFOS nécessaire.
 
 ___
 ## Utilisation
@@ -35,5 +39,13 @@ Pour MAME, je ne sais pas.
 
 Il faut dumper le BIN sur une ROM 24K et remplacer dans le PHC-25.\
 N'ayant rien de tout ça, je ne peux pas faire.
+
+### Affichage des caractères
+
+Programme BASIC : 
+
+```basic
+10 REM TO DO
+```
 
 ___
