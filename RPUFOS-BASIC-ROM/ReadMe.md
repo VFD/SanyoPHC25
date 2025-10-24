@@ -22,4 +22,18 @@ ___
 
 Voir table.
 
+
+___
+## Utilisation
+
+### Emulteur
+
+Renommer la rom en « phc25rom.bin », puis la placer dans le répertoire de l'émulateur.\
+Pour MAME, je ne sais pas.
+
+### Sur la machine physique
+
+Il faut dumper le BIN sur une ROM 24K et remplacer dans le PHC-25.\
+N'ayant rien de tout ça, je ne peux pas faire.
+
 ___
