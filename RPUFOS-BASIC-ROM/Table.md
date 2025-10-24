@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Lire la ROM est récupérer les codes Hexa.
+Lire la ROM et récupérer les codes Hexa.
 
 Création de nouveaux caractères.
 
@@ -12,7 +12,7 @@ Je n'en ai pas.
 ___
 ## Tables adresse jeux de caractère
 
-La colonne "Hexa" des tables correspond au 12 octets en hexadécimal.\
+La colonne « Hexa » des tables correspond au 12 octets en hexadécimal.\
 Suite à une boulette je les ai stupidement perdu... à refaire.
 
 ### Table ASCII basse
@@ -21,41 +21,42 @@ Les caractères de contrôles.\
 Non affichable. Sauf si un CHR$(xxx) avant.\
 à compléter.
 
+L'adresse est incertaine elle est extrapoler.
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
 |-------|----|------|----------|---------|------|
-| 0     |    | NUL  | 4F60     |  |  |
-| 1     |    | SOH  | 4F6C     |  |  |
-| 2     |    | STX  | 4F78     |  |  |
-| 3     |    | ETX  | 4F84     |  |  |
-| 4     |    | EOT  | 4F90     |  |  |
-| 5     |    | ENQ  | 4F9C     |  |  |
-| 6     |    | ACK  | 4FA8     |  |  |
-| 7     |    | BEL  | 4FB4     |  |  |
-| 8     |    | BS   | 4FC0     |  |  |
-| 9     |    | TAB  | 4FCC     |  |  |
-| 10    |    | LF   | 4FD8     | Line Feed |  |
-| 11    |    | VT   | 4FE4     |  |  |
-| 12    |    | FF   | 4FF0     |  |  |
-| 13    |    | CR   | 4FFC     | Carriage Return |  |
-| 14    |    | SO   | 5008     |  |  |
-| 15    |    | SI   | 5014     |  |  |
-| 16    |    | DLE  | 5020     |  |  |
-| 17    |    | DC1  | 502C     |  |  |
-| 18    |    | DC2  | 5038     |  |  |
-| 19    |    | DC3  | 5044     |  |  |
-| 20    |    | DC4  | 5050     |  |  |
-| 21    |    | NAK  | 505C     |  |  |
-| 22    |    | SYN  | 5068     |  |  |
-| 23    |    | ETB  | 5074     |  |  |
-| 24    |    | CAN  | 5080     |  |  |
-| 25    |    | EM   | 508C     |  |  |
-| 26    |    | SUB  | 5098     |  |  |
-| 27    |    | ESC  | 50A4     |  |  |
-| 28    |    | FS   | 50B0     |  |  |
-| 29    |    | GS   | 50BC     |  |  |
-| 30    |    | RS   | 50C8     |  |  |
-| 31    |    | US   | 50D4     |  |  |
+| 0     | 00 | NUL  | 4F60     |  |  |
+| 1     | 01 | SOH  | 4F6C     |  |  |
+| 2     | 02 | STX  | 4F78     |  |  |
+| 3     | 03 | ETX  | 4F84     |  |  |
+| 4     | 04 | EOT  | 4F90     |  |  |
+| 5     | 05 | ENQ  | 4F9C     |  |  |
+| 6     | 06 | ACK  | 4FA8     |  |  |
+| 7     | 07 | BEL  | 4FB4     |  |  |
+| 8     | 08 | BS   | 4FC0     |  |  |
+| 9     | 09 | TAB  | 4FCC     |  |  |
+| 10    | 0A | LF   | 4FD8     | Line Feed |  |
+| 11    | 0B | VT   | 4FE4     |  |  |
+| 12    | 0C | FF   | 4FF0     |  |  |
+| 13    | 0D | CR   | 4FFC     | Carriage Return |  |
+| 14    | 0E | SO   | 5008     |  |  |
+| 15    | 0F | SI   | 5014     |  |  |
+| 16    | 10 | DLE  | 5020     |  |  |
+| 17    | 11 | DC1  | 502C     |  |  |
+| 18    | 12 | DC2  | 5038     |  |  |
+| 19    | 13 | DC3  | 5044     |  |  |
+| 20    | 14 | DC4  | 5050     |  |  |
+| 21    | 15 | NAK  | 505C     |  |  |
+| 22    | 16 | SYN  | 5068     |  |  |
+| 23    | 17 | ETB  | 5074     |  |  |
+| 24    | 18 | CAN  | 5080     |  |  |
+| 25    | 19 | EM   | 508C     |  |  |
+| 26    | 1A | SUB  | 5098     |  |  |
+| 27    | 1B | ESC  | 50A4     |  |  |
+| 28    | 1C | FS   | 50B0     |  |  |
+| 29    | 1D | GS   | 50BC     |  |  |
+| 30    | 1E | RS   | 50C8     |  |  |
+| 31    | 1F | US   | 50D4     |  |  |
 
 Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
@@ -167,9 +168,12 @@ Pour le 127, il faudrait voir la ROM Japonnaise. Quitte à le recoder.
 
 ### Table ASCII étendue
 
-Codage de 121 caractères suplémentaire. Les 6 premiers déjà pris (128 à 133).\
+Codage de 121 caractères suplémentaires. Les 6 premiers déjà pris (128 à 133).\
 Inspiré de l'AMSTRAD et du ZX81. Plus création pixel art.\
 
+On peut étudier le remplacement de £ et d'autres par du pixel Art 8x12.
+
+Les char affichés sont ceux de la normes UTF8. Mais ça donne une idée.
 
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
@@ -209,7 +213,7 @@ Inspiré de l'AMSTRAD et du ZX81. Plus création pixel art.\
 | 160   |    |      | 576C     | chapeau ^ |  |
 | 161   |    |      | 5778     | ' |  |
 | 162   |    |      | 5784     | auréole |  |
-| 163   |    |      | 5790     | £ |  |
+| 163   |    | £    | 5790     | £ |  |
 | 164   |    |      | 579C     | (c) |  |
 | 165   |    |      | 57A8     | P (inverse) |  |
 | 166   |    |      | 57B4     | paragraphe |  |
@@ -308,15 +312,10 @@ Inspiré de l'AMSTRAD et du ZX81. Plus création pixel art.\
 ### work
 
 
-Plage:\
-formules à revoir.
-
-Adresse=0x52F8+(n−65)⋅12\text{Adresse} = 0x52F8 + (n - 65) \cdot 12
-
-Adresse(n)=0x52F8+(n−65)⋅12\text{Adresse}(n) = 0x52F8 + (n - 65) \cdot 12
 
 ### Inspiration
 
-https://asmtradcpc.zilog.fr/docs/Table_des_caracteres_ASCII.php
+[Jeu de caractères AMSTRAD](https://asmtradcpc.zilog.fr/docs/Table_des_caracteres_ASCII.php)
 
+et ZX81.
 ___
