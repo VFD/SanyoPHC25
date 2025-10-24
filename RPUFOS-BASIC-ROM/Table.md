@@ -9,6 +9,53 @@ Création de nouveaux caractères.
 Test à faire sur une vraie machine.\
 Je n'en ai pas.
 
+## Tables diverses
+
+Adresse de début et de fin.
+
+Message de bienvenu après le choix 1 ou 2 du boot.
+
+| Deb. | Fin  | Comment  |
+|------|------|----------|
+| 005B | 0074 | Message après choix |
+| 0130 | 0136 | Ready |
+
+
+Messages d'erreurs
+
+Début en &H0137 ou &H0138 si on prend le séparateur &H00.
+
+| Deb. | Fin  | Comment  |
+|------|------|----------|
+| 0138 |      | Break |
+|      |      | Next w/o for |
+|      |      | Syntax error |
+|      |      | Return w/o gosub |
+|      |      | Not enough data |
+|      |      | Illegal function call |
+|      |      | Over flow |
+|      |      | Out of memory |
+|      |      | Undefined line number |
+|      |      | Bad subscript |
+|      |      | Duplicate definition |
+|      |      | Divided by zero |
+|      |      | Illegal direct call |
+|      |      | Type mismatched |
+|      |      | Out of string space |
+|      |      | Too long string |
+|      |      | String too complex |
+|      |      | Can't continue |
+|      |      | Undefined FN call |
+|      |      | Tape read error |
+|      | 028B | Missing operand |
+
+Fin en &H028A ou &H028B si on prend en compte ou pas le séparateur &H00.
+
+
+&H02C9 à &H0491 : Mots clés du BASIC.
+
+
+
 ___
 ## Tables adresse jeux de caractère
 
@@ -21,42 +68,42 @@ Les caractères de contrôles.\
 Non affichable. Sauf si un CHR$(xxx) avant.\
 à compléter.
 
-L'adresse est incertaine elle est extrapoler.
+
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
 |-------|----|------|----------|---------|------|
-| 0     | 00 | NUL  | 4F60     |  |  |
-| 1     | 01 | SOH  | 4F6C     |  |  |
-| 2     | 02 | STX  | 4F78     |  |  |
-| 3     | 03 | ETX  | 4F84     |  |  |
-| 4     | 04 | EOT  | 4F90     |  |  |
-| 5     | 05 | ENQ  | 4F9C     |  |  |
-| 6     | 06 | ACK  | 4FA8     |  |  |
-| 7     | 07 | BEL  | 4FB4     |  |  |
-| 8     | 08 | BS   | 4FC0     |  |  |
-| 9     | 09 | TAB  | 4FCC     |  |  |
-| 10    | 0A | LF   | 4FD8     | Line Feed |  |
-| 11    | 0B | VT   | 4FE4     |  |  |
-| 12    | 0C | FF   | 4FF0     |  |  |
-| 13    | 0D | CR   | 4FFC     | Carriage Return |  |
-| 14    | 0E | SO   | 5008     |  |  |
-| 15    | 0F | SI   | 5014     |  |  |
-| 16    | 10 | DLE  | 5020     |  |  |
-| 17    | 11 | DC1  | 502C     |  |  |
-| 18    | 12 | DC2  | 5038     |  |  |
-| 19    | 13 | DC3  | 5044     |  |  |
-| 20    | 14 | DC4  | 5050     |  |  |
-| 21    | 15 | NAK  | 505C     |  |  |
-| 22    | 16 | SYN  | 5068     |  |  |
-| 23    | 17 | ETB  | 5074     |  |  |
-| 24    | 18 | CAN  | 5080     |  |  |
-| 25    | 19 | EM   | 508C     |  |  |
-| 26    | 1A | SUB  | 5098     |  |  |
-| 27    | 1B | ESC  | 50A4     |  |  |
-| 28    | 1C | FS   | 50B0     |  |  |
-| 29    | 1D | GS   | 50BC     |  |  |
-| 30    | 1E | RS   | 50C8     |  |  |
-| 31    | 1F | US   | 50D4     |  |  |
+| 0     | 00 | NUL  |      |  |  |
+| 1     | 01 | SOH  |      |  |  |
+| 2     | 02 | STX  |      |  |  |
+| 3     | 03 | ETX  |      |  |  |
+| 4     | 04 | EOT  |      |  |  |
+| 5     | 05 | ENQ  |      |  |  |
+| 6     | 06 | ACK  |      |  |  |
+| 7     | 07 | BEL  |      |  |  |
+| 8     | 08 | BS   |      |  |  |
+| 9     | 09 | TAB  |      |  |  |
+| 10    | 0A | LF   |      | Line Feed |  |
+| 11    | 0B | VT   |      |  |  |
+| 12    | 0C | FF   |      |  |  |
+| 13    | 0D | CR   |      | Carriage Return |  |
+| 14    | 0E | SO   |      |  |  |
+| 15    | 0F | SI   |      |  |  |
+| 16    | 10 | DLE  |      |  |  |
+| 17    | 11 | DC1  |      |  |  |
+| 18    | 12 | DC2  |      |  |  |
+| 19    | 13 | DC3  |      |  |  |
+| 20    | 14 | DC4  |      |  |  |
+| 21    | 15 | NAK  |      |  |  |
+| 22    | 16 | SYN  |      |  |  |
+| 23    | 17 | ETB  |      |  |  |
+| 24    | 18 | CAN  |      |  |  |
+| 25    | 19 | EM   |      |  |  |
+| 26    | 1A | SUB  |      |  |  |
+| 27    | 1B | ESC  |      |  |  |
+| 28    | 1C | FS   |      | X |  |
+| 29    | 1D | GS   | 5148     |  | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 30    | 1E | RS   | 5154     |  | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 31    | 1F | US   | 5160     |  | 00 00 00 00 00 00 00 00 00 00 00 00 |
 
 Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
@@ -67,40 +114,40 @@ Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
 |-------|----|------|----------|---------|------|
-| 32    |    | SPC  | 50E0     |  | 00 00 00 00 00 00 00 00 00 00 00 00 |
-| 33    |    | !    | 50EC     |  |  |
-| 34    |    | "    | 50F8     |  |  |
-| 35    |    | \#   | 5104     |  |  |
-| 36    |    | $    | 5110     |  |  |
-| 37    |    | %    | 511C     |  |  |
-| 38    |    | &    | 5128     |  |  |
-| 39    |    | '    | 5134     |  |  |
-| 40    |    | (    | 5140     |  |  |
-| 41    |    | )    | 514C     |  |  |
-| 42    |    | \*   | 5158     |  |  |
-| 43    |    | +    | 5164     |  |  |
-| 44    |    | ,    | 5170     |  |  |
-| 45    |    | -    | 517C     |  |  |
-| 46    |    | .    | 5188     |  |  |
-| 47    |    | /    | 5194     |  |  |
-| 48    |    | 0    | 51A0     |  |  |
-| 49    |    | 1    | 51AC     |  |  |
-| 50    |    | 2    | 51B8     |  |  |
-| 51    |    | 3    | 51C4     |  |  |
-| 52    |    | 4    | 51D0     |  |  |
-| 53    |    | 5    | 51DC     |  |  |
-| 54    |    | 6    | 51E8     |  |  |
-| 55    |    | 7    | 51F4     |  |  |
-| 56    |    | 8    | 5200     |  |  |
-| 57    |    | 9    | 520C     |  |  |
-| 58    |    | :    | 5218     |  |  |
-| 59    |    | ;    | 5224     |  |  |
-| 60    |    | <    | 5230     |  |  |
-| 61    |    | =    | 523C     |  |  |
-| 62    |    | >    | 5248     |  |  |
-| 63    |    | ?    | 5254     |  |  |
-| 64    |    | @    | 5260     |  |  |
-| 65    |    | A    | 52F8     |  |  |
+| 32    |    | SPC  | 516C     |  | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 33    |    | !    | 5178     |  |  |
+| 34    |    | "    | 5184     |  |  |
+| 35    |    | \#   | 5190     |  |  |
+| 36    |    | $    | 519C     |  |  |
+| 37    |    | %    | 51A8     |  |  |
+| 38    |    | &    | 51B4     |  |  |
+| 39    |    | '    | 51C0     |  |  |
+| 40    |    | (    | 51CC     |  |  |
+| 41    |    | )    | 51D8     |  |  |
+| 42    |    | \*   | 51E4     |  |  |
+| 43    |    | +    | 51F0     |  |  |
+| 44    |    | ,    | 51FC     |  |  |
+| 45    |    | -    | 5208     |  |  |
+| 46    |    | .    | 5214     |  |  |
+| 47    |    | /    | 5220     |  |  |
+| 48    |    | 0    | 522C     |  |  |
+| 49    |    | 1    | 5238     |  |  |
+| 50    |    | 2    | 5244     |  |  |
+| 51    |    | 3    | 5250     |  |  |
+| 52    |    | 4    | 525C     |  |  |
+| 53    |    | 5    | 5268     |  |  |
+| 54    |    | 6    | 5274     |  |  |
+| 55    |    | 7    | 5280     |  |  |
+| 56    |    | 8    | 528C     |  |  |
+| 57    |    | 9    | 5298     |  |  |
+| 58    |    | :    | 52A4     |  |  |
+| 59    |    | ;    | 52B0     |  |  |
+| 60    |    | <    | 52BC     |  |  |
+| 61    |    | =    | 52C8     |  |  |
+| 62    |    | >    | 52D4     |  |  |
+| 63    |    | ?    | 52E0     |  |  |
+| 64    |    | @    | 52EC     |  | 00 3c 42 02 02 32 4a 4a 4a 3c 00 00 |
+| 65    |    | A    | 52F8     |  | 00 18 24 42 42 42 42 7E 42 42 42 00 |
 | 66    |    | B    | 5304     |  |  |
 | 67    |    | C    | 5310     |  |  |
 | 68    |    | D    | 531C     |  |  |
@@ -205,19 +252,19 @@ Tout cela pour avoir une cohérence.
 | 144   |    |      | 56AC     | - tableau . |  |
 | 145   |    |      | 56B8     | - tableau H |  |
 | 146   |    |      | 56C4     | - tableau D |  |
-| 147   |    |      | 56D0     | - tableau HD |  |
+| 147   |    | └    | 56D0     | - tableau HD |  |
 | 148   |    |      | 56DC     | - tableau B |  |
-| 149   |    |      | 56E8     | - tableau HB |  |
-| 150   |    |      | 56F4     | - tableau DB |  |
-| 151   |    |      | 5700     | - tableau HDB |  |
+| 149   |    | │    | 56E8     | - tableau HB |  |
+| 150   |    | ┌    | 56F4     | - tableau DB |  |
+| 151   |    | ├    | 5700     | - tableau HDB |  |
 | 152   |    |      | 570C     | - tableau G |  |
-| 153   |    |      | 5718     | - tableau HG |  |
-| 154   |    |      | 5724     | - tableau DG |  |
-| 155   |    |      | 5730     | - tableau HDG |  |
-| 156   |    |      | 573C     | - tableau GB |  |
-| 157   |    |      | 5748     | - tableau HGB |  |
-| 158   |    |      | 5754     | - tableau GBD |  |
-| 159   |    |      | 5760     | - tableau croix HBGD |  |
+| 153   |    | ┘    | 5718     | - tableau HG |  |
+| 154   |    | ─    | 5724     | - tableau DG |  |
+| 155   |    | ┴    | 5730     | - tableau HDG |  |
+| 156   |    | ┐    | 573C     | - tableau GB |  |
+| 157   |    | ┤    | 5748     | - tableau HGB |  |
+| 158   |    | ┬    | 5754     | - tableau GBD |  |
+| 159   |    | ┼    | 5760     | - tableau croix HBGD |  |
 | 160   |    |      | 576C     | chapeau ^ |  |
 | 161   |    |      | 5778     | ' |  |
 | 162   |    |      | 5784     | auréole |  |
@@ -261,7 +308,7 @@ Tout cela pour avoir une cohérence.
 | 200   |    |      | 594C     | fiole |  |
 | 201   |    |      | 5958     | bombe ronde | 02 05 0A 18 3C 42 8D 8D 81 81 42 3C |
 | 202   |    |      | 5964     | O |  |
-| 203   |    |      | 5970     | X |  |
+| 203   |    | ⛌    | 5970     | X |  |
 | 204   |    |      | 597C     | / |  |
 | 205   |    |      | 5988     | \ |  |
 | 206   |    |      | 5994     | damier 2x2 |  |
@@ -319,6 +366,72 @@ Tout cela pour avoir une cohérence.
 
 ### work
 
+AfficheA:
+```
+    LD HL, 6000h   ; Adresse mémoire vidéo
+    LD A, 'A'      ; Code ASCII de 'A' (0x41)
+    LD (HL), A     ; Écrit le caractère à l’écran
+    RET            ; Retourne au programme appelant
+```
+
+21 00 60 3E 41 77 C9
+
+RANDOMIZE(-TIME)
+
+```asm
+; Supposons que l'adresse de TIME soit accessible à 0xF3F0 (exemple fictif)
+LD HL, 0xF3F0     ; Adresse du compteur temps
+LD A, (HL)        ; Lire la valeur du temps
+LD B, A           ; Stocker dans B comme graine
+
+; Exemple de génération pseudo-aléatoire simple
+; (très basique, juste pour illustrer)
+INC B             ; Modifier la graine
+LD A, B
+AND 0x0F          ; Limiter à 0–15
+LD (0x7000), A    ; Stocker le résultat dans une variable à 0x7000
+
+RET               ; Retour de la sous-routine
+```
+
+
+
+```basic
+1000 POKE &HFB58,247:20:POKE &HFB56,1:CLEAR 50,&HF800:RETURN
+```
+
+```asm
+LD A, 0xF7        ; Valeur à écrire à FB58
+LD (0xFB58), A    ; POKE &HFB58,247
+
+LD A, 0x01        ; Valeur à écrire à FB56
+LD (0xFB56), A    ; POKE &HFB56,1
+
+RET               ; RETURN
+```
+
+EXEC &Hxxxx: CLEAR 50,&HF800
+
+3E F7 32 58 FB 3E 01 32 56 FB C9
+
+
+2 vers 1
+
+```basic
+1000 CLEAR 50,&HE000:POKE &HFB58,223:POKE &HFB56,20:RETURN
+```
+
+```asm
+LD A, 0xDF
+LD (0xFB58), A
+LD A, 0x14
+LD (0xFB56), A
+RET
+```
+
+on aurait CLEAR 50,&HE000: EXEC &Hxxxx
+
+3E DF 32 58 FB 3E 14 32 56 FB C9
 
 
 ### Inspiration
@@ -327,3 +440,22 @@ Tout cela pour avoir une cohérence.
 
 et ZX81.
 ___
+
+```basic
+10 A=&H55EC
+20 B=&H5BEB
+30 C=0
+40 FOR I=A TO B
+50 D=PEEK(I)
+60 E=INT(D/16)
+70 F=D-(E*16)
+80 IF E<10 THEN G=E+48 ELSE G=E+55
+90 IF F<10 THEN H=F+48 ELSE H=F+55
+100 LPRINT CHR$(G)+CHR$(H);" ";
+110 C=C+1
+120 IF C=12 THEN LPRINT:C=0
+130 NEXT
+140 IF C<>0 THEN LPRINT
+```
+
+
