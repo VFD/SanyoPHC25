@@ -20,7 +20,7 @@ ___
 ___
 ## Nouveau caractères
 
-Voir (table)[Table.md].
+Voir [table](Table.md).
 
 
 ___
