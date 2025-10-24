@@ -1,0 +1,25 @@
+# Hack de la ROM Basic
+
+___
+## Introduction
+
+Le passage de la ROM Basic du Japonnais au PAL à provoqué la mise à 0 de tout les caractère au-delà de chr$(134) inclu.\
+un PRINT CHR$(134) est l'équivalent d'un espace.
+
+L'idée est donc de hacker la ROM Basic et y loger de nouveau caractère (134 à 255).
+
+___
+## Méthode
+
+- Trouver l'emplacement de l'encodage des caractère
+- Designe des nouveaux caractère en 8x12 (matrice des caractères)
+  - Création d'un outil simple (HTML, CSS, Javascript)
+- Encoder les caractère dans la ROM
+- Tester
+
+___
+## Nouveau caractères
+
+Voir table.
+
+___
