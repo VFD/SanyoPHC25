@@ -233,134 +233,205 @@ Tout cela pour avoir une cohérence.
 
 | ASCII | &H | Char | Adresse  | Comment                   | Hexa |
 |-------|----|------|----------|---------------------------|------|
-| 128   |    | ♠    | 55EC     | pique (229)               | 00 10 38 7C FE FE FE 10 38 7C 00 00 |
-| 129   |    | ♥    | 55F8     | coeur (228) - bloc HG     | 00 00 6C FE FE FE FE 7C 38 10 00 00 |
-| 130   |    | ♣    | 5604     | trèfle (226) - bloc HD    | 00 38 38 FE FE FE D6 10 38 7C 00 00 |
-| 131   |    | ♦    | 5610     | carreau (227) - bloc H    | 00 10 38 38 7C FE 7C 38 38 10 00 00 |
-| 132   |    | ○    | 561C     | rond vide (230) - bloc BG | 00 00 38 44 82 82 82 44 38 00 00 00 |
-| 133   |    | ●    | 5628     | rond plein (231) - Bloc G | 00 00 38 7C FE FE FE 7C 38 00 00 00 |
-| 134   |    |      | 5634     | - bloc bg hd              | 0F 0F 0F 0F 0F 0F F0 F0 F0 F0 F0 F0 |
-| 135   |    |      | 5640     | - bloc                    | FF FF FF FF FF FF F0 F0 F0 F0 F0 F0 |
-| 136   |    |      | 564C     | - bloc BD                 | 00 00 00 00 00 00 0F 0F 0F 0F 0F 0F |
-| 137   |    |      | 5658     | - bloc                    | F0 F0 F0 F0 F0 F0 0F 0F 0F 0F 0F 0F |
-| 138   |    |      | 5664     | - bloc D                  | 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F |
-| 139   |    |      | 5670     | - bloc                    | FF FF FF FF FF FF 0F 0F 0F 0F 0F 0F |
-| 140   |    |      | 567C     | - bloc B                  | 00 00 00 00 00 00 FF FF FF FF FF FF |
-| 141   |    |      | 5688     | - bloc                    | F0 F0 F0 F0 F0 F0 FF FF FF FF FF FF |
-| 142   |    |      | 5694     | - bloc                    | FF FF FF FF FF FF 0F 0F 0F 0F 0F 0F |
-| 143   |    |      | 56A0     | Bloc plein                | FF FF FF FF FF FF FF FF FF FF FF FF |
-| 144   |    |      | 56AC     | - tableau .               | 00 00 00 00 18 18 00 00 00 00 00 00 |
-| 145   |    |      | 56B8     | - tableau H               | 18 18 18 18 18 18 18 00 00 00 00 00 |
-| 146   |    |      | 56C4     | - tableau D               | 00 00 00 00 00 1F 1F 00 00 00 00 00 |
-| 147   |    | └    | 56D0     | - tableau HD              | 18 18 18 18 18 1F 0F 00 00 00 00 00 |
-| 148   |    |      | 56DC     | - tableau B               | 00 00 00 00 00 18 18 18 18 18 18 18 |
-| 149   |    | │    | 56E8     | - tableau HB              | 18 18 18 18 18 18 18 18 18 18 18 18 |
-| 150   |    | ┌    | 56F4     | - tableau DB              | 00 00 00 00 00 0F 1F 18 18 18 18 18 |
-| 151   |    | ├    | 5700     | - tableau HDB             | 18 18 18 18 18 1F 1F 18 18 18 18 18 |
-| 152   |    |      | 570C     | - tableau G               | 00 00 00 00 00 F8 F8 00 00 00 00 00 |
-| 153   |    | ┘    | 5718     | - tableau HG              | 18 18 18 18 18 F8 F0 00 00 00 00 00 |
-| 154   |    | ─    | 5724     | - tableau DG              | 00 00 00 00 00 FF FF 00 00 00 00 00 |
-| 155   |    | ┴    | 5730     | - tableau HDG             | 18 18 18 18 18 FF FF 00 00 00 00 00 |
-| 156   |    | ┐    | 573C     | - tableau GB              | 00 00 00 00 00 F0 F8 18 18 18 18 18 |
-| 157   |    | ┤    | 5748     | - tableau HGB             | 18 18 18 18 18 F8 F8 18 18 18 18 18 |
-| 158   |    | ┬    | 5754     | - tableau GBD             | 00 00 00 00 00 FF FF 18 18 18 18 18 |
-| 159   |    | ┼    | 5760     | - tableau croix HBGD      | 18 18 18 18 18 FF FF 18 18 18 18 18 |
-| 160   |    |      | 576C     | chapeau ^                 | 00 00 10 38 6C C6 00 00 00 00 00 00 |
-| 161   |    |      | 5778     | '                         | 00 00 0C 18 30 00 00 00 00 00 00 00 |
-| 162   |    |      | 5784     | auréole                   | 00 00 38 44 38 00 00 00 00 00 00 00 |
-| 163   |    | £    | 5790     | £                         | 00 3C 66 60 60 F8 60 60 66 FE 00 00 |
-| 164   |    |      | 579C     | (c)                       | 00 00 00 38 44 BA A2 BA 44 38 00 00 |
-| 165   |    |      | 57A8     | P (inverse)               | 00 7E F4 F4 74 34 34 34 34 34 00 00 |
-| 166   |    |      | 57B4     | paragraphe                | 00 00 1E 30 38 6C 6C 38 18 F0 00 00 |
-| 167   |    |      | 57C0     | \`                        | 00 18 18 0C 00 00 00 00 00 00 00 00 |
-| 168   |    |      | 57CC     | 1/4                       | 00 00 40 C0 44 4C 54 1E 04 00 00 00 |
-| 169   |    |      | 57D8     | 1/2                       | 00 00 40 C0 4C 52 44 08 1E 00 00 00 |
-| 170   |    |      | 57E4     | 1/3                       | 00 00 E0 10 62 16 EA 0F 02 00 00 00 |
-| 171   |    |      | 57F0     | Tombe (croix)             | 00 00 18 18 7E 7E 18 18 18 7E 00 00 |
-| 172   |    |      | 57FC     | division                  | 00 00 18 18 00 7E 7E 00 18 18 00 00 |
-| 173   |    |      | 5808     | char tab                  | 00 00 00 00 00 7E 7E 06 06 00 00 00 |
-| 174   |    |      | 5814     | ? à l'envers              | 00 00 10 00 10 10 08 04 44 44 38 00 |
-| 175   |    |      | 5820     | ! à l'envers              | 00 00 10 00 00 10 10 10 10 10 10 00 |
-| 176   |    |      | 582C     | alpha                     | 00 00 00 00 00 73 DE CC DE 73 00 00 |
-| 177   |    |      | 5838     | beta                      | 00 7C C6 C6 C6 FC C6 C6 C6 F8 C0 00 |
-| 178   |    |      | 5844     | .                         | 00 00 00 66 66 3C 66 66 66 3C 00 00 |
-| 179   |    |      | 5850     | .                         | 00 00 3C 60 60 3C 66 66 66 3C 00 00 |
-| 180   |    |      | 585C     | .                         | 00 00 00 00 1E 30 7C 7C 30 1E 00 00 |
-| 181   |    |      | 5868     | .                         | 00 38 6C C6 C6 FE C6 C6 6C 38 00 00 |
-| 182   |    |      | 5874     | .                         | 00 00 C0 60 60 30 38 6C 6C C6 00 00 |
-| 183   |    |      | 5880     | .                         | 00 00 00 66 66 66 66 7C 60 60 60 00 |
-| 184   |    |      | 588C     | .pi                       | 00 00 00 7C A8 28 28 28 48 8E 00 00 |
-| 185   |    |      | 5898     | .                         | 00 00 00 00 00 7E D8 D8 D8 70 00 00 |
-| 186   |    |      | 58A4     | .                         | 00 00 03 06 0C 3C 66 3C 60 C0 00 00 |
-| 187   |    |      | 58B0     | .                         | 00 00 03 06 0C 66 66 3C 60 C0 00 00 |
-| 188   |    |      | 58BC     | .                         | 00 00 00 E6 3C 18 18 38 6C C7 00 00 |
-| 189   |    |      | 58C8     | .                         | 00 00 00 00 66 C3 C3 DB DB 7E 00 00 |
-| 190   |    |      | 58D4     | .                         | 00 00 FE C6 C0 60 30 60 C6 FE 00 00 |
-| 191   |    |      | 58E0     | Omega                     | 00 00 00 7C C6 C6 C6 C6 6C EE 00 00 |
-| 192   |    |      | 58EC     | 4x4                       | 00 00 00 00 00 00 00 00 0F 0F 0F 0F |
-| 193   |    |      | 58F8     | 4x4                       | 00 00 00 00 00 00 00 00 F0 F0 F0 F0 |
-| 194   |    |      | 5904     | 4x4                       | 0F 0F 0F 0F 00 00 00 00 00 00 00 00 |
-| 195   |    |      | 5910     | 4x4                       | F0 F0 F0 F0 00 00 00 00 00 00 00 00 |
-| 196   |    |      | 591C     | 4x4                       | 00 00 00 00 0F 0F 0F 0F 00 00 00 00 |
-| 197   |    |      | 5928     | 4x4                       | 00 00 00 00 F0 F0 F0 F0 00 00 00 00 |
-| 198   |    |      | 5934     | escalier up               | 18 24 42 81 81 8D 81 9D 81 BD 81 FD |
-| 199   |    |      | 5940     | porte                     | 18 24 42 99 99 81 81 A1 A1 81 81 FF |
-| 200   |    |      | 594C     | fiole                     | 3C 3C 00 3C 42 8D A5 A1 A1 91 42 3C |
-| 201   |    |      | 5958     | bombe ronde               | 02 05 0A 18 3C 42 8D 81 81 42 3C 00 |
-| 202   |    |      | 5964     | O                         | 18 18 24 24 24 C3 C3 24 24 24 18 18 |
-| 203   |    | ⛌    | 5970     | X                         | 00 00 82 44 28 10 28 44 82 00 00 00 |
-| 204   |    |      | 597C     | /                         | 03 03 03 06 0E 1C 38 70 60 C0 C0 C0 |
-| 205   |    |      | 5988     | \                         | C0 C0 C0 60 70 38 1C 0E 06 03 03 03 |
-| 206   |    |      | 5994     | damier 2x2                | CC CC 33 33 CC CC 33 33 CC CC 33 33 |
-| 207   |    |      | 59A0     | damier 1x1                | AA 55 AA 55 AA 55 AA 55 AA 55 AA 55 |
-| 208   |    |      | 59AC     | barre H                   | FF FF 00 00 00 00 00 00 00 00 00 00 |
-| 209   |    |      | 59B8     | barre G                   | 03 03 03 03 03 03 03 03 03 03 03 03 |
-| 210   |    |      | 59C4     | barre B                   | 00 00 00 00 00 00 00 00 00 00 FF FF |
-| 211   |    |      | 59D0     | barre D                   | C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 |
-| 212   |    |      | 59DC     | damier 1x1 1              | A0 50 A0 50 A0 50 00 00 00 00 00 00 |
-| 213   |    |      | 59E8     | damier 1x1 2              | 0A 05 0A 05 0A 05 00 00 00 00 00 00 |
-| 214   |    |      | 59F4     | damier 1x1 3              | 00 00 00 00 00 00 0A 05 0A 05 0A 05 |
-| 215   |    |      | 5A00     | damier 1x1 4              | 00 00 00 00 00 00 A0 50 A0 50 A0 50 |
-| 216   |    |      | 5A0C     | damier 1x1 H              | AA 55 AA 55 AA 55 00 00 00 00 00 00 |
-| 217   |    |      | 5A18     | damier 1x1 D              | 0A 05 0A 05 0A 05 0A 05 0A 05 0A 05 |
-| 218   |    |      | 5A24     | damier 1x1 B              | 00 00 00 00 00 00 AA 55 AA 55 AA 55 |
-| 219   |    |      | 5A30     | damier 1x1 G              | A0 50 A0 50 A0 50 A0 50 A0 50 A0 50 |
-| 220   |    |      | 5A3C     | damier 1x1 HG             | AA 55 AA 55 AA 55 A0 50 A0 50 A0 50 |
-| 221   |    |      | 5A48     | damier 1x1                | AA 55 AA 55 AA 55 0A 05 0A 05 0A 05 |
-| 222   |    |      | 5A54     | damier 1x1                | 0A 05 0A 05 0A 05 AA 55 AA 55 AA 55 |
-| 223   |    |      | 5A60     | damier 1x1                | A0 50 A0 50 A0 50 AA 55 AA 55 AA 55 |
-| 224   |    |      | 5A6C     | smiley :)                 | 00 00 7E FF 99 FF BD C3 FF 7E 00 00 |
-| 225   |    |      | 5A78     | smiley :(                 | 00 00 7E FF 99 FF C3 BD FF 7E 00 00 |
-| 226   |    |      | 5A84     | - bloc HD                 | 0F 0F 0F 0F 0F 0F 00 00 00 00 00 00 |
-| 227   |    |      | 5A90     | - bloc H                  | FF FF FF FF FF FF 00 00 00 00 00 00 |
-| 228   |    |      | 5A9C     | - bloc HG                 | F0 F0 F0 F0 F0 F0 00 00 00 00 00 00 |
-| 229   |    |      | 5AA8     | damier 1x2                | CC 33 CC 33 CC 33 CC 33 CC 33 CC 33 |
-| 230   |    |      | 5AB4     | - bloc BG                 | 00 00 00 00 00 00 F0 F0 F0 F0 F0 F0 |
-| 231   |    |      | 5AC0     | - Bloc G                  | F0 F0 F0 F0 F0 F0 F0 F0 F0 F0 F0 F0 |
-| 232   |    |      | 5ACC     | carré                     | 00 00 7E 42 42 42 42 42 42 7E 00 00 |
-| 233   |    |      | 5AD8     | carré plein               | 00 00 7E 7E 7E 7E 7E 7E 7E 7E 00 00 |
-| 234   |    |      | 5AE4     | Mâle                      | 00 00 0F 07 0D 78 CC CC 78 00 00 00 |
-| 235   |    |      | 5AF0     | Femelle                   | 00 3C 66 66 66 3C 18 7E 18 00 00 00 |
+| 128   |    | ♠    | 55EC     | Pique                     | 00 10 38 7C FE FE FE 10 38 7C 00 00 |
+| 129   |    | ♥    | 55F8     | Coeur                     | 00 00 6C FE FE FE FE 7C 38 10 00 00 |
+| 130   |    | ♣    | 5604     | Trèfle                    | 00 38 38 FE FE FE D6 10 38 7C 00 00 |
+| 131   |    | ♦    | 5610     | Carreau                   | 00 10 38 38 7C FE 7C 38 38 10 00 00 |
+| 132   |    | ○    | 561C     | Rond vide                 | 00 00 38 44 82 82 82 44 38 00 00 00 |
+| 133   |    | ●    | 5628     | Rond plein                | 00 00 38 7C FE FE FE 7C 38 00 00 00 |
+| 134   |    |      | 5634     | carré                     | 00 00 7E 42 42 42 42 42 42 7E 00 00 |
+| 135   |    |      | 5640     | carré plein               | 00 00 7E 7E 7E 7E 7E 7E 7E 7E 00 00 |
+| 136   |    |      | 564C     | X                         | 00 00 82 44 28 10 28 44 82 00 00 00 |
+| 137   |    |      | 5658     | Signe PI                  | 00 00 00 7C A8 28 28 28 48 8E 00 00 |
+| 138   |    |      | 5664     | signe divisé              | 00 00 00 10 00 FE 00 10 00 00 00 00 |
+| 139   |    |      | 5670     | ? à l'envers              | 00 00 10 00 10 10 08 04 44 44 38 00 |
+| 140   |    |      | 567C     | ! à l'envers              | 00 00 10 00 00 10 10 10 10 10 10 00 |
+| 141   |    |      | 5688     | circonflex ^              | 00 10 28 44 00 00 00 00 00 00 00 00 |
+| 142   |    |      | 5694     | ' aigüe                   | 00 10 10 20 00 00 00 00 00 00 00 00 |
+| 143   |    |      | 56A0     | ' grave                   | 00 10 10 08 00 00 00 00 00 00 00 00 |
+| 144   |    |      | 56AC     | accent o                  | 00 00 38 44 38 00 00 00 00 00 00 00 |
+| 145   |    |      | 56B8     | tréma                     | 00 28 00 00 00 00 00 00 00 00 00 00 | 
+| 146   |    |      | 56C4     | 1/4                       | 00 00 40 C0 44 4C 54 1E 04 00 00 00 |
+| 147   |    |      | 56D0     | 1/2                       | 00 00 40 C0 4C 52 44 08 1E 00 00 00 |
+| 148   |    |      | 56DC     | 1/3                       | 00 00 E0 10 62 16 EA 0F 02 00 00 00 |
+| 149   |    |      | 56E8     | - tableau .               | 00 00 00 00 00 18 18 00 00 00 00 00 |
+| 150   |    |      | 56F4     | - tableau H               | 18 18 18 18 18 18 18 00 00 00 00 00 |
+| 151   |    |      | 5700     | - tableau D               | 00 00 00 00 00 1F 1F 00 00 00 00 00 |
+| 152   |    |      | 570C     | - tableau B               | 00 00 00 00 00 18 18 18 18 18 18 18 |
+| 153   |    |      | 5718     | - tableau G               | 00 00 00 00 00 F8 F8 00 00 00 00 00 |
+| 154   |    | └    | 5724     | - tableau HD              | 18 18 18 18 18 1F 0F 00 00 00 00 00 |
+| 155   |    | ┌    | 5730     | - tableau DB              | 00 00 00 00 00 0F 1F 18 18 18 18 18 |
+| 156   |    | ┘    | 573C     | - tableau HG              | 18 18 18 18 18 F8 F0 00 00 00 00 00 |
+| 157   |    | ┐    | 5748     | - tableau GB              | 00 00 00 00 00 F0 F8 18 18 18 18 18 |
+| 158   |    | │    | 5754     | - tableau HB              | 18 18 18 18 18 18 18 18 18 18 18 18 |
+| 159   |    | ─    | 5760     | - tableau DG              | 00 00 00 00 00 FF FF 00 00 00 00 00 |
+| 160   |    | ┴    | 576C     | - tableau HDG             | 18 18 18 18 18 FF FF 00 00 00 00 00 |
+| 161   |    | ├    | 5778     | - tableau HDB             | 18 18 18 18 18 1F 1F 18 18 18 18 18 |
+| 162   |    | ┬    | 5784     | - tableau GBD             | 00 00 00 00 00 FF FF 18 18 18 18 18 |
+| 163   |    | ┤    | 5790     | - tableau HGB             | 18 18 18 18 18 F8 F8 18 18 18 18 18 |
+| 164   |    | ┼    | 579C     | - tableau croix HBGD      | 18 18 18 18 18 FF FF 18 18 18 18 18 |
+| 165   |    |      | 57A8     | barre H                   | FF FF 00 00 00 00 00 00 00 00 00 00 |
+| 166   |    |      | 57B4     | barre G                   | 03 03 03 03 03 03 03 03 03 03 03 03 |
+| 167   |    |      | 57C0     | barre B                   | 00 00 00 00 00 00 00 00 00 00 FF FF |
+| 168   |    |      | 57CC     | barre D                   | C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 C0 |
+| 169   |    |      | 57D8     | - bloc H                  | FF FF FF FF FF FF 00 00 00 00 00 00 |
+| 170   |    |      | 57E4     | - bloc D                  | 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F 0F |
+| 171   |    |      | 57F0     | - bloc B                  | 00 00 00 00 00 00 FF FF FF FF FF FF |
+| 172   |    |      | 57FC     | - Bloc G                  | F0 F0 F0 F0 F0 F0 F0 F0 F0 F0 F0 F0 |
+| 173   |    |      | 5808     | - bloc HD                 | 0F 0F 0F 0F 0F 0F 00 00 00 00 00 00 |
+| 174   |    |      | 5814     | - bloc HG                 | F0 F0 F0 F0 F0 F0 00 00 00 00 00 00 |
+| 175   |    |      | 5820     | - bloc BD                 | 00 00 00 00 00 00 0F 0F 0F 0F 0F 0F |
+| 176   |    |      | 582C     | - bloc BG                 | 00 00 00 00 00 00 F0 F0 F0 F0 F0 F0 |
+| 177   |    |      | 5838     | - bloc bg hd              | 0F 0F 0F 0F 0F 0F F0 F0 F0 F0 F0 F0 |
+| 178   |    |      | 5844     | - bloc                    | F0 F0 F0 F0 F0 F0 0F 0F 0F 0F 0F 0F |
+| 179   |    |      | 5850     | - bloc bd hg              | FF FF FF FF FF FF F0 F0 F0 F0 F0 F0 |
+| 180   |    |      | 585C     | - bloc                    | FF FF FF FF FF FF 0F 0F 0F 0F 0F 0F |
+| 181   |    |      | 5868     | - bloc                    | F0 F0 F0 F0 F0 F0 FF FF FF FF FF FF |
+| 182   |    |      | 5874     | - bloc                    | FF FF FF FF FF FF 0F 0F 0F 0F 0F 0F |
+| 183   |    |      | 5880     | - Bloc plein              | FF FF FF FF FF FF FF FF FF FF FF FF |
+| 184   |    |      | 588C     | 4x4                       | 00 00 00 00 00 00 00 00 0F 0F 0F 0F |
+| 185   |    |      | 5898     | 4x4                       | 00 00 00 00 00 00 00 00 F0 F0 F0 F0 |
+| 186   |    |      | 58A4     | 4x4                       | 0F 0F 0F 0F 00 00 00 00 00 00 00 00 |
+| 187   |    |      | 58B0     | 4x4                       | F0 F0 F0 F0 00 00 00 00 00 00 00 00 |
+| 188   |    |      | 58BC     | 4x4                       | 00 00 00 00 0F 0F 0F 0F 00 00 00 00 |
+| 189   |    |      | 58C8     | 4x4                       | 00 00 00 00 F0 F0 F0 F0 00 00 00 00 |
+| 190   |    |      | 58D4     | barre /                   | 03 03 03 06 0E 1C 38 70 60 C0 C0 C0 |
+| 191   |    |      | 58E0     | barre \                   | C0 C0 C0 60 70 38 1C 0E 06 03 03 03 |
+| 192   |    |      | 58EC     | damier 2x2                | CC CC 33 33 CC CC 33 33 CC CC 33 33 |
+| 193   |    |      | 58F8     | damier 1x2                | CC 33 CC 33 CC 33 CC 33 CC 33 CC 33 |
+| 194   |    |      | 5904     | damier 1x1                | AA 55 AA 55 AA 55 AA 55 AA 55 AA 55 |
+| 195   |    |      | 5910     | damier 1x1 1              | A0 50 A0 50 A0 50 00 00 00 00 00 00 |
+| 196   |    |      | 591C     | damier 1x1 2              | 0A 05 0A 05 0A 05 00 00 00 00 00 00 |
+| 197   |    |      | 5928     | damier 1x1 3              | 00 00 00 00 00 00 0A 05 0A 05 0A 05 |
+| 198   |    |      | 5934     | damier 1x1 4              | 00 00 00 00 00 00 A0 50 A0 50 A0 50 |
+| 199   |    |      | 5940     | damier 1x1 H              | AA 55 AA 55 AA 55 00 00 00 00 00 00 |
+| 200   |    |      | 594C     | damier 1x1 D              | 0A 05 0A 05 0A 05 0A 05 0A 05 0A 05 |
+| 201   |    |      | 5958     | damier 1x1 B              | 00 00 00 00 00 00 AA 55 AA 55 AA 55 |
+| 202   |    |      | 5964     | damier 1x1 G              | A0 50 A0 50 A0 50 A0 50 A0 50 A0 50 |
+| 203   |    |      | 5970     | damier 1x1 HG             | AA 55 AA 55 AA 55 A0 50 A0 50 A0 50 |
+| 204   |    |      | 597C     | damier 1x1                | AA 55 AA 55 AA 55 0A 05 0A 05 0A 05 |
+| 205   |    |      | 5988     | damier 1x1                | 0A 05 0A 05 0A 05 AA 55 AA 55 AA 55 |
+| 206   |    |      | 5994     | damier 1x1                | A0 50 A0 50 A0 50 AA 55 AA 55 AA 55 |
+| 207   |    |      | 59A0     | bloc & damier             | FF FF FF FF FF FF AA 55 AA 55 AA 55 |
+| 208   |    |      | 59AC     | bloc & damier             | AA 55 AA 55 AA 55 FF FF FF FF FF FF |
+| 209   |    |      | 59B8     | bloc & damier             | FA F5 FA F5 FA F5 FA F5 FA F5 FA F5 |
+| 210   |    |      | 59C4     | bloc & damier             | AF 5F AF 5F AF 5F AF 5F AF 5F AF 5F |
+| 211   |    |      | 59D0     | (c)                       | 00 00 00 38 44 BA A2 BA 44 38 00 00 | 
+| 212   |    |      | 59DC     | Flocon                    | 99 99 5A 24 24 C3 C3 24 24 5A 99 99 |
+| 213   | ⚅  |      | 59E8     | dé 6                      | 00 7C 82 AA 82 AA 82 AA 82 7C 00 00 |
+| 214   | ⚄  |      | 59F4     | dé 5                      | 00 00 7C 82 AA 82 92 82 AA 82 7C 00 |
+| 215   | ⚃  |      | 5A00     | dé 4                      | 00 00 7C 82 AA 82 82 82 AA 82 7C 00 |
+| 216   | ⚂  |      | 5A0C     | dé 3                      | 00 00 7C 82 8A 82 92 82 A2 82 7C 00 |
+| 217   | ⚁  |      | 5A18     | dé 2                      | 00 00 7C 82 8A 82 82 82 A2 82 7C 00 |
+| 218   | ⚀  |      | 5A24     | dé 1                      | 00 00 7C 82 82 82 92 82 82 82 7C 00 |
+| 219   | 𓋹  |      | 5A30     | Ankh                      | 00 38 44 44 28 10 FE 10 10 10 10 00 |
+| 220   |    |      | 5A3C     | Coupe                     | 00 00 82 44 7C 7C 38 10 10 38 00 00 |
+| 221   |    |      | 5A48     | Tête de mort              | 00 00 7C FE 92 92 FE 6C 38 28 00 00 |
+| 222   |    |      | 5A54     | Porte                     | 18 24 42 99 99 81 81 A1 A1 81 81 FF |
+| 223   |    |      | 5A60     | Escalier up               | 18 24 42 81 81 8D 81 9D 81 BD 81 FF |
+| 224   |    |      | 5A6C     | Coffre                    | 00 00 00 3C 42 81 FF 81 99 81 81 FF |
+| 225   |    |      | 5A78     | Clef                      | 00 10 28 44 28 10 10 10 18 10 18 00 |
+| 226   |    |      | 5A84     | Fiole                     | 00 00 3C 18 18 18 24 42 A1 B1 81 7E |
+| 227   |    |      | 5A90     | bombe ronde               | 00 02 05 0A 18 3C 42 8D 81 81 42 3C |
+| 228   |    |      | 5A9C     | flag                      | FE FE FE FE FE FE FE FE EE C6 82 00 |
+| 229   |    |      | 5AA8     | immeuble                  | 18 7E 5A 7E 5A 7E 5A 7E 5A 7E 5A FF |
+| 230   |    |      | 5AB4     | coin                      | 00 00 3C 42 99 91 91 99 42 3C 00 00 |
+| 231   |    |      | 5AC0     | hachure                   | 88 11 22 44 88 11 22 44 88 11 22 44 |
+| 232   |    |      | 5ACC     | fusée                     | 18 18 3C 3C 3C 3C 3C 3C 3C 3C 7E DB |
+| 233   |    |      | 5AD8     | Bombe                     | 00 3C 18 18 3C 3C 3C 3C 3C 3C 18 00 |
+| 234   |    |      | 5AE4     | Tombe (croix)             | 00 00 00 00 18 18 7E 7E 18 18 18 7E |
+| 235   |    |      | 5AF0     | Orage                     | 00 00 7E FF FF 7E 18 0C 18 30 18 00 |
 | 236   |    |      | 5AFC     | note                      | 00 0C 0C 0C 0C 0C 0C 3C 7C 38 00 00 |
 | 237   |    |      | 5B08     | note croche               | 00 18 1C 1E 1B 18 18 78 F8 70 00 00 |
-| 238   |    |      | 5B14     | etoile?                   | 99 99 5A 24 24 C3 C3 24 24 5A 99 99 |
-| 239   |    |      | 5B20     | fusée                     | 10 10 38 38 38 38 38 38 38 7C 54 C6 |
-| 240   |    | ↑    | 5B2C     | Flèche Haut               | 18 3C 7E FF 18 18 18 18 18 18 18 18 |
-| 241   |    | ↓    | 5B38     | Flèche Bas                | 18 18 18 18 18 18 18 18 FF 7E 3C 18 |
-| 242   |    | ←    | 5B44     | Flèche Gauche             | 00 00 00 20 60 FF FF 60 20 00 00 00 |
-| 243   |    | →    | 5B50     | Flèche Droite             | 00 00 00 04 06 FF FF 06 04 00 00 00 |
-| 244   |    |      | 5B5C     | Triangle H                | 00 00 18 18 3C 3C 7E 7E FF FF 00 00 |
-| 245   |    |      | 5B68     | Triangle B                | 00 00 FF FF 7E 7E 3C 3C 18 18 00 00 |
+| 238   |    |      | 5B14     | Mâle                      | 00 0F 07 0D 78 CC CC CC 78 00 00 00 |
+| 239   |    |      | 5B20     | homme                     | 3C 3C 3C 18 3C 5A 5A 18 24 24 24 24 |
+| 240   |    |      | 5B2C     | homme IoI                 | 3C 3C BD 99 7E 18 18 18 24 24 24 24 |
+| 241   |    |      | 5B38     | Femelle                   | 00 3C 66 66 66 3C 18 7E 18 00 00 00 |
+| 242   |    |      | 5B44     | femme                     | 3C 3C 3C 18 3C 5A 5A 18 3C 7E 24 24 |
+| 243   |    |      | 5B50     | femme IoI                 | 3C 3C BD 99 7E 18 18 18 3C 7E 24 24 |
+| 244   |    |      | 5B5C     | smiley :)                 | 00 00 7E FF 99 FF BD C3 FF 7E 00 00 |
+| 245   |    |      | 5B68     | smiley :(                 | 00 00 7E FF 99 FF C3 BD FF 7E 00 00 |
 | 246   |    |      | 5B74     | Triangle D                | 00 00 C0 F0 FC FF FF FC F0 C0 00 00 |
 | 247   |    |      | 5B80     | Triangle G                | 00 00 03 0F 3F FF FF 3F 0F 03 00 00 |
-| 248   |    |      | 5B8C     | homme                     | 3C 3C 3C 18 3C 5A 5A 18 24 24 24 24 |
-| 249   |    |      | 5B98     | femme                     | 3C 3C 3C 18 3C 5A 5A 18 3C 7E 24 24 |
-| 250   |    |      | 5BA4     | homme IoI                 | 3C 3C BD 99 7E 18 18 18 24 24 24 24 |
-| 251   |    |      | 5BB0     | femme IoI                 | 3C 3C BD 99 7E 18 18 18 3C 7E 24 24 |
-| 252   |    |      | 5BBC     | Bombe                     | 00 3C 18 18 3C 3C 3C 3C 3C 18 00 00 |
-| 253   |    |      | 5BC8     | Orage                     | 00 00 7E FF FF 7E 18 0C 18 30 18 00 |
+| 248   |    |      | 5B8C     | Triangle H                | 00 00 18 18 3C 3C 7E 7E FF FF 00 00 |
+| 249   |    |      | 5B98     | Triangle B                | 00 00 FF FF 7E 7E 3C 3C 18 18 00 00 |
+| 250   |    | ↑    | 5BA4     | Flèche Haut               | 18 3C 7E FF 18 18 18 18 18 18 18 18 |
+| 251   |    | ↓    | 5BB0     | Flèche Bas                | 18 18 18 18 18 18 18 18 FF 7E 3C 18 |
+| 252   |    | ←    | 5BBC     | Flèche Gauche             | 00 00 00 20 60 FF FF 60 20 00 00 00 |
+| 253   |    | →    | 5BC8     | Flèche Droite             | 00 00 00 04 06 FF FF 06 04 00 00 00 |
 | 254   |    |      | 5BD4     | Flèche Haut bas           | 18 3C 7E FF 18 18 18 18 FF 7E 3C 18 |
 | 255   |    |      | 5BE0     | Flèche Gauche Droite      | 00 00 00 24 66 FF FF 66 24 00 00 00 |
+
+__________________________________________________________________________________________________
+
+cat
+00 00 00 00 88 F8 A8 71 21 79 7D BE
+
+Coin
+00 00 3C 42 99 91 91 99 42 3C 00 00
+
+pot
+00 18 7E 24 24 42 42 42 42 42 42 3C
+
+Double barre verticale
+00 00 66 66 66 66 66 66 66 66 00 00
+
+Motif
+DD AA 77 AA DD AA 77 AA DD AA 77 AA
+
+Motif cadrillage
+FF 88 88 88 88 88 FF 88 88 88 88 88
+77 88 88 88 88 88 77 88 88 88 88 88
+
+Hachure
+88 11 22 44 88 11 22 44 88 11 22 44
+
+Fantôme 
+3C 42 81 A9 A9 81 81 91 81 81 55 2A
+
+Cadenas
+00 00 38 44 44 FE EE EE FE 7C 00 00
+
+fiole
+3C 3C 00 3C 42 8D A5 A1 A1 91 42 3C
+
+Feu
+08 42 52 58 1C 7E 67 63 C1 C1 C3 66
+
+O
+18 18 24 24 24 C3 C3 24 24 24 18 18
+
+
+
+£
+00 3C 66 60 60 F8 60 60 66 FE 00 00
+
+P (inverse)               | 00 7E F4 F4 74 34 34 34 34 34 00 00 |
+paragraphe                | 00 00 1E 30 38 6C 6C 38 18 F0 00 00 |
+\`                        | 00 18 18 0C 00 00 00 00 00 00 00 00 |
+
+division épait            | 00 00 18 18 00 7E 7E 00 18 18 00 00 |
+char tab                  | 00 00 00 00 00 7E 7E 06 06 00 00 00 |
+
+
+alpha                     | 00 00 00 00 00 73 DE CC DE 73 00 00 |
+beta                      | 00 7C C6 C6 C6 FC C6 C6 C6 F8 C0 00 |
+.                         | 00 00 00 66 66 3C 66 66 66 3C 00 00 |
+.                         | 00 00 3C 60 60 3C 66 66 66 3C 00 00 |
+.                         | 00 00 00 00 1E 30 7C 7C 30 1E 00 00 |
+.                         | 00 38 6C C6 C6 FE C6 C6 6C 38 00 00 |
+.                         | 00 00 C0 60 60 30 38 6C 6C C6 00 00 |
+.                         | 00 00 00 66 66 66 66 7C 60 60 60 00 |
+.pi   ---                 | 00 00 00 7C A8 28 28 28 48 8E 00 00 |
+.                         | 00 00 00 00 00 7E D8 D8 D8 70 00 00 |
+.                         | 00 00 03 06 0C 3C 66 3C 60 C0 00 00 |
+.                         | 00 00 03 06 0C 66 66 3C 60 C0 00 00 |
+.                         | 00 00 00 E6 3C 18 18 38 6C C7 00 00 |
+.                         | 00 00 00 00 66 C3 C3 DB DB 7E 00 00 |
+.                         | 00 00 FE C6 C0 60 30 60 C6 FE 00 00 |
+Omega                     | 00 00 00 7C C6 C6 C6 C6 6C EE 00 00 |
+
+
 
 
 
@@ -394,9 +465,7 @@ LD (0x7000), A    ; Stocker le résultat dans une variable à 0x7000
 RET               ; Retour de la sous-routine
 ```
 
-___
 
-1 vers 2 écrans
 
 ```basic
 1000 POKE &HFB58,247:20:POKE &HFB56,1:CLEAR 50,&HF800:RETURN
@@ -417,7 +486,7 @@ EXEC &Hxxxx: CLEAR 50,&HF800
 3E F7 32 58 FB 3E 01 32 56 FB C9
 
 
-2 vers 1 écran
+2 vers 1
 
 ```basic
 1000 CLEAR 50,&HE000:POKE &HFB58,223:POKE &HFB56,20:RETURN
@@ -435,7 +504,6 @@ on aurait CLEAR 50,&HE000: EXEC &Hxxxx
 
 3E DF 32 58 FB 3E 14 32 56 FB C9
 
-___
 
 ### Inspiration
 
@@ -446,8 +514,6 @@ ___
 
 
 LPRINT des chars.
-
-Dump de la ROM basic, pour le jeu de caractères.
 
 ```basic
 10 A=&H55EC
@@ -467,106 +533,3 @@ Dump de la ROM basic, pour le jeu de caractères.
 ```
 
 
-___
-
-### Scrolling purement théorique.
-
-Au final un peu faux car il faudrait aussi modifier la partie attribut de l'écran texte.
-
-Scroll screen 1 et 2, haut bas. 1 ligne de texte.
-
-| Routine | Adresse | Appel | BASIC |
-|---------|---------|-------|-------|
-| Scroll haut écran 1 | &H5BEC | EXEC &H5BEC |
-| Scroll bas écran 1  | &H5C1C | EXEC &H5C1C |
-| Scroll haut écran 2 | &H5C4C | EXEC &H5C4C |
-| Scroll bas écran 2  | &H5C7C | EXEC &H5C7C |
-
-
-```asm
-        ORG 5BECh          ; Adresse de départ en ROM
-
-NB_LIGNES     EQU 16
-NB_COLS       EQU 32
-TAILLE_LIGNE  EQU NB_COLS
-TAILLE_ECRAN  EQU NB_LIGNES * NB_COLS
-
-VRAM1         EQU 06000h
-VRAM2         EQU 0E000h
-
-; --- Scroll vers le haut écran 1 ---
-SCROLL_HAUT_E1:
-        LD HL, VRAM1 + TAILLE_LIGNE
-        LD DE, VRAM1
-        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
-        LDIR
-        LD HL, VRAM1 + TAILLE_ECRAN - TAILLE_LIGNE
-        LD B, TAILLE_LIGNE
-        LD A, ' '
-EFFACE_HAUT_E1:
-        LD (HL), A
-        INC HL
-        DJNZ EFFACE_HAUT_E1
-        RET
-
-; --- Scroll vers le bas écran 1 ---
-SCROLL_BAS_E1:
-        LD HL, VRAM1 + TAILLE_ECRAN - TAILLE_LIGNE - 1
-        LD DE, VRAM1 + TAILLE_ECRAN - 1
-        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
-        LDDR
-        LD HL, VRAM1
-        LD B, TAILLE_LIGNE
-        LD A, ' '
-EFFACE_BAS_E1:
-        LD (HL), A
-        INC HL
-        DJNZ EFFACE_BAS_E1
-        RET
-
-; --- Scroll vers le haut écran 2 ---
-SCROLL_HAUT_E2:
-        LD HL, VRAM2 + TAILLE_LIGNE
-        LD DE, VRAM2
-        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
-        LDIR
-        LD HL, VRAM2 + TAILLE_ECRAN - TAILLE_LIGNE
-        LD B, TAILLE_LIGNE
-        LD A, ' '
-EFFACE_HAUT_E2:
-        LD (HL), A
-        INC HL
-        DJNZ EFFACE_HAUT_E2
-        RET
-
-; --- Scroll vers le bas écran 2 ---
-SCROLL_BAS_E2:
-        LD HL, VRAM2 + TAILLE_ECRAN - TAILLE_LIGNE - 1
-        LD DE, VRAM2 + TAILLE_ECRAN - 1
-        LD BC, TAILLE_ECRAN - TAILLE_LIGNE
-        LDDR
-        LD HL, VRAM2
-        LD B, TAILLE_LIGNE
-        LD A, ' '
-EFFACE_BAS_E2:
-        LD (HL), A
-        INC HL
-        DJNZ EFFACE_BAS_E2
-        RET
-```
-
-En hexa injecté 192 octets:
-
--- -- -- -- -- -- -- -- -- -- -- -- 21 20 60 11\
-00 60 01 E0 0C ED B0 21 E0 60 06 20 3E 20 77 23\
-10 D8 C9 21 DF 61 11 FF 61 01 E0 0C ED B8 21 00\
-20 60 06 20 3E 20 77 23 D8 C9 21 20 E0 11 00 E0\
-30 01 E0 0C ED B0 21 E0 E0 06 20 3E 20 77 23 D8\
-40 C9 21 DF E0 11 FF E0 01 E0 0C ED B8 21 00 E0\
-50 06 20 3E 20 77 23 D8 C9\
-
-Grosso modo 200 octets pour du scroll assembleur. C'est interressant.
-
-Etude à revoir.
-
-___
