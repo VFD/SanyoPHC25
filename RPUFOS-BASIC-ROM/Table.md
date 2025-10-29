@@ -1,15 +1,144 @@
 # Jeu de caractère PHC-25
 
+___
 ## Introduction
 
-Lire la ROM et récupérer les codes Hexa.
-
-Création de nouveaux caractères.
+Analyse de la ROM Basic et recherche des adresses mémoire pour le jeu de caractères.\
+Il est logè en fin de ROM.\
+Création de nouveaux caractères sur la plage étendue qui a été RAZ par SANYO.
 
 Test à faire sur une vraie machine.\
 Je n'en ai pas.
 
+___
 ## Tables diverses
+
+### Plage Mémoire du PHC-25
+
+#### Rappel
+
+Mode screen 1 et screen 2 (text)
+
+De &h6000 à &h61FF pour l'affichage.\
+De &h6800 à &h69FF pour les attributs.
+
+2 x 512 octets.
+
+
+Mode Screen 3 et screen 4 (graphic)
+
+De &h6000 à &h77FF pour l’écran 1.\
+De &hE000 à &hF700 pour l’écran 2.\
+Chaque plage d’adresse occupe 6Ko.
+
+![Image Plage Mémoire PHC-25](Assets/memoryMapPHC-25.png)
+
+
+
+#### Adresse mémoire des instructions du basic
+
+&H02C9 à &H0491 : Mots clés du BASIC.
+
+
+| Comment | Adresse | Comment  |
+|---------|---------|----------|
+| ABS     |  |
+| AND     |  |
+| ASC     |  |
+| CHR$    |  |
+| CLEAR   | &H1981 |
+| CLOAD   | &H40F2 |
+| CLOAD?  |
+| CLS     | &H3F70 |
+| COLOR   | &H3CF6 |
+| CONSOLE | &H3EA9 |
+| CONT    | &H193F |
+| COS     | |
+| CSAVE   | &H4442 |
+| CSRLIN  | |
+| CTOFF   | &H4555 |
+| CTON    | &H454E |
+| DATA    | &H2553 |
+| DEF     | &H236E |
+| DIM     | &H213F |
+| ELSE    | &H05E1 |
+| END     | &H1907 |
+| EXEC    | &H1070 |
+| EXP     |  |
+| FN      | &H2E49 |
+| FOR     | &H07BF |
+| FRE     |  |
+| GOSUB   | &H08E0 |
+| GOTO    | &H08F5 |
+| IF      | &H0979 |
+| INKEY$  |  |
+| &H2483  |
+| INP     |  |
+| INPUT   | &H0A1F |
+| INPUT#  |  |
+| INT     |  |
+| KEY     | &H0F3A |
+| LCOPY   | &H0FC6 |
+| LEFT$   |  |
+| LEN     |  |
+| LET     | &H24F9 |
+| LINE    | &H3921 |
+| LIST    | &H25DB |
+| LLIST   | &H25D6 |
+| LOCATE  | &H3E73 |
+| LOG     |  |
+| LPOS    |  |
+| LPRINT  | &H266C |
+| MID$    |  |
+| NEW     | &H1866 |
+| NEXT    | &H1A4C |
+| NOT     |  |
+| ON      | &H095C |
+| OR      |  |
+| OUT     | &H24E2 |
+| PAINT   | &H37A2 |
+| PEEK    |  |
+| PLAY    | &H4907 |
+| POINT   |  |
+| POKE    | &H24EE |
+| POS     |  |
+| PRESET  | &H3B56 |
+| PRINT   | &H2673 |
+| PRINT#  |  |
+| PSET    | &H3B36 |
+| READ    | &H0A66 |
+| REM     | &H254D |
+| RESTORE | &H18D1 |
+| RETURN  | &H0936 |
+| RIGHT$  |  |
+| RND     |  |
+| RUN     | &H08C2 |
+| SCREEN  | &H3F1B |
+| SCRIN   |  |
+| SGN     |  |
+| SIN     |  |
+| SLOAD   | &H4086 |
+| SOUND   | &H4679 |
+| SPC     | &H1AA6 |
+| SQR     |  |
+| SSAVE   | &H4344 |
+| STEP    |  |
+| STICK   |  |
+| STOP    | &H18FD |
+| STRIG   |  |
+| STR$    |  |
+| TAB     | &H2E43 |
+| TAN     |  |
+| TIME    |  |
+| THEN    |  |
+| TO      | &H2E35 |
+| USR     |  |
+| VAL     |  |
+
+
+
+
+### ROM BASIC
 
 Adresse de début et de fin.
 
@@ -52,7 +181,7 @@ Début en &H0137 ou &H0138 si on prend le séparateur &H00.
 Fin en &H028A ou &H028B si on prend en compte ou pas le séparateur &H00.
 
 
-&H02C9 à &H0491 : Mots clés du BASIC.
+
 
 
 
@@ -65,8 +194,11 @@ Suite à une boulette je les ai stupidement perdu... à refaire.
 ### Table ASCII basse
 
 Les caractères de contrôles.\
-Non affichable. Sauf si un CHR$(xxx) avant ?\
+Non affichable.\
 à compléter pour savoir si il y a une adresse ROM.
+
+Si un CHR$(xxx) avant affichage du char ?\
+à étudier plus avant.
 
 
 
@@ -107,10 +239,10 @@ Non affichable. Sauf si un CHR$(xxx) avant ?\
 
 Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
-
+___
 ### Table ASCII standard
 
-
+RAS.
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
 |-------|----|------|----------|---------|------|
@@ -213,22 +345,15 @@ Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
 Pour le 127, il faudrait voir la ROM Japonnaise. Quitte à le recoder.
 
+___
 ### Table ASCII étendue
 
 Codage de 121 caractères suplémentaires. Les 6 premiers déjà pris (128 à 133).\
 Inspiré de l'AMSTRAD et du ZX81. Plus création pixel art.\
-
-On peut étudier le remplacement de £ et d'autres par du pixel Art 8x12.\
-Les caractères grecs par exemple, sauf le PI.
+Design fin comme ceux standard.
 
 Les char affichés sont ceux de la normes UTF8. Mais ça donne une idée.
 
-Un remix est possible pour mettre ensemble les caractères commun, par exemple les blocs.\
-La série 144- 159 c'est pour les tableaux.\
-Remonter les 2 carrés 232, 233 en 134, 135 ? ou la « X » et PI avant puisque dejà définis.\
-Idem pour les ? ! inversés, les remonter.
-
-Tout cela pour avoir une cohérence.
 
 
 | ASCII | &H | Char | Adresse  | Comment                   | Hexa |
@@ -362,11 +487,11 @@ Tout cela pour avoir une cohérence.
 | 254   | FE |      | 5BD4     | Flèche Haut bas           | 18 3C 7E FF 18 18 18 18 FF 7E 3C 18 |
 | 255   | FF |      | 5BE0     | Flèche Gauche Droite      | 00 00 00 24 66 FF FF 66 24 00 00 00 |
 
-__________________________________________________________________________________________________
-
+___
 #### Autres étude de caractères semi-graphique
 
-Un Poke directe en mémoire est toujours possible.
+Un Poke directe en mémoire est toujours possible.\
+Cepandant attention quand on est en Screen 1 ou 2 qui sont des mode texte avec une plage mémoire d'attributs.
 
 | Comment                   | Hexa |
 |---------------------------|------|
@@ -409,13 +534,11 @@ Un Poke directe en mémoire est toujours possible.
 
 
 ___
-
 ### work
 
 Etude Assembleur pour compléter la ROM
 
-
-#### Exemple
+#### Exemples
 
 ##### Afficher un caractère
 
