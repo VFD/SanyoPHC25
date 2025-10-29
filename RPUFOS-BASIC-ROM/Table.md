@@ -71,8 +71,7 @@ Chaque plage d’adresse occupe 6Ko.
 | GOSUB   | &H08E0 |
 | GOTO    | &H08F5 |
 | IF      | &H0979 |
-| INKEY$  |  |
-| &H2483  |
+| INKEY$  | &H2483  |
 | INP     |  |
 | INPUT   | &H0A1F |
 | INPUT#  |  |
@@ -135,6 +134,64 @@ Chaque plage d’adresse occupe 6Ko.
 | USR     |  |
 | VAL     |  |
 
+Table par adresse connue.
+
+| Adresse  | Comment  | Comment  |
+|----------|----------|----------|
+| &H05E1   | ELSE     |          |
+| &H07BF   | FOR      |          |
+| &H08C2   | RUN      |          |
+| &H08E0   | GOSUB    |          |
+| &H08F5   | GOTO     |          |
+| &H0936   | RETURN   |          |
+| &H095C   | ON       |          |
+| &H0979   | IF       |          |
+| &H0A1F   | INPUT    |          |
+| &H0A66   | READ     |          |
+| &H0F3A   | KEY      |          |
+| &H0FC6   | LCOPY    |          |
+| &H1070   | EXEC     |          |
+| &H1866   | NEW      |          |
+| &H18D1   | RESTORE  |          |
+| &H18FD   | STOP     |          |
+| &H1907   | END      |          |
+| &H193F   | CONT     |          |
+| &H1981   | CLEAR    |          |
+| &H1A4C   | NEXT     |          |
+| &H1AA6   | SPC      |          |
+| &H213F   | DIM      |          |
+| &H236E   | DEF      |          |
+| &H2483   | INKEY$   |          |
+| &H24E2   | OUT      |          |
+| &H24EE   | POKE     |          |
+| &H24F9   | LET      |          |
+| &H254D   | REM      |          |
+| &H2553   | DATA     |          |
+| &H25D6   | LLIST    |          |
+| &H25DB   | LIST     |          |
+| &H266C   | LPRINT   |          |
+| &H2673   | PRINT    |          |
+| &H2E35   | TO       |          |
+| &H2E43   | TAB      |          |
+| &H2E49   | FN       |          |
+| &H3921   | LINE     |          |
+| &H37A2   | PAINT    |          |
+| &H3B36   | PSET     |          |
+| &H3B56   | PRESET   |          |
+| &H3CF6   | COLOR    |          |
+| &H3E73   | LOCATE   |          |
+| &H3EA9   | CONSOLE  |          |
+| &H3F1B   | SCREEN   |          |
+| &H3F70   | CLS      |          |
+| &H4086   | SLOAD    |          |
+| &H40F2   | CLOAD    |          |
+| &H4344   | SSAVE    |          |
+| &H4442   | CSAVE    |          |
+| &H454E   | CTON     |          |
+| &H4555   | CTOFF    |          |
+| &H4679   | SOUND    |          |
+| &H4907   | PLAY     |          |
+
 
 
 
@@ -180,16 +237,11 @@ Début en &H0137 ou &H0138 si on prend le séparateur &H00.
 
 Fin en &H028A ou &H028B si on prend en compte ou pas le séparateur &H00.
 
-
-
-
-
-
 ___
 ## Tables adresse jeux de caractère
 
 La colonne « Hexa » des tables correspond au 12 octets en hexadécimal.\
-Suite à une boulette je les ai stupidement perdu... à refaire.
+
 
 ### Table ASCII basse
 
@@ -204,38 +256,38 @@ Si un CHR$(xxx) avant affichage du char ?\
 
 | ASCII | &H | Char | Adresse  | Comment | Hexa |
 |-------|----|------|----------|---------|------|
-| 0     | 00 | NUL  |          |         |  |
-| 1     | 01 | SOH  |          |         |  |
-| 2     | 02 | STX  |          |         |  |
-| 3     | 03 | ETX  |          |         |  |
-| 4     | 04 | EOT  |          |         |  |
-| 5     | 05 | ENQ  |          |         |  |
-| 6     | 06 | ACK  |          |         |  |
-| 7     | 07 | BEL  |          |         |  |
-| 8     | 08 | BS   |          |         |  |
-| 9     | 09 | TAB  |          |         |  |
-| 10    | 0A | LF   |          | Line Feed |  |
-| 11    | 0B | VT   |          |         |  |
-| 12    | 0C | FF   |          |         |  |
-| 13    | 0D | CR   |          | Carriage Return |  |
-| 14    | 0E | SO   |          |         |  |
-| 15    | 0F | SI   |          |         |  |
-| 16    | 10 | DLE  |          | pi      |  |
-| 17    | 11 | DC1  |          | ┴       |  |
-| 18    | 12 | DC2  |          | ┬       |  |
-| 19    | 13 | DC3  |          | ┤       |  |
-| 20    | 14 | DC4  |          | ├       |  |
-| 21    | 15 | NAK  |          | ┼       |  |
-| 22    | 16 | SYN  |          | │       |  |
-| 23    | 17 | ETB  |          | ─       |  |
-| 24    | 18 | CAN  |          | ┌       |  |
-| 25    | 19 | EM   |          | ┐       |  |
-| 26    | 1A | SUB  |          | └       |  |
-| 27    | 1B | ESC  |          | ┘       |  |
-| 28    | 1C | FS   |          | X       |  |
-| 29    | 1D | GS   |          |         |  |
-| 30    | 1E | RS   |          |         |  |
-| 31    | 1F | US   |          |         |  |
+| 0     | 00 | NUL  | 4FEC     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 1     | 01 | SOH  | 4FF8     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 2     | 02 | STX  | 5004     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 3     | 03 | ETX  | 5010     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 4     | 04 | EOT  | 501C     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 5     | 05 | ENQ  | 5028     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 6     | 06 | ACK  | 5034     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 7     | 07 | BEL  | 5040     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 8     | 08 | BS   | 504C     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 9     | 09 | TAB  | 5058     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 10    | 0A | LF   | 5064     | Line Feed | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 11    | 0B | VT   | 5070     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 12    | 0C | FF   | 507C     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 13    | 0D | CR   | 5088     | Carriage Return | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 14    | 0E | SO   | 5094     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 15    | 0F | SI   | 50A0     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 16    | 10 | DLE  | 50AC     | pi      | 00 00 00 7E A8 28 28 28 48 8E 00 00 |
+| 17    | 11 | DC1  | 50B8     | ┴       | 18 18 18 18 18 FF FF 00 00 00 00 00 |
+| 18    | 12 | DC2  | 50C4     | ┬       | 00 00 00 00 00 FF FF 18 18 18 18 18 |
+| 19    | 13 | DC3  | 50D0     | ┤       | 18 18 18 18 18 F8 F8 18 18 18 18 18 |
+| 20    | 14 | DC4  | 50DC     | ├       | 18 18 18 18 18 1F 1F 18 18 18 18 18 |
+| 21    | 15 | NAK  | 50E8     | ┼       | 18 18 18 18 18 FF FF 18 18 18 18 18 |
+| 22    | 16 | SYN  | 50F4     | │       | 18 18 18 18 18 18 18 18 18 18 18 18 |
+| 23    | 17 | ETB  | 5100     | ─       | 00 00 00 00 00 FF FF 00 00 00 00 00 |
+| 24    | 18 | CAN  | 510C     | ┌       | 00 00 00 00 00 1F 1F 18 18 18 18 18 |
+| 25    | 19 | EM   | 5118     | ┐       | 00 00 00 00 00 F8 F8 18 18 18 18 18 |
+| 26    | 1A | SUB  | 5124     | └       | 18 18 18 18 18 1F 1F 00 00 00 00 00 |
+| 27    | 1B | ESC  | 5130     | ┘       | 18 18 18 18 18 F8 F8 00 00 00 00 00 |
+| 28    | 1C | FS   | 513C     | X       | 00 00 82 44 28 10 28 44 82 00 00 00 |
+| 29    | 1D | GS   | 5148     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 30    | 1E | RS   | 5154     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 31    | 1F | US   | 5160     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
 
 Va savoir pourquoi SANYO y a collé des caractères graphique... :-/
 
@@ -354,6 +406,7 @@ Design fin comme ceux standard.
 
 Les char affichés sont ceux de la normes UTF8. Mais ça donne une idée.
 
+Il y a une legere modification de 1 pixel sur les caractères tableau par rapport à ceux définis.
 
 
 | ASCII | &H | Char | Adresse  | Comment                   | Hexa |
@@ -539,6 +592,27 @@ ___
 Etude Assembleur pour compléter la ROM
 
 #### Exemples
+
+Vider le buffer INKEY$ si présent.
+Puis attendre une touche.
+
+```asm
+CLEAR_KEYBUF:
+C3 83 24   JP 2483h            ; Appelle la routine INKEY$ du PHC-25 (A = touche ou 0)
+FE 00      CP 0                ; Compare A avec 0
+20 FB      JR NZ,CLEAR_KEYBUF  ; Si une touche est présente, consomme-la et recommence
+C9         RET                 ; Sinon, buffer vidé → retour
+
+CD xx xx   CALL CLEAR_KEYBUF   ; Appelle la routine de vidage clavier
+CD 83 24   CALL 2483h          ; Appelle INKEY$ pour lire une touche
+FE 00      CP 0                ; Compare A avec 0
+28 F9      JR Z,WAIT_LOOP      ; Si aucune touche, boucle jusqu’à détection
+C9         RET                 ; Touche détectée → retour à BASIC
+```
+Ce prog est-il correct ?/
+
+
+
 
 ##### Afficher un caractère
 
