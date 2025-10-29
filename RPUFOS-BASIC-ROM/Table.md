@@ -4,26 +4,33 @@ ___
 ## Introduction
 
 Analyse de la ROM Basic et recherche des adresses mémoire pour le jeu de caractères.\
-Il est logè en fin de ROM.\
+Il est logé en fin de ROM (&h4FEC).\
 Création de nouveaux caractères sur la plage étendue qui a été RAZ par SANYO.
 
 Test à faire sur une vraie machine.\
 Je n'en ai pas.
 
+Décodage du mieux possible des fonctions de la ROM Basic.
+
 ___
 ## Tables diverses
 
+Plages mémoire, etc.\
+Le markdown ne permet pas des tableaux compplexes.
+
 ### Plage Mémoire du PHC-25
 
-#### Rappel
+#### Rappel des zones mémoire écran 1 et 2
+
+L'écran 1 et l'écran principal.
 
 Mode screen 1 et screen 2 (text)
 
 De &h6000 à &h61FF pour l'affichage.\
 De &h6800 à &h69FF pour les attributs.
 
-2 x 512 octets.
-
+2 x 512 octets.\
+Englobé dans la zone des 6ko.
 
 Mode Screen 3 et screen 4 (graphic)
 
@@ -31,14 +38,17 @@ De &h6000 à &h77FF pour l’écran 1.\
 De &hE000 à &hF700 pour l’écran 2.\
 Chaque plage d’adresse occupe 6Ko.
 
+#### Plage mémoire connue à date
+
 ![Image Plage Mémoire PHC-25](Assets/memoryMapPHC-25.png)
 
-
+Il y a encore du taf à faire dessus.
 
 #### Adresse mémoire des instructions du basic
 
-&H02C9 à &H0491 : Mots clés du BASIC.
+&H02C9 à &H0491 : Mots clés du BASIC en clair.
 
+Table des entrées du Basic par mot clé.
 
 | Comment | Adresse | Comment  |
 |---------|---------|----------|
@@ -134,7 +144,7 @@ Chaque plage d’adresse occupe 6Ko.
 | USR     |  |
 | VAL     |  |
 
-Table par adresse connue.
+Table par les adresses connues ordre croissant.
 
 | Adresse  | Comment  | Comment  |
 |----------|----------|----------|
@@ -263,7 +273,7 @@ Si un CHR$(xxx) avant affichage du char ?\
 | 4     | 04 | EOT  | 501C     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
 | 5     | 05 | ENQ  | 5028     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
 | 6     | 06 | ACK  | 5034     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
-| 7     | 07 | BEL  | 5040     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
+| 7     | 07 | BEL  | 5040     | Bip     | 00 00 00 00 00 00 00 00 00 00 00 00 |
 | 8     | 08 | BS   | 504C     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
 | 9     | 09 | TAB  | 5058     |         | 00 00 00 00 00 00 00 00 00 00 00 00 |
 | 10    | 0A | LF   | 5064     | Line Feed | 00 00 00 00 00 00 00 00 00 00 00 00 |
