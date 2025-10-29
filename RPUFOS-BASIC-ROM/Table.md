@@ -613,15 +613,16 @@ FE 00      CP 0                ; Compare A avec 0
 20 FB      JR NZ,CLEAR_KEYBUF  ; Si une touche est présente, consomme-la et recommence
 C9         RET                 ; Sinon, buffer vidé → retour
 
+WAIT_LOOP:
 CD xx xx   CALL CLEAR_KEYBUF   ; Appelle la routine de vidage clavier
 CD 83 24   CALL 2483h          ; Appelle INKEY$ pour lire une touche
 FE 00      CP 0                ; Compare A avec 0
 28 F9      JR Z,WAIT_LOOP      ; Si aucune touche, boucle jusqu’à détection
 C9         RET                 ; Touche détectée → retour à BASIC
 ```
-Ce prog est-il correct ?/
+Ce prog est-il correct ?
 
-
+Comment retourner au "C3" ?
 
 
 ##### Afficher un caractère
