@@ -351,7 +351,7 @@ C'est ce qui se passe avec les émulateurs.\
 Une des raisons suplémentaire de reporter ces caractères vers la zone étendue.
 
 La touche GRAPH doit être utilisée seule, sinon rien ne se passe.\
-SPC signifie que ça affiche un espace (possible caractère de contrôle).
+Pas trouvé la touche pour le 00, probable que ce soit la touche vierge, qui n'est pas émulée.
 
 Ce n'est pas un espace, car cela provoque l'erreur « Syntax error ».
 
