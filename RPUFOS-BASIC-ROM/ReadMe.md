@@ -22,6 +22,14 @@ Le générateur peut être adapté à la dimension que l'on souhaite.
 ___
 ## Nouveau caractères
 
+### Version Alpha
+
+Test élémentaire et rapide de faisabilité.
+
+### Version Beta
+
+Réorganisation du jeu de caractère et choix d'un ensemble de semi-graphique jugés plus pertinents.
+
 Voir [table](Table.md).
 
 Il s'agit ici d'une première version qui peut évoluer.\
