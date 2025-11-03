@@ -7,7 +7,7 @@ Analyse de la ROM pour améliorer le PHC-25.\
 Le jeu de caractères sur la version PAL est médiocre.\
 SANYO c'est contenté de faire un RAZ (mise à 00) de tout les caractères Kanji.\
 le résultat c'est une grosse limitation pour les programmes en comparaison des machines de la même pèriode.
-Par exemple le ZX81 qui fait mieux (mais il est UK.
+Par exemple le ZX81 qui fait mieux (mais il est UK).
 
 ### Analyse de la ROM Basic
 
@@ -31,7 +31,7 @@ et ZX81.
 
 les Tests sur émulateur 
  - v1.04 PAL de G. Fetis = OK
- - v1.X PAL de ... 
+ - v1.0.3 PAL de Hitchkikr 
  - MAME : Non fait
 
 
@@ -74,6 +74,117 @@ Chaque plage d’adresse occupe 6Ko.
 ![Image Plage Mémoire PHC-25](Assets/memoryMapPHC-25.png)
 
 Il y a encore des zones à identifier dessus.
+
+
+### Les RST Z80 du PHC-25
+
+Il y a 8 RST pour le Z80, ces instructions sont toujours logé aux même adresses.\
+Le PHC-25 ne fait pas exception.
+
+
+| Instruction | Opcode Hex | Adresse appelée | Commentaire                       |
+|-------------|------------|-----------------|-----------------------------------|
+| RST 0       | `C7`       | `$0000`         |  |
+| RST 1       | `CF`       | `$0008`         |  |
+| RST 2       | `D7`       | `$0010`         |  |
+| RST 3       | `DF`       | `$0018`         |  |
+| RST 4       | `E7`       | `$0020`         |  |
+| RST 5       | `EF`       | `$0028`         |  |
+| RST 6       | `F7`       | `$0030`         |  |
+| RST 7       | `FF`       | `$0038`         |  |
+
+Chaque système fait ce qu'il veut des RST.\
+Pour le PHC-25, il faut décoder.
+
+#### Séquence d'octets & Désassemblage
+
+Extraction :
+
+```
+c3 af 0b 3f 20 00 f7 df
+c3 04 15 68 67 c3 56 24 
+c3 94 05 60 e0 e0 60 2d 
+c3 29 1d 00 e0 cd 23 2e 
+c3 2a 1d 23 23 5e 23 56 
+c3 39 1d af fd b7 c8 fe 
+c3 72 1d c9 2b c3 01 2c 
+c3 ac 1a  
+```
+
+Désassemblage :
+
+Les octets entre les Jump sont actuellement considérés comme des DATA.
+
+| Adresse | Octets   | Instruction / Donnée | Commentaire                       |
+|---------|----------|----------------------|-----------------------------------|
+| $0000 - | C3 AF 0B | JP $0BAF             | Vecteur RST 0 : saut vers routine |
+| $0003   | 3F       | DB $3F               | Donnée codée en dur               |
+| $0004   | 20       | DB $20               | Donnée codée en dur               |
+| $0005   | 00       | DB $00               | Donnée codée en dur               |
+| $0006   | F7       | DB $F7               | Donnée codée en dur (RST 6 )      |
+| $0007   | DF       | DB $DF               | Donnée codée en dur (RST 3 )      |
+| $0008 - | C3 04 15 | JP $1504             | Vecteur RST 1                     |
+| $000B   | 68       | DB $68               | Donnée                            |
+| $000C   | 67       | DB $67               | Donnée                            |
+| $000D   | C3       | DB $C3               | Donnée ou JP $2456                |
+| $000E   | 56       | DB $56               | Donnée                            |
+| $000F   | 24       | DB $24               | Donnée                            |
+| $0010 - | C3 94 05 | JP $0594             | Vecteur RST 2                     |
+| $0013   | 60       | DB $60               | Donnée                            |
+| $0014   | E0       | DB $E0               | Donnée                            |
+| $0015   | E0       | DB $E0               | Donnée                            |
+| $0016   | 60       | DB $60               | Donnée                            |
+| $0017   | 2D       | DB $2D               | Donnée                            |
+| $0018 - | C3 29 1D | JP $1D29             | Vecteur RST 3                     |
+| $001B   | 00       | DB $00               | Donnée                            |
+| $001C   | E0       | DB $E0               | Donnée                            |
+| $001D   | CD       | DB $CD               | Donnée ou CALL $2E23              |
+| $001E   | 23       | DB $23               | Donnée                            |
+| $001F   | 2E       | DB $2E               | Donnée                            |
+| $0020 - | C3 2A 1D | JP $1D2A             | Vecteur RST 4                     |
+| $0023   | 23       | DB $23               | Donnée                            |
+| $0024   | 23       | DB $23               | Donnée                            |
+| $0025   | 5E       | DB $5E               | Donnée                            |
+| $0026   | 23       | DB $23               | Donnée                            |
+| $0027   | 56       | DB $56               | Donnée                            |
+| $0028 - | C3 39 1D | JP $1D39             | Vecteur RST 5                     |
+| $002B   | AF       | DB $AF               | Donnée                            |
+| $002C   | FD       | DB $FD               | Donnée                            |
+| $002D   | B7       | DB $B7               | Donnée                            |
+| $002E   | C8       | DB $C8               | Donnée                            |
+| $002F   | FE       | DB $FE               | Donnée                            |
+| $0030 - | C3 72 1D | JP $1D72             | Vecteur RST 6                     |
+| $0033   | C9       | DB $C9               | Donnée                            |
+| $0034   | 2B       | DB $2B               | Donnée                            |
+| $0035   | C3       | DB $C3               | Donnée ou JP $2C01                |
+| $0036   | 01       | DB $01               | Donnée                            |
+| $0037   | 2C       | DB $2C               | Donnée                            |
+| $0038 - | C3 AC 1A | JP $1AAC             | Vecteur RST 7                     |                    
+
+
+à l'adresse &h3B, commence des textes.\
+
+USER MEMORY.\
+Puis\
+Le texte du boot : SCREEN?.
+
+L'octet &h00 est utilisé comme séparateur.
+
+#### Les Jumps
+
+| RST   | JP (C3) | Opcode     | Description |
+|-------|---------|------------|-------------|
+| RST 0 | `$0BAF` | `C3 AF 0B` |  |
+| RST 1 | `$1504` | `C3 04 15` |  |
+| RST 2 | `$2456` | `C3 56 24` |  |
+| RST 3 | `$0594` | `C3 94 05` |  |
+| RST 4 | `$1D29` | `C3 29 1D` |  |
+| RST 5 | `$1D2A` | `C3 2A 1D` |  |
+| RST 6 | `$1D39` | `C3 39 1D` |  |
+| RST 7 | `$1D72` | `C3 72 1D` |  |
+
+
+
 
 ### Adresse mémoire des instructions du basic
 
