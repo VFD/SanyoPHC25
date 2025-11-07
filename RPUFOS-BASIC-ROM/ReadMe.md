@@ -76,6 +76,8 @@ EXEC &HFBF0
 ```
 L'appel peut aussi se faire en assembleur.
 
+L'écran remonte d'une ligne vers le haut.\
+Le reset de la ligne 15 n'est pas encore implémenté.
 
 #### Bascule 1 vers 2 et 2 vers 1 pour les écran (quelques octets).
 
