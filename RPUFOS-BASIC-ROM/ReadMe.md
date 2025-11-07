@@ -83,6 +83,21 @@ Reset de la nouvelle ligne à faire.
 ___
 ### Idées
 
+#### USR
+
+Il semble que la commande USR se code comme ci-dessous :
+
+```basic
+100 CLEAR 50,&HE000
+110 POKE &HE000,&HC9
+120 X=USR(&HE000)
+```
+
+Mais provoque une erreur qui n'est pas une ereur de syntaxe.\
+"Illegal function call".
+
+
+
 #### Scroll UP de l'écran Texte
 
 Implentation d'un code ASM pour le screen 1.\
