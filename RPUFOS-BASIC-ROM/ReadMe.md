@@ -62,9 +62,22 @@ ___
 de 5BEC à 5FFF, soit 1044 octets.\
 Grosso modo nous avons de quoi loger pour 1K+ de programme assembleur.
 
+___
 ### Idées
 
-Bascule 1 vers 2 et 2 vers 1 pour les écran (quelques octets).
+#### Scroll UP de l'écran Texte
+
+Implentation d'un code ASM pour le screen 1.\
+Dans la ROM RPUFOS-Basic-phc25rom-Beta2.bin.\
+Faire :
+
+```basic
+EXEC &HFBF0
+```
+L'appel peut aussi se faire en assembleur.
+
+
+#### Bascule 1 vers 2 et 2 vers 1 pour les écran (quelques octets).
 
 Randomize ?
 
