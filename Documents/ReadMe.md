@@ -3,6 +3,7 @@
 ## Introduction
 
 Après plein de lecture sur la façon de programmer le PHC-25, il en résulte quasiment un bouquin pour programmez en Basic.\
+Vu la quantité d'info il va y avoir un split.
 
 ## Programmez en BASIC
 
