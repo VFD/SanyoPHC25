@@ -8,7 +8,7 @@ Pour la Game JAM de mai 2025 à octobre 2025.
 Les travaux reste cependant toujours d'actualités pour être améliorés.
 
 Le repository RPUFOS sert au adaptation de David H. Ahl.\
-Compte tenu de la médicrité du jeu de caractères les adaptations en brute force peuvent être ok, mais c'es mieux de faire quelque chose de plus sexy.\
+Compte tenu de la médicrité du jeu de caractères les adaptations en brute force peuvent être ok, mais c'est mieux de faire quelque chose de plus sexy.\
 D'où l'étude de la ROM PAL et de sa modification.
 
 Travaux divers.
@@ -27,7 +27,22 @@ Anciennement sur RPUFOS. Le Report est en cours.
 Travail pour améliorer la ROM Basic du PHC 25.\
 Elle est renomée en RPUFOS Basic v1.4.
 
-Ajout de caractères semi-graphique sur la plage ASCII étendue effacée par SANYO pour importer l'ordinateur en Europe.
+Ajout de caractères semi-graphique sur la plage ASCII étendue effacée par SANYO pour importer l'ordinateur en Europe.\
+Reprise en particulier des caractères semi-graphiques du ZX81, ordinateur le plus proche (résolution et processeur Z80).
+Celà permet donc d'adapter une grande majorité de jeu du ZX81, et par là même d'étendre son parc logiciel.
+
+### Les scroll écrans
+
+Il y a un peu de place dans la ROM Basic pour y loger du code.\
+Les scroll écran en Basic peuvent être très lent.\
+Donc mise en place de scroll accessible directement par la commande Basic EXEC et via l'assembleur Z80 par CALL.
+
+- Scroll texte haut
+- Scroll texte bas
+- Scroll texte gauche
+- Scroll texte droite 
+
+etc.
 
 
 ___
