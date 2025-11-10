@@ -170,11 +170,12 @@ Le texte du boot : SCREEN?.
 
 L'octet &h00 est utilisé comme séparateur.
 
-#### Les Jumps
+Les Jumps :\
+Tentative d'association. Le reset est tout à fait logique.
 
 | RST   | JP (C3) | Opcode     | Description |
 |-------|---------|------------|-------------|
-| RST 0 | `$0BAF` | `C3 AF 0B` |  |
+| RST 0 | `$0BAF` | `C3 AF 0B` | Reset       |
 | RST 1 | `$1504` | `C3 04 15` |  |
 | RST 2 | `$2456` | `C3 56 24` |  |
 | RST 3 | `$0594` | `C3 94 05` |  |
@@ -373,6 +374,8 @@ Après le choix 1 ou 2 du boot.
 
 Début en &H0137 ou &H0138 si on prend le séparateur &H00.
 
+&H0137 à &H028B
+
 | Deb. | Fin  | Comment  |
 |------|------|----------|
 | 0138 |      | Break |
@@ -417,6 +420,11 @@ Pas encore trouvé de méthode par programme pour afficher le caractère.\
 Par exemple, « PRINT CHR$(16) » ne fonctionne pas, à la place il semblerait que l'on enchaîne un LF CR.\
 Ce comportement est tout à fait logique.\
 « PRINT CHR$(7) » fait bien un bip.
+
+Les données de caractère sont codés sur 12 octets.\
+
+ASCII bas : &H4FEC à &H516B.
+
 
 
 | No | &H | ASCII | Adresse | Touche | Hexa (dump)                         | Commentaire     |
@@ -472,6 +480,10 @@ ___
 ### Table ASCII standard
 
 RAS, sinon que les caractères on une police fine.
+
+ASCII standard : &H516C à &H55EB.
+
+
 
 | No  | &H | ASCII | Adresse | Hexa (dump)                         | Commentaire |
 |-----|----|-------|---------|-------------------------------------|-------------|
@@ -585,6 +597,8 @@ Design fin comme ceux standard.
 Les char affichés sont ceux de la normes UTF8. Mais ça donne une idée.
 
 Il y a une legere modification de 1 pixel sur les caractères tableau par rapport à ceux définis.
+
+ASCII étendu : &H55EC à 5BEB.
 
 
 | ASCII | &H | Char | Adresse  | Hexa (dump)                         | Comment                   |
