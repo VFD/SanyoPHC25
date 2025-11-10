@@ -8,6 +8,11 @@ Un PRINT CHR$(134) est l'équivalent d'un espace.
 
 L'idée est donc de hacker la ROM Basic et d'y loger de nouveaux caractères (134 à 255).
 
+Un source pour l'ASM de la ROM Basic :\
+https://github.com/z88dk/techdocs/blob/master/targets/phc25/phc25rom.asm
+
+
+
 ___
 ## Méthode
 
