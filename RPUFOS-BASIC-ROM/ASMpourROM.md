@@ -87,6 +87,7 @@ RET               ; Retour de la sous-routine
 hexa:\
 TO DO.
 
+___
 ## Refaire le choix de 1 ou 2 écrans
 
 Passage de 1 à 2 :
@@ -134,8 +135,11 @@ Code hexa :\
 CLEAR 50,&HE000: EXEC &Hxxxx
 ```
 
-Il faut trouver comment faire le CLEAR 50,&Hxxxx en ASM.
+Faire le CLEAR 50,&Hxxxx soi-même car c'est un choix du programmeur.
+
+22 octets qui seront ajoutés si il reste de la place après encodage des scroll écran.
 
 __
+
 
 ___
