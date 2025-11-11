@@ -7,6 +7,8 @@ Pour la Game JAM de mai 2025 à octobre 2025.
 
 ### Resources PHC-25
 
+[z88dk](https://github.com/z88dk/z88dk/wiki/Platform---Sanyo-PHC-25#seiko-map-1010)
+
 [Olipix - You Tube](https://www.youtube.com/@Olipix)\
 [Aurelien34 - PHC25 Turbo](https://github.com/Aurelien34/PHC25Turbo)\
 [Aurelien34 - Welcome](https://github.com/Aurelien34/PHC2Welcome)\
@@ -16,7 +18,7 @@ Pour la Game JAM de mai 2025 à octobre 2025.
 
 Les travaux reste cependant toujours d'actualités pour être améliorés.
 
-Le repository RPUFOS sert au adaptation de David H. Ahl.\
+Le repository RPUFOS sert au adaptation de David H. Ahl. Mais pourrait migrer ici.\
 Compte tenu de la médicrité du jeu de caractères les adaptations en brute force peuvent être ok, mais c'est mieux de faire quelque chose de plus sexy.\
 D'où l'étude de la ROM PAL et de sa modification.
 
@@ -24,7 +26,13 @@ Travaux divers.
 - Documentations
   - Retro doc et compléments pour programmer sur le PHC-25
 - Hack de la ROM Basic PAL 1.3
-- 
+- ...
+
+La doc Basic devrait spliter.
+- Basic How To
+- Adaptation du bouquin 10 PRINT
+- Pourquoi pas un 102 Programmes pour PHC-25
+- ...
 
 Le code source utilisé est celui du REPO de z88dk.\
 Il est mis à jour ici quand j'ai le temps.
