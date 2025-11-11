@@ -642,6 +642,9 @@ INDFND:
 000005F5:	LD B,11h		; Error: Undefined FN call
 000005F7:	JR +02h
 000005F9:	LD B,13h		; Error: Missing operand
+; ----------------------------------------
+; Display error
+; ----------------------------------------
 000005FB:	LD HL,(FEE0h)
 000005FE:	LD A,L
 000005FF:	OR H
@@ -1104,7 +1107,7 @@ FORSLP:
 00000907:	CALL 028Fh
 0000090A:	JR Z,+05h
 0000090C:	LD B,07h			; Error: Undefined line number
-0000090E:	JP 05FBh			; ERROR
+0000090E:	JP 05FBh			; ERROR: Duplicate definition
 ; ----------------------------------------
 ;
 ; ----------------------------------------
@@ -1145,7 +1148,7 @@ FORSLP:
 00000941:	EI
 00000942:	DEC A
 00000943:	LD B,02h
-00000945:	JP NZ,05FBh					; ERROR
+00000945:	JP NZ,05FBh					; ERROR: Return w/o gosub
 00000948:	POP HL
 00000949:	LD (FEADh),HL				; CURLIN
 0000094C:	CALL 0927h
@@ -1265,6 +1268,7 @@ FORSLP:
 00000A01:	DEC C
 00000A02:	LD A,(BC)
 00000A03:	NOP
+;
 00000A04:	LD A,(FD7Ah)
 00000A07:	OR A
 00000A08:	JP NZ,05F1h			; Error: Type mismatched
@@ -1335,7 +1339,7 @@ FORSLP:
 00000A7B:	XOR A
 00000A7C:	JR +25h
 00000A7E:	CALL 1D21h
-00000A81:	INC L
+00000A81:	INC L		; or DB 2Ch
 00000A82:	CALL 2139h
 00000A85:	RST 20h		; GETVAR: Get variable address to DE
 00000A86:	EX HL,(SP)
@@ -1475,6 +1479,8 @@ FORSLP:
 ; FE54: 22h,00h,00h		; LD (0000h),HL
 ; FE57: C9h				; RET
 ; FE58: C3h,2Bh,23h		; JP 232Bh
+;
+; Array of strings initially assigned to function keys 8 Char max
 00000B5F:	DB "RUN", 0Dh, 00h, 00h, 00h, 00h
 00000B67:	DB "CLOAD""", 00h, 00h
 00000B6F:	DB "PRINT ", 00h, 00h 
@@ -1703,7 +1709,8 @@ FORSLP:
 00000D27:	LD (F95Eh),A
 00000D2A:	RET
 ; ----------------------------------------
-;
+; no call here so ?
+; DB 3Eh, 03h, CDh, B0h, 47h, C9h
 ; ----------------------------------------
 00000D2B:	LD A,03h
 00000D2D:	CALL 47B0h
@@ -1852,6 +1859,9 @@ FORSLP:
 00000E1F:	POP AF
 00000E20:	RET
 ; ----------------------------------------
+; Takes the Y coordinate in L and computes the corresponding screen address in DE.
+; 
+; HL et AF are preserved.
 ;
 ; ----------------------------------------
 00000E21:	PUSH HL
@@ -1862,7 +1872,7 @@ FORSLP:
 00000E27:	ADD HL,HL
 00000E28:	ADD HL,HL
 00000E29:	ADD HL,HL
-00000E2A:	ADD HL,HL
+00000E2A:	ADD HL,HL				;   Multiply HL by 32
 00000E2B:	LD A,(FB5Bh)
 00000E2E:	OR H
 00000E2F:	LD D,A
@@ -1871,6 +1881,14 @@ FORSLP:
 00000E32:	POP HL
 00000E33:	RET
 ; ----------------------------------------
+; Converts coordinates X,Y present in HL to the corresponding address on VRAM.
+; 
+; Input:
+; - Coordinates in HL
+; Output:
+; - Address in HL
+; 
+; DE and AF are preserved
 ;
 ; ----------------------------------------
 00000E34:	PUSH DE
@@ -1973,7 +1991,8 @@ FORSLP:
 00000ECE:	POP HL
 00000ECF:	RET
 ; ----------------------------------------
-;
+; Probably Data
+; DB  7Eh, B7h, C9h
 ; ----------------------------------------
 00000ED0:	LD A,(HL)
 00000ED1:	OR A
@@ -1989,7 +2008,8 @@ FORSLP:
 00000EDB:	POP HL
 00000EDC:	RET
 ; ----------------------------------------
-;
+; Probably Data
+; defb     $af,$f5,$7c,$3c,$67,$95,$3d,$18,$05
 ; ----------------------------------------
 00000EDD:	XOR A
 00000EDE:	PUSH AF
@@ -1999,6 +2019,9 @@ FORSLP:
 00000EE2:	SUB L
 00000EE3:	DEC A
 00000EE4:	JR +05h
+; ----------------------------------------
+;
+; ----------------------------------------
 00000EE6:	XOR A
 00000EE7:	DEC A
 00000EE8:	PUSH AF
@@ -2128,7 +2151,10 @@ FORSLP:
 00000F9C:	POP AF
 00000F9D:	JR Z,+02h
 00000F9F:	JR -0Fh
-
+;
+; Input
+; A: char to send to centronics port
+;
 00000FA1:	DI
 00000FA2:	LD A,B
 00000FA3:	OUTA (00h)
@@ -2194,7 +2220,8 @@ FORSLP:
 00001006:	POP HL
 00001007:	RET
 ; ----------------------------------------
-;
+; DATA ?
+; defb     $03,$0a,$1d,$c1,$00,$00,$00,$0f,$f0,$ff 
 ; ----------------------------------------
 00001008:	INC BC
 00001009:	LD A,(BC)
@@ -2206,6 +2233,9 @@ FORSLP:
 0000100F:	RRCA
 00001010:	RET P
 00001011:	RST 38h
+; ----------------------------------------
+;
+; ----------------------------------------
 00001012:	LD B,10h
 00001014:	PUSH BC
 00001015:	LD C,00h
@@ -2281,9 +2311,9 @@ FORSLP:
 00001074:	LD HL,107Ah
 00001077:	PUSH HL
 00001078:	EX DE,HL
-00001079:	LD PC,HL
-0000107A:	POP HL
-0000107B:	RET
+00001079:	LD PC,HL		; JUMP
+0000107A:	POP HL			; Data ?
+0000107B:	RET				; Data ?
 ; ----------------------------------------
 ;
 ; ----------------------------------------
@@ -2491,6 +2521,10 @@ FORSLP:
 000011AF:	RET
 ; ----------------------------------------
 ;
+; H is incremented if not equal to 32
+; (which is going one char right for the cursor, limited
+; by screen width)
+;
 ; ----------------------------------------
 000011B0:	LD A,20h
 000011B2:	CP H
@@ -2499,6 +2533,10 @@ FORSLP:
 000011B5:	RET
 ; ----------------------------------------
 ;
+; L is increment if not equal to maximum height of screen
+; (which is going one char down for the cursor, limited
+; by screen height)
+;
 ; ----------------------------------------
 000011B6:	LD A,(FB6Fh)
 000011B9:	CP L
@@ -2506,7 +2544,7 @@ FORSLP:
 000011BB:	INC L
 000011BC:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 000011BD:	PUSH DE
 000011BE:	PUSH HL
@@ -2562,7 +2600,7 @@ FORSLP:
 0000120D:	LD HL,(FB72h)
 00001210:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00001211:	LD H,20h
 00001213:	LD A,(FF6Bh)
@@ -2584,12 +2622,12 @@ FORSLP:
 0000122E:	LD H,01h
 00001230:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00001231:	LD HL,(FB9Dh)
 00001234:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00001235:	PUSH HL
 00001236:	PUSH DE
@@ -2612,7 +2650,7 @@ FORSLP:
 00001250:	LD A,B
 00001251:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00001252:	AND C
 00001253:	LD (DE),A
@@ -2630,6 +2668,9 @@ FORSLP:
 0000125F:	LD (DE),A
 00001260:	SCF
 00001261:	LD B,A
+; ----------------------------------------
+;
+; ----------------------------------------
 00001262:	LD HL,(FB72h)
 00001265:	CALL 12CCh
 00001268:	RET NZ
@@ -2641,11 +2682,14 @@ FORSLP:
 00001273:	XOR A
 00001274:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00001275:	LD H,01h
 00001277:	JP 0DA9h
 0000127A:	CALL 13ACh
+; ----------------------------------------
+;
+; ----------------------------------------
 0000127D:	CALL 12A1h
 00001280:	RET NZ
 00001281:	LD (FB72h),HL
@@ -2678,7 +2722,7 @@ FORSLP:
 000012B4:	OR A
 000012B5:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 000012B6:	LD HL,(FB72h)
 000012B9:	CALL 12D4h
@@ -2693,16 +2737,25 @@ FORSLP:
 000012C8:	RET Z
 000012C9:	DEC L
 000012CA:	JR -1Eh
+; ----------------------------------------
+;
+; ----------------------------------------
 000012CC:	LD A,(FB7Ah)
 000012CF:	CP H
 000012D0:	RET Z
 000012D1:	INC H
 000012D2:	JR -26h
+; ----------------------------------------
+; DATA ?
+; ----------------------------------------
 000012D4:	LD A,01h
 000012D6:	CP H
 000012D7:	RET Z
 000012D8:	DEC H
 000012D9:	JR -2Dh
+; ----------------------------------------
+;
+; ----------------------------------------
 000012DB:	LD A,(FB6Eh)
 000012DE:	LD H,A
 000012DF:	LD A,(FB6Fh)
