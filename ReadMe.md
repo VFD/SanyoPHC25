@@ -5,6 +5,15 @@
 OBSCURE System étudié par les RPUFOS (Retro Programers For Obscure Systems).\
 Pour la Game JAM de mai 2025 à octobre 2025.
 
+### Resources PHC-25
+
+[Olipix - You Tube](https://www.youtube.com/@Olipix)\
+[Aurelien34 - PHC25 Turbo](https://github.com/Aurelien34/PHC25Turbo)\
+[Aurelien34 - Welcome](https://github.com/Aurelien34/PHC2Welcome)\
+
+
+### Travaux
+
 Les travaux reste cependant toujours d'actualités pour être améliorés.
 
 Le repository RPUFOS sert au adaptation de David H. Ahl.\
@@ -16,6 +25,10 @@ Travaux divers.
   - Retro doc et compléments pour programmer sur le PHC-25
 - Hack de la ROM Basic PAL 1.3
 - 
+
+Le code source utilisé est celui du REPO de z88dk.\
+Il est mis à jour ici quand j'ai le temps.
+
 ___
 ## Documentations
 
@@ -43,16 +56,5 @@ Donc mise en place de scroll accessible directement par la commande Basic EXEC e
 - Scroll texte droite 
 
 etc.
-
-___
-## Resources PHC-25
-
-
-
-
-[Aurelien34 - PHC25 Turbo](https://github.com/Aurelien34/PHC25Turbo)
-
-
-[Aurelien34 - Welcome](https://github.com/Aurelien34/PHC2Welcome)
 
 ___
