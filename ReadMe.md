@@ -1,5 +1,9 @@
 # Sanyo PHC-25
 
+<p style="text-align: center;">
+  <img src="Documents/Assets/RPUFOS_Logo.png" alt="Logo RPUFOS" width="150">
+</p>
+
 ## Introduction
 
 OBSCURE System étudié par les RPUFOS (Retro Programers For Obscure Systems).\
