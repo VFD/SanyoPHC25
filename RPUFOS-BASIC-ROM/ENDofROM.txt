@@ -1,5 +1,11 @@
-
-End of ROM.
+;
+; Ce qui se trouve à la fin de la ROM 1.3
+; 
+; Du code source addembleur.
+; Ce code source ne sert à rien.
+; 
+; Il sera remplacer par du code Z80 pour la v1.4.
+;
 
 CFCERR
 	OR	D
