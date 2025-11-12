@@ -3,7 +3,7 @@
 ## Introduction
 
 Après plein de lecture sur la façon de programmer le PHC-25, il en résulte quasiment un bouquin pour programmez en Basic.\
-Vu la quantité d'info il va y avoir un split.
+Vu la quantité d'info il y un split.
 
 De plus, la pauvreté du jeu de caractère m'a amené à analyser la ROM et essayer de comprendre où sont passés les caractères.\
 Ne pas oublier qu'à la basse cet ordinateur n'était destiné qu'au marché Japonais.\
@@ -19,7 +19,7 @@ Je verrais bien un 3D Monster Maze sur ce PHC.
 ___
 ## Le Basic du Sanyo PHC-25
 
-Compile toute lla documentation concernant la programation Basic du PHC-25.\
+Compile toute la documentation concernant la programation Basic du PHC-25.\
 Possible split pour extraire la partie branchement du PHC-25.
 
 ___
