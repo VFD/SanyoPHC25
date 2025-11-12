@@ -168,6 +168,18 @@ SHD2_LOOP:
 | Scroll gauche | 2	| EXEC &H5C4A |
 | Scroll droite | 2	| EXEC &H5C5D |
 
+A valider pour le type Texte.
+
+Faire ensuite le screen 3.
+
+Faire ensuite le screen 4.
+
+Les RAZ sont à étudier de prêt.
+
+
+Peut poser problème de stop du son par le DI EI.
+
+Alternative faire la synchro VBL.
 
 ___
 
@@ -436,6 +448,7 @@ DEPLD2:
 ```
 
 BOF BOF.
+
 
 
 ___
