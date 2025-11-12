@@ -37,7 +37,7 @@ Les jeux graphiques devraient augmenter avec la ROM v1.4 quand elle sera en rele
 ___
 102 programmes pour PHC-25
 
-L'idée de le faire eiste, il n'y a plus qu'à...
+L'idée de le faire existe, il n'y a plus qu'à...
 
 ___
 ## Programmez en Assembleur
