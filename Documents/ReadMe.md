@@ -17,7 +17,13 @@ Le PHC-25 et le ZX81 partageant le même processeur, un Z80.\
 Je verrais bien un 3D Monster Maze sur ce PHC.
 
 ___
-## Programmez en BASIC
+## Le Basic du Sanyo PHC-25
+
+Compile toute lla documentation concernant la programation Basic du PHC-25.\
+Possible split pour extraire la partie branchement du PHC-25.
+
+___
+## Programmez en BASIC sur SANYO PHC-25
 
 Probablement un truc que Micro Application n'aurait pas rogné.\
 Mais c'était une autre époque.
@@ -25,7 +31,13 @@ Mais c'était une autre époque.
 ___
 ## 10 PRINT for Sanyo PHC-25
 
-TO DO: il faut l'extraire.
+Reprise du livre éponyme pour faire des effets graphiques avec le Sanyo PHC-25.\
+Les jeux graphiques devraient augmenter avec la ROM v1.4 quand elle sera en release complet.
+
+___
+102 programmes pour PHC-25
+
+L'idée de le faire eiste, il n'y a plus qu'à...
 
 ___
 ## Programmez en Assembleur
