@@ -8,7 +8,7 @@
 ; PHC-25 Memory map:
 ;
 ; 0000h - 5FFFh   : BASIC ROM
-; F800h - FFFFh   : RAM BASIC working area
+; F800h - FFFFh   : RAM BASIC working area - need to be decoded
 ; 
 ; C000h - DFFFh   : Basic Program (8ko)
 ; 
@@ -24,65 +24,66 @@
 ; 8000h - BFFFh   : Free (16ko) for ?
 ; 
 ; ----------------------------------------
-; Z80 RST (To DO)
+; Base don work by:
+;	Z88dk
+;	Mokona
 ; ----------------------------------------
-00000000:	JP 0BAFh		; START
-
-00000003:	CCF
-00000004:	JR NZ,+00h
-00000006:	RST 30h		; GETYPR
-00000007:	RST 18h
-
-00000008:	JP 1504h
-
-0000000B:	LD L,B
-0000000C:	LD H,A
-0000000D:	JP 2456h
-
-; compare DE and HL (aka DCOMPR)
+; ----------------------------------------
+; Z80 RST
+; ----------------------------------------
+; ----------------------------------------
+; RST 00h; cold_start
+;
+00000000:	JP 0BAFh						; COLD START  0BAFh
+;
+00000003:	DB 3Fh, 20h, 00h, F7h, DFh		; ?
+; ----------------------------------------
+; RST 08h; VBLANK Synchro
+;
+00000008:	JP 1504h						; wait_vbl
+;
+0000000B:	DB 68h, 67h, C3h, 56h, 24h		; ?
+; ----------------------------------------
+; RST 10h; compare DE and HL (aka DCOMPR)
+;
 00000010:	JP 0594h
-
-00000013:	LD H,B
-00000014:	RET PO
-00000015:	RET PO
-00000016:	LD H,B
-00000017:	DEC L
-00000018:	JP 1D29h
-0000001B:	NOP
-0000001C:	RET PO
-0000001D:	CALL 2E23h
-
-; expect number
-; GETVAR: Get variable address to DE
-00000020:	JP 1D2Ah
-
-00000023:	INC HL
-00000024:	INC HL
-00000025:	LD E,(HL)
-00000026:	INC HL
-00000027:	LD D,(HL)
-00000028:	JP 1D39h
-0000002B:	XOR A
-0000002C:	OR A
-0000002E:	RET Z
-0000002F:	CP C3h
-00000031:	LD (HL),D
-00000032:	DEC E
-00000033:	RET
+;
+00000013:	DB 60h, E0h, E0h, 60h, 2Dh		; ?
 ; ----------------------------------------
+; RST 18h; Skip spaces after incrementing HL
+;
+00000018:	JP 1D29h
+;
+0000001B:	DB 00h, E0h, CDh, 23h, 2Eh		; ?
 ;
 ; ----------------------------------------
-00000034:	DEC HL
-00000035:	JP 2C01h
+; RST 20h; Skip spaces without incrementing HL
+;
+00000020:	JP 1D2Ah
+;
+00000023:	DB 23h, 23h, 5Eh, 23h, 56h		; ?
+; ----------------------------------------
+; RST 28h; Check if next pointer character (by HL) is a comma
+;
+00000028:	JP 1D39h
+;
+0000002B:	DB AFh, FDh, B7h, C8h, FEh		; ?
+; ----------------------------------------
+; RST 30h; checks_fdae
+; 
+00000030:	JP 1D72h
+;
+00000033:	DB C9h, 2Bh, C3h, 01h, 2Ch		; ?
+; ----------------------------------------
+; RST 38h; irq_vector
 00000038:	JP 1AACh
-0000003B:	LD D,L
-
+;
 ; ----------------------------------------
 ; Not code - messages ASCII
 ; ----------------------------------------
 0000003C:	DB "User Memory", 20h, 00h, 20h, "Bytes", 0Dh, 0Ah, 00h
 00000051:	DB "Screen ? ", 00h
-0000005B:	DB "PHC-25 SANYO BASIC v.1.3", 0Dh, 0Ah, 00h
+0000005B:	DB "PHC-25 SANYO BASIC V.1.3", 0Dh, 0Ah, 00h
 
 ; ----------------------------------------
 ; FNCTAB, JP table for statements
@@ -171,7 +172,7 @@
 00000112:	defw 232Bh	; __COS		(->Error: Illegal Function Call)
 00000114:	defw 232Bh	; __SIN		(->Error: Illegal Function Call)
 ; ----------------------------------------
-; 
+; ???
 ; ----------------------------------------
 00000108:	LD H,H
 00000109:	DEC SP
@@ -233,7 +234,6 @@
 ; ----------------------------------------
 ; End of ASCII Messages
 ; ----------------------------------------
-
 ; ----------------------------------------
 ; 
 ; ----------------------------------------
@@ -552,7 +552,7 @@
 00000590:	POP DE
 00000591:	JP 04D8h
 ; ----------------------------------------
-; CPDEHL: compare DE and HL, reached via INT 10h
+; RST 10h; compare DE and HL (aka DCOMPR)
 ; ----------------------------------------
 00000594:	LD A,H
 00000595:	SUB D
@@ -623,7 +623,7 @@ INDFND:
 000005D3:	POP HL
 000005D4:	JP 0A04h
 ; ----------------------------------------
-;
+; Error
 ; ----------------------------------------
 000005D7:	LD HL,(FD77h)
 000005DA:	LD (F98Bh),HL
@@ -660,7 +660,7 @@ INDFND:
 00000612:	POP DE
 00000613:	LD B,E
 00000614:	INC B
-00000615:	LD HL,013Eh
+00000615:	LD HL,013Eh					; "Next w/o for"
 00000618:	DEC B
 00000619:	JR Z,+08h
 0000061B:	PUSH BC
@@ -686,10 +686,10 @@ READY:
 00000644:	CALL 10DFh
 00000647:	LD HL,FFFFh
 0000064A:	LD (F98Bh),HL
-0000064D:	LD (FEADh),HL		; CURLIN
+0000064D:	LD (FEADh),HL					; CURLIN
 00000650:	LD A,L
 00000651:	LD (F92Eh),A
-00000654:	LD HL,0130h
+00000654:	LD HL,0130h						; "READY" Address
 00000657:	CALL 1DFBh
 0000065A:	LD HL,FD99h
 0000065D:	LD A,(HL)
@@ -704,9 +704,9 @@ READY:
 0000066D:	RST 18h
 0000066E:	JR Z,-16h
 00000670:	PUSH AF
-00000671:	CALL C,233Eh		; LNUM_PARM
+00000671:	CALL C,233Eh					; LNUM_PARM
 00000674:	PUSH DE
-00000675:	RST 20h		; GETVAR: Get variable address to DE
+00000675:	RST 20h							; GETVAR: Get variable address to DE
 00000676:	CALL 04A8h
 00000679:	LD HL,FC4Bh
 0000067C:	POP DE
@@ -725,7 +725,7 @@ READY:
 00000690:	AND A
 00000691:	PUSH AF
 00000692:	CALL 028Ch
-00000695:	LD (FEADh),BC		; CURLIN
+00000695:	LD (FEADh),BC					; CURLIN
 00000699:	LD (FEA9h),HL
 0000069C:	JR Z,+05h
 0000069E:	POP AF
@@ -790,13 +790,13 @@ READY:
 00000714:	LD BC,FFCEh
 00000717:	ADD HL,BC
 00000718:	LD (F989h),HL
-0000071B:	LD HL,(FEADh)		; CURLIN
+0000071B:	LD HL,(FEADh)					; CURLIN
 0000071E:	POP BC
 0000071F:	POP DE
 00000720:	CALL 0790h
 00000723:	LDIR
 00000725:	POP BC
-00000726:	LD HL,(FEADh)		; CURLIN
+00000726:	LD HL,(FEADh)					; CURLIN
 00000729:	LD (HL),B
 0000072A:	DEC HL
 0000072B:	LD (HL),C
@@ -1511,7 +1511,7 @@ FORSLP:
 ;
 
 ; ----------------------------------------
-; START Initialisation
+; START Initialisation (RST 00h)
 ; ----------------------------------------
 00000BAF:	DI							; Disable Interrupts
 00000BB0:	LD SP,F8FFh
@@ -3118,7 +3118,7 @@ FORSLP:
 00001502:	LD H,A
 00001503:	RET
 ; ----------------------------------------
-;
+; RST 08h; VBLANK Synchro wait_vbl
 ; ----------------------------------------
 00001504:	INA (40h)
 00001506:	AND 10h
@@ -3789,9 +3789,9 @@ FORSLP:
 0000192F:	LD A,(FB5Ah)
 00001932:	LD (FBA4h),A
 00001935:	POP AF
-00001936:	LD HL,0138h
+00001936:	LD HL,0138h					; "Break" address
 00001939:	JP NZ,0623h
-0000193C:	JP 063Bh		; READY
+0000193C:	JP 063Bh					; READY
 
 
 ; __CONT
@@ -3799,7 +3799,7 @@ FORSLP:
 00001942:	LD A,H
 00001943:	OR L
 00001944:	LD B,10h			; Err $10 - "Can't CONTINUE"
-00001946:	JP Z,05FBh		; ERROR
+00001946:	JP Z,05FBh			; ERROR
 00001949:	PUSH HL
 0000194A:	XOR A
 0000194B:	LD (F92Eh),A
@@ -3991,7 +3991,7 @@ FORSLP:
 00001AA6:	CALL 2B9Bh
 00001AA9:	JP FE58h
 ; ----------------------------------------
-; 
+; RST 38h; irq_vector
 ; ----------------------------------------
 00001AAC:	EX AF,AF'
 00001AAD:	EXX
@@ -4155,19 +4155,19 @@ FORSLP:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00001BD7:	XOR A
-00001BD8:	LD (F928h),A
+00001BD7:	XOR A						; RAZ A
+00001BD8:	LD (F928h),A				; 00h in F928
 00001BDB:	LD A,01h
-00001BDD:	OR A
+00001BDD:	OR A						; Z=0 S=0
 00001BDE:	RET
 ; ----------------------------------------
-;
+; Memset copy (HL)->(DE+1) with A
 ; ----------------------------------------
-00001BDF:	LD E,L
+00001BDF:	LD E,L						; DE = HL
 00001BE0:	LD D,H
-00001BE1:	INC DE
-00001BE2:	LD (HL),A
-00001BE3:	LDIR
+00001BE1:	INC DE						; DE + 1
+00001BE2:	LD (HL),A					; A -> (HL)
+00001BE3:	LDIR						; (HL)->(DE) BC-1 until BC=0
 00001BE5:	RET
 ; ----------------------------------------
 ;
@@ -4312,7 +4312,7 @@ FORSLP:
 00001CB1:	LD (HL),A
 00001CB2:	RET
 ; ----------------------------------------
-; Another MemSet
+; Memset Memory copy from F93A -> F934 (6 bytes)
 ; ----------------------------------------
 00001CB3:	LD HL,F93Ah
 00001CB6:	LD DE,F934h
@@ -4365,7 +4365,7 @@ FORSLP:
 00001D0F:	LD E,(HL)
 00001D10:	LD A,H
 00001D11:	ADD 08h
-00001D13:	LD H,A
+00001D13:	LD H,A						; HL + 800h
 00001D14:	LD D,(HL)
 00001D15:	LD (FB76h),DE
 00001D19:	XOR A
@@ -4375,36 +4375,42 @@ FORSLP:
 ; ----------------------------------------
 00001D1B:	INC HL
 00001D1C:	LD A,(HL)
-00001D1D:	CP 20h
-00001D1F:	JR Z,-06h
+00001D1D:	CP 20h						; SPACE
+00001D1F:	JR Z,-06h					; if SPACE 1D1B
+;
 00001D21:	LD A,(HL)
 00001D22:	EX HL,(SP)
 00001D23:	CP (HL)
 00001D24:	INC HL
 00001D25:	EX HL,(SP)
-00001D26:	JP NZ,05E1h		; SN_ERR
+00001D26:	JP NZ,05E1h					; SN_ERR
+; ----------------------------------------
+; RST 18h; Skip spaces after incrementing HL
+; ----------------------------------------
 00001D29:	INC HL
-
-; expect number
+; ----------------------------------------
+; RST 20h; Skip spaces without incrementing HL
+; ----------------------------------------
 00001D2A:	LD A,(HL)
-00001D2B:	CP 20h
-00001D2D:	JR Z,-06h
+00001D2B:	CP 20h						; SPACE
+00001D2D:	JR Z,-06h					; if SPACE 1D2A
 00001D2F:	LD A,(HL)
-00001D30:	CP 3Ah
-00001D32:	RET NC
-00001D33:	CP 30h
-00001D35:	CCF
+00001D30:	CP 3Ah						; :
+00001D32:	RET NC						; return if A >= : ('0' to '9')
+00001D33:	CP 30h						; 0
+00001D35:	CCF							; invert carry flag
 00001D36:	INC A
-00001D37:	DEC A
+00001D37:	DEC A						; control flag
 00001D38:	RET
 ; ----------------------------------------
-;
+; RST 28h; Check if next pointer character (by HL) is a comma (',')
 ; ----------------------------------------
 00001D39:	CALL 1D21h
 00001D3C:	INC L
 00001D3D:	RET
+;
 00001D3E:	CALL 1D21h
-00001D41:	JR Z,-37h
+00001D41:	JR Z,-37h					; Z=1 1D0Ch
 00001D43:	PUSH HL
 00001D44:	JR +0Ch
 ; ----------------------------------------
@@ -4427,20 +4433,25 @@ FORSLP:
 00001D5C:	ADD HL,SP
 00001D5D:	POP HL
 00001D5E:	RET C
-00001D5F:	LD B,06h		; Error: Out of memory
-00001D61:	JP 05FBh		; ERROR
-
+00001D5F:	LD B,06h					; Error: Out of memory
+00001D61:	JP 05FBh					; ERROR
+;
+;
+;
 00001D64:	CALL 1D43h
 00001D67:	PUSH BC
 00001D68:	EX HL,(SP)
 00001D69:	POP BC
-00001D6A:	RST 10h		; compare DE and HL (aka DCOMPR)
+00001D6A:	RST 10h						; compare DE and HL (aka DCOMPR)
 00001D6B:	LD A,(HL)
 00001D6C:	LD (BC),A
 00001D6D:	RET Z
 00001D6E:	DEC HL
 00001D6F:	DEC BC
 00001D70:	JR -08h
+; ----------------------------------------
+; RST 30h; checks_fdae
+; ----------------------------------------
 00001D72:	LD A,(FDAFh)
 00001D75:	OR A
 00001D76:	RET Z
@@ -4455,15 +4466,20 @@ FORSLP:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00001D81:	XOR A
+00001D81:	XOR A						; A=00h
 00001D82:	LD A,(FD55h)
 00001D85:	RLA
 00001D86:	AND A
 00001D87:	RET PE
-00001D88:	JP 05F1h			; Error: Type mismatched
-
-00001D8B:	SCF
-00001D8C:	JR -0Ch
+00001D88:	JP 05F1h					; Error: Type mismatched
+; ----------------------------------------
+;
+; ----------------------------------------
+00001D8B:	SCF							; Set Carry Flag. C=1
+00001D8C:	JR -0Ch						; to 1D82h.
+; ----------------------------------------
+;
+; ----------------------------------------
 00001D8E:	PUSH HL
 00001D8F:	LD HL,012Bh
 00001D92:	CALL 1DFBh
@@ -4543,11 +4559,11 @@ FORSLP:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00001E0C:	DEC HL
-00001E0D:	LD (HL),00h
-00001E0F:	RST 10h		; compare DE and HL (aka DCOMPR)
-00001E10:	JR NZ,-06h
-00001E12:	RET
+00001E0C:	DEC HL						; HL-1
+00001E0D:	LD (HL),00h					; 00h -> (HL)
+00001E0F:	RST 10h						; compare DE and HL (aka DCOMPR)
+00001E10:	JR NZ,-06h					; if HL <> DE then 1E0C
+00001E12:	RET							; HL=DE then return
 ; ----------------------------------------
 ; LOADFP - Load FP value pointed by HL to BCDE
 ; ----------------------------------------
@@ -4561,7 +4577,7 @@ FORSLP:
 00001E1A:	INC HL
 00001E1B:	RET
 ; ----------------------------------------
-;
+; Write EDCB to memory adress - write FP
 ; ----------------------------------------
 00001E1C:	LD (HL),E
 00001E1D:	INC HL
@@ -4573,7 +4589,7 @@ FORSLP:
 00001E23:	INC HL
 00001E24:	RET
 ; ----------------------------------------
-;
+; UPPER$		a->A z->Z
 ; ----------------------------------------
 00001E25:	INC HL
 00001E26:	LD A,(HL)
@@ -4586,12 +4602,11 @@ FORSLP:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00001E30:	CALL 1E25h
+00001E30:	CALL 1E25h					; UPPER$
 00001E33:	CALL 1D30h
 00001E36:	CCF
 00001E37:	RET NC
 00001E38:	LD A,(HL)
-
 ; ISLETTER_A: Check char in 'A' being in the 'A'..'Z' range
 00001E39:	CP 41h
 00001E3B:	RET C
@@ -4627,8 +4642,8 @@ FORSLP:
 00001E57:	LD A,(F92Eh)
 00001E5A:	INC A
 00001E5B:	RET NZ
-00001E5C:	LD B,0Bh		; Error: Illegal direct call
-00001E5E:	JP 05FBh		; ERROR
+00001E5C:	LD B,0Bh					; Error: Illegal direct call
+00001E5E:	JP 05FBh					; ERROR
 
 00001E61:	CALL 1D3Eh
 00001E64:	JR +04h
@@ -4779,7 +4794,7 @@ FORSLP:
 00001F6C:	LD DE,(FDACh)		; FACLOW
 00001F70:	PUSH DE
 00001F71:	PUSH BC
-00001F72:	CALL 2331h		; GETINT
+00001F72:	CALL 2331h			; GETINT
 00001F75:	POP BC
 00001F76:	PUSH DE
 00001F77:	EX DE,HL
@@ -4845,6 +4860,9 @@ FORSLP:
 00001FD0:	JR Z,-12h
 00001FD2:	CCF
 00001FD3:	JP 1D7Dh
+; ----------------------------------------
+;
+; ----------------------------------------
 00001FD6:	LD D,A
 00001FD7:	INC D
 00001FD8:	INC D
@@ -4858,7 +4876,9 @@ FORSLP:
 00001FE3:	SBC A
 00001FE4:	LD C,A
 00001FE5:	JP 2B75h
-
+; ----------------------------------------
+;
+; ----------------------------------------
 00001FE8:	PUSH DE
 00001FE9:	LD DE,(FDACh)		; FACLOW
 00001FED:	PUSH DE
@@ -4885,10 +4905,14 @@ FORSLP:
 00002018:	PUSH DE
 00002019:	PUSH HL
 0000201A:	JP 32E1h
-
-0000201D:	LD B,0Eh		; Error: Too long string
-0000201F:	JP 05FBh		; ERROR
-
+; ----------------------------------------
+;
+; ----------------------------------------
+0000201D:	LD B,0Eh				; Error: Too long string
+0000201F:	JP 05FBh				; ERROR
+; ----------------------------------------
+;
+; ----------------------------------------
 00002022:	LD A,(HL)
 00002023:	CALL 1E16h
 00002026:	LD L,A
@@ -5059,8 +5083,8 @@ FORSLP:
 0000211F:	LD H,B
 00002120:	JP 2089h
 
-00002123:	LD B,0Dh		; Error: Out of string space
-00002125:	JP 05FBh		; ERROR
+00002123:	LD B,0Dh					; Error: Out of string space
+00002125:	JP 05FBh					; ERROR
 
 00002128:	CALL 2139h
 0000212B:	PUSH HL
@@ -5217,8 +5241,8 @@ FORSLP:
 00002226:	POP AF
 00002227:	CP (HL)
 00002228:	JP Z,228Ch
-0000222B:	LD B,08h		; Error: Bad subscript
-0000222D:	JP 05FBh		; ERROR
+0000222B:	LD B,08h				; Error: Bad subscript
+0000222D:	JP 05FBh				; ERROR
 
 00002230:	POP AF
 00002231:	CALL 1E20h
@@ -5377,22 +5401,22 @@ __CINT:
 00002327:	LD DE,8000h
 0000232A:	RET
 ; ----------------------------------------
-; Error: Illegal Function Call
+; 
 ; ----------------------------------------
-0000232B:	LD B,04h
-0000232D:	JP 05FBh		; ERROR
+0000232B:	LD B,04h				; Error: Illegal Function Call
+0000232D:	JP 05FBh				; ERROR
 
 00002330:	RST 18h
 
 GETINT:
-00002331:	CALL 1E66h		; EVAL_0
+00002331:	CALL 1E66h				; EVAL_0
 
 DEPINT:
-00002334:	CALL 2312h	; __CINT
+00002334:	CALL 2312h				; __CINT
 00002337:	LD A,D
 00002338:	OR A
 00002339:	JR NZ,-10h
-0000233B:	RST 20h		; GETVAR: Get variable address to DE
+0000233B:	RST 20h					; GETVAR: Get variable address to DE
 0000233C:	LD A,E
 0000233D:	RET
 ; ----------------------------------------
@@ -7885,17 +7909,17 @@ NXTSTT:
 000032DE:	CALL 32B9h
 000032E1:	LD DE,FD6Ch
 000032E4:	LD HL,(FD5Bh)
-000032E7:	LD (FDACh),HL		; FACLOW
+000032E7:	LD (FDACh),HL			; FACLOW
 000032EA:	LD A,01h
 000032EC:	LD (FD55h),A
 000032EF:	LD B,03h
 000032F1:	CALL 27FBh
 000032F4:	LD (FD5Bh),HL
-000032F7:	RST 10h		; compare DE and HL (aka DCOMPR)
+000032F7:	RST 10h					; compare DE and HL (aka DCOMPR)
 000032F8:	POP HL
 000032F9:	RET NZ
-000032FA:	LD B,0Fh		; Error: String too complex
-000032FC:	JP 05FBh		; ERROR
+000032FA:	LD B,0Fh				; Error: String too complex
+000032FC:	JP 05FBh				; ERROR
 ; ----------------------------------------
 ;
 ; ----------------------------------------
@@ -7943,13 +7967,13 @@ NXTSTT:
 0000332E:	LD H,A
 0000332F:	RET
 ; ----------------------------------------
-;
+; 
 ; ----------------------------------------
 00003330:	PUSH AF
 00003331:	PUSH BC
 00003332:	LD B,00h
-00003334:	LD A,(FB5Ch)
-00003337:	ADD A
+00003334:	LD A,(FB5Ch)		; index
+00003337:	ADD A				; A*2
 00003338:	LD C,A
 00003339:	ADD HL,BC
 0000333A:	LD A,(HL)
@@ -7958,45 +7982,49 @@ NXTSTT:
 0000333D:	LD L,A
 0000333E:	POP BC
 0000333F:	POP AF
-00003340:	LD PC,HL
-00003341:	LD HL,3347h
+00003340:	LD PC,HL			; next adr is HL /!\
+; Init switch
+00003341:	LD HL,3347h			; this is a switch
 00003344:	JP 3330h
-; ----------------------------------------
-;
-; ----------------------------------------
-00003347:	LD C,A
-00003348:	INC SP
-00003349:	LD E,E
-0000334A:	INC SP
-0000334B:	LD C,A
-0000334C:	INC SP
-0000334D:	LD H,C
-0000334E:	INC SP
+; switch array
+00003347:	DEFW 334Fh   ; switch 1
+00003349:	DEFW 335Bh   ; switch 2
+0000334B:	DEFW 334Fh   ; switch 3
+0000334D:	DEFW 3361h   ; switch 4
+; switch 1 switch 3
 0000334F:	OR A
-00003350:	JR Z,+06h
-00003352:	CP 05h
-00003354:	RET C
-00003355:	LD A,04h
+00003350:	JR Z,+06h	; A=00h -> 3358h
+00003352:	CP 05h		; A=05h ?
+00003354:	RET C		; A<5 then RET
+00003355:	LD A,04h	; A=04h
 00003357:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
+; init A=01h
 00003358:	LD A,01h
 0000335A:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
-0000335B:	CP 09h
-0000335D:	RET C
-0000335E:	LD A,08h
+; switch 2
+0000335B:	CP 09h		; A=09h ?
+0000335D:	RET C		; A<9 -> RET
+0000335E:	LD A,08h	; A=08h
 00003360:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
-00003361:	CP 02h
-00003363:	RET C
-00003364:	LD A,01h
+; switch 4
+00003361:	CP 02h		; A=02h ?
+00003363:	RET C		; A<2 -> RET
+00003364:	LD A,01h	; A=01h
 00003366:	RET
+; 
+; (Switch 1)(Switch 3):
+;     ┌─ A=0 ──► A=1
+;     ├─ 0<A<5 ──► A unchanged
+;     └─ A≥5 ──► A=4
+; 
+; (Switch 2):
+;     ┌─ A<9 ──► A unchanged
+;     └─ A≥9 ──► A=8
+; 
+; (Switch 4):
+;     ┌─ A<2 ──► A unchanged
+;     └─ A≥2 ──► A=1
+; 
 ; ----------------------------------------
 ;
 ; ----------------------------------------
@@ -9242,8 +9270,8 @@ NXTSTT:
 00003AF8:	LD (HL),DDh
 00003AFA:	DEC (HL)
 00003AFB:	LD L,H
-;00003AFC:	LD (HL),CDh
-;00003AFE:	LD A,1Dh
+00003AFC:	LD (HL),CDh
+00003AFE:	LD A,1Dh
 
 COORD_PARMS_DST:
 00003AFD:	CALL 1D3Eh
@@ -9261,12 +9289,13 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 00003B15:	PUSH DE
 00003B16:	PUSH BC
-00003B17:	RST 20h		; GETVAR: Get variable address to DE
+00003B17:	RST 20h						; GETVAR: Get variable address to DE
 00003B18:	JR Z,+17h
 00003B1A:	RST 28h
 00003B1B:	CP 2Ch
 00003B1D:	JR Z,+10h
-00003B1F:	CALL 2331h		; GETINT
+00003B1F:	CALL 2331h					; GETINT
+;
 00003B22:	PUSH AF
 00003B23:	PUSH HL
 00003B24:	CALL 3341h
@@ -9279,10 +9308,10 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00003B2F:	XOR A
-00003B30:	DEC A
+00003B2F:	XOR A						; A=00h Z=1 N,C,H=0
+00003B30:	DEC A						; A=FFh Z=0 S=1 N=1 H=?
 00003B31:	LD A,(FB5Dh)
-00003B34:	JR -14h
+00003B34:	JR -14h						; 3B22h
 ; ----------------------------------------
 ; __PSET
 ; ----------------------------------------
@@ -10355,7 +10384,7 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 000041A4:	LD HL,0000h
 000041A7:	LD (FD87h),HL		; OLDTXT
-000041AA:	LD HL,0138h
+000041AA:	LD HL,0138h			; "Break" address
 000041AD:	RET
 ; ----------------------------------------
 ;
@@ -10511,8 +10540,8 @@ COORD_PARMS_DST:
 000042B2:	POP AF
 000042B3:	CALL 42C2h
 000042B6:	CALL 41A4h
-000042B9:	LD B,06h		; Error: Out of memory
-000042BB:	JP 05FBh		; ERROR
+000042B9:	LD B,06h					; Error: Out of memory
+000042BB:	JP 05FBh					; ERROR
 ; ----------------------------------------
 ;
 ; ----------------------------------------
@@ -10521,7 +10550,7 @@ COORD_PARMS_DST:
 000042C1:	POP AF
 000042C2:	LD A,20h
 000042C4:	LD (601Fh),A
-000042C7:	CALL 4555h		; __CTOFF  - Turn off Cassette tape motor
+000042C7:	CALL 4555h					; __CTOFF  - Turn off Cassette tape motor
 000042CA:	EI
 000042CB:	RET
 ; ----------------------------------------
