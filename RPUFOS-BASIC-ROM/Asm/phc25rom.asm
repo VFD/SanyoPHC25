@@ -4376,7 +4376,7 @@ FORSLP:
 00001D1B:	INC HL
 00001D1C:	LD A,(HL)
 00001D1D:	CP 20h						; SPACE
-00001D1F:	JR Z,-06h					; if SPACE 1D1B
+00001D1F:	JR Z,-06h					; if SPACE 1D1Bh
 ;
 00001D21:	LD A,(HL)
 00001D22:	EX HL,(SP)
@@ -4393,7 +4393,7 @@ FORSLP:
 ; ----------------------------------------
 00001D2A:	LD A,(HL)
 00001D2B:	CP 20h						; SPACE
-00001D2D:	JR Z,-06h					; if SPACE 1D2A
+00001D2D:	JR Z,-06h					; if SPACE 1D2Ah
 00001D2F:	LD A,(HL)
 00001D30:	CP 3Ah						; :
 00001D32:	RET NC						; return if A >= : ('0' to '9')
@@ -4410,7 +4410,7 @@ FORSLP:
 00001D3D:	RET
 ;
 00001D3E:	CALL 1D21h
-00001D41:	JR Z,-37h					; Z=1 1D0Ch
+00001D41:	JR Z,-37h					; if Z=1 1D0Ch
 00001D43:	PUSH HL
 00001D44:	JR +0Ch
 ; ----------------------------------------
@@ -4435,9 +4435,9 @@ FORSLP:
 00001D5E:	RET C
 00001D5F:	LD B,06h					; Error: Out of memory
 00001D61:	JP 05FBh					; ERROR
+; ----------------------------------------
 ;
-;
-;
+; ----------------------------------------
 00001D64:	CALL 1D43h
 00001D67:	PUSH BC
 00001D68:	EX HL,(SP)
@@ -4481,7 +4481,7 @@ FORSLP:
 ;
 ; ----------------------------------------
 00001D8E:	PUSH HL
-00001D8F:	LD HL,012Bh
+00001D8F:	LD HL,012Bh					; Start Messages " in "
 00001D92:	CALL 1DFBh
 00001D95:	POP HL
 00001D96:	XOR A
@@ -4543,6 +4543,7 @@ FORSLP:
 00001DF5:	CALL Z,10EEh
 00001DF8:	INC BC
 00001DF9:	JR -0Eh
+;
 00001DFB:	LD A,(HL)
 00001DFC:	OR A
 00001DFD:	RET Z
