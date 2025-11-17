@@ -28,8 +28,6 @@ ___
 Il s'agit de trouver des sous routines pour simplifier les actions.\
 Grosso modo trouver ce que l'on appel des MemSets.
 
-ça tombe bien il y en a.
-
 ## Table des adresses connues de MemSets
 
 La notation hexadecimale utilise le formalisme du PHC-25.
@@ -53,6 +51,20 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 00001BE3:	LDIR						; (HL)->(DE) BC-1 until BC=0
 00001BE5:	RET
 ```
+
+Les 2 sont quasi identique, va savoir pourquoi...\
+
+Pour scroller l'écran, non, par contre pour RAZ d'une ligne c'est jouable.
+
+```
+LD A,20h                        ; SPACE
+LD HL, addr_ligne
+LD B,20h                        ; 32 fois
+DI                                ; no glitch ? or wait VBL ?
+CALL 059Ah
+EI
+```
+
 ___
 # Exemple à l'arrache de code de scroll 
 
@@ -485,6 +497,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
