@@ -34,11 +34,25 @@ Grosso modo trouver ce que l'on appel des MemSets.
 
 La notation hexadecimale utilise le formalisme du PHC-25.
 
-| Adresse | Input       | Commentaire |
-|---------|-------------|-------------|
-| &h059A  | A=Char ; B=Count ; HL=Addr start | DE=HL+1 : LDIR [DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0] |
+&h059A
+```asm
+0000059A:	LD (HL),A		; put val(A) in adress(HL)
+0000059B:	LD E,L			; HL -> DE
+0000059C:	LD D,H
+0000059D:	INC DE			; DE+1
+0000059E:	LDIR			; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
+000005A0:	RET
+```
 
-
+&h1BDF
+```asm
+00001BDF:	LD E,L						; DE = HL
+00001BE0:	LD D,H
+00001BE1:	INC DE						; DE + 1
+00001BE2:	LD (HL),A					; A -> (HL)
+00001BE3:	LDIR						; (HL)->(DE) BC-1 until BC=0
+00001BE5:	RET
+```
 ___
 # Exemple à l'arrache de code de scroll 
 
@@ -471,6 +485,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
