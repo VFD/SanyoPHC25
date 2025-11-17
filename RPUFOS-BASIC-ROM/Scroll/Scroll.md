@@ -60,7 +60,7 @@ Pour RAZ d'une ligne c'est jouable pour economiser quelques octets.
 ```
 LD A,20h                        ; SPACE
 LD HL, addr_ligne
-LD BC,001Fh                       ; 31 fois - BC=N-1 (32-1)
+LD BC,0020h                       ; 32 fois
 DI                                ; no glitch ? or wait VBL ?
 CALL 059Ah
 EI
@@ -502,6 +502,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
