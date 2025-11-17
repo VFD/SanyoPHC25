@@ -153,6 +153,20 @@ COPYUP:             5C0E DEFINED AT LINE 36
                     > USED AT LINE 21
                     > USED AT LINE 25
                     > USED AT LINE 31
+SCROLLDOWN2:        5C15 DEFINED AT LINE 44
+SCROLLDOWN1:        5C28 DEFINED AT LINE 54
+COPYDOWN:           5C37 DEFINED AT LINE 62
+                    > USED AT LINE 47
+                    > USED AT LINE 51
+                    > USED AT LINE 57
+LINE0V1:            5C3E DEFINED AT LINE 70
+LINE0V2:            5C43 DEFINED AT LINE 75
+LINE15V2:           5C48 DEFINED AT LINE 80
+LINE15V1:           5C4D DEFINED AT LINE 85
+FILLLINE:           5C50 DEFINED AT LINE 88
+                    > USED AT LINE 72
+                    > USED AT LINE 77
+                    > USED AT LINE 82
 ```
 
 82 octets pour les scrolls up and down.\
@@ -193,6 +207,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
