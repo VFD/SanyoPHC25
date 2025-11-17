@@ -17,7 +17,11 @@ Soit 8 programmes pour les SCREEN 3 & 4.
 
 Le tout en un minimum d'octets et si possible sans glitch.
 
-Grosso modo on à 1Ko en ROM.
+Nous disposons de 1044 octets pour faire ça.\
+Il faut aussi penser à :
+- Faire DI pour empêcher les interruption pendant la copie, puis EI
+- Faire la synchro VBL
+
 
 ___
 # Analyse de la ROM 1.3
@@ -462,4 +466,5 @@ BOF BOF.
 
 
 ___
+
 
