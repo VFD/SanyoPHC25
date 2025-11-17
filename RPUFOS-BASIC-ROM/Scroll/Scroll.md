@@ -76,37 +76,74 @@ ___
 0000                          ; Scroll texte + attributs (PHC-25)
 0000                          ; Deux points d'entrée : VRAM1 et VRAM2
 0000                          ; ----------------------------------------
+0000                          ; 6000h - 77FFh   : Video RAM 1 (6ko) - SCREEN 3 & SCREEN 4
+0000                          ;   6000h - 61FFh : SCREEN 1 & 2 Text
+0000                          ;   6800h - 69FFh : SCREEN 1 & 2 Attibuts
+0000                          ; 
+0000                          ; E000h - F7FFh : Video RAM 2 (6ko) - SCREEN 3 & SCREEN 4
+0000                          ;   E000h - E1FFh : SCREEN 1 & 2 Text
+0000                          ;   E800h - E9FFh : SCREEN 1 & 2 Attibuts
 5BEC                          .ORG   $5BEC   ; Point d'entrée dans la ROM
+5BEC                          ; Scroll UP
 5BEC                SCROLLUP1:   ; pour VRAM1
 5BEC   21 20 60               LD   HL,6020h   ; source texte ligne 1
 5BEF   11 00 60               LD   DE,6000h   ; dest texte ligne 0
-5BF2   CD 12 5C               CALL   Copy   
+5BF2   CD 12 5C               CALL   CopyUp   
 5BF5   21 20 68               LD   HL,6820h   ; source attributs ligne 1
 5BF8   11 00 68               LD   DE,6800h   ; dest attributs ligne 0
-5BFB   CD 12 5C               CALL   Copy   
+5BFB   CD 12 5C               CALL   CopyUp   
 5BFE   C9                     RET   
 5BFF                SCROLLUP2:   ; pour VRAM2
 5BFF   21 20 E0               LD   HL,0E020h   ; source texte ligne 1
 5C02   11 00 E0               LD   DE,0E000h   ; dest texte ligne 0
-5C05   CD 12 5C               CALL   Copy   
+5C05   CD 12 5C               CALL   CopyUp   
 5C08   21 20 E8               LD   HL,0E820h   ; source attributs ligne 1
 5C0B   11 00 E8               LD   DE,0E800h   ; dest attributs ligne 0
-5C0E   CD 12 5C               CALL   Copy   
+5C0E   CD 12 5C               CALL   CopyUp   
 5C11   C9                     RET   
-5C12                COPY:     
+5C12                COPYUP:   
 5C12   01 E0 01               LD   BC,480   ; 32*15  1E0h
 5C15   CF                     RST   08h   ; VSYNC
 5C16   ED B0                  LDIR   
 5C18   C9                     RET   
+5C19                          ; Scroll Down
+5C19                SCROLLDOWN1:   ; pour VRAM1
+5C19   21 DF 61               LD   HL,61DFh   ; source texte ligne 14
+5C1C   11 FF 61               LD   DE,61FFh   ; dest texte ligne 15
+5C1F   CD 3F 5C               CALL   CopyDown   
+5C22   21 DF 69               LD   HL,69DFh   ; source attributs ligne 14
+5C25   11 FF 69               LD   DE,69FFh   ; dest attributs ligne 15
+5C28   CD 3F 5C               CALL   CopyDown   
+5C2B   C9                     RET   
+5C2C                SCROLLDOWN2:   ; pour VRAM2
+5C2C   21 DF E1               LD   HL,0E1DFh   ; source texte ligne 1
+5C2F   11 FF E1               LD   DE,0E1FFh   ; dest texte ligne 0
+5C32   CD 3F 5C               CALL   CopyDown   
+5C35   21 DF E9               LD   HL,0E9DFh   ; source attributs ligne 1
+5C38   11 FF E9               LD   DE,0E9FFh   ; dest attributs ligne 0
+5C3B   CD 3F 5C               CALL   CopyDown   
+5C3E   C9                     RET   
+5C3F                COPYDOWN:   
+5C3F   01 E0 01               LD   BC,480   ; 32*15  1E0h
+5C42   CF                     RST   08h   ; VSYNC
+5C43   ED B8                  LDDR   
+5C45   C9                     RET   
 
 
-SCROLLUP1:          5BEC DEFINED AT LINE 8
-SCROLLUP2:          5BFF DEFINED AT LINE 18
-COPY:               5C12 DEFINED AT LINE 28
-                    > USED AT LINE 11
-                    > USED AT LINE 15
+SCROLLUP1:          5BEC DEFINED AT LINE 18
+SCROLLUP2:          5BFF DEFINED AT LINE 28
+COPYUP:             5C12 DEFINED AT LINE 38
                     > USED AT LINE 21
                     > USED AT LINE 25
+                    > USED AT LINE 31
+                    > USED AT LINE 35
+SCROLLDOWN1:        5C19 DEFINED AT LINE 46
+SCROLLDOWN2:        5C2C DEFINED AT LINE 56
+COPYDOWN:           5C3F DEFINED AT LINE 66
+                    > USED AT LINE 49
+                    > USED AT LINE 53
+                    > USED AT LINE 59
+                    > USED AT LINE 63
 ```
 
 ___
@@ -541,6 +578,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
