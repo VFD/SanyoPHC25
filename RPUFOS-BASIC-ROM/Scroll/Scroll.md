@@ -61,9 +61,8 @@ Pour RAZ d'une ligne c'est jouable pour economiser quelques octets.
 LD A,20h                        ; SPACE
 LD HL, addr_ligne
 LD BC,0020h                       ; 32 fois
-DI                                ; no glitch ? or wait VBL ?
+RST   08h   ; VSYNC
 CALL 059Ah
-EI
 RET
 ```
 
@@ -578,6 +577,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
