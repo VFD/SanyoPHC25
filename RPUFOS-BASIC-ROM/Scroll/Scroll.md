@@ -1,9 +1,8 @@
 # Etude scroll
 
+## Introduction
 
-### Introduction
-
-Inclure dans la ROM 1.4 des scroll écrans.
+### Inclure dans la ROM 1.4 des scroll écrans.
 
 - 2 écrans Texte possibles
 - 4 scroll possibles
@@ -15,7 +14,7 @@ Soit 8 programmes pour les SCREEN 1 & 2.
 
 Soit 8 programmes pour les SCREEN 3 & 4.
 
-Le tout en un minimum d'octets et si possible sans glitch.
+### Le tout en un minimum d'octets et si possible sans glitch.
 
 Nous disposons de 1044 octets pour faire ça.\
 Il faut aussi penser à :
@@ -31,6 +30,13 @@ Grosso modo trouver ce que l'on appel des MemSets.
 
 ça tombe bien il y en a.
 
+## Table des adresses connues de MemSets
+
+La notation hexadecimale utilise le formalisme du PHC-25.
+
+| Adresse | commentaire |
+|---------|-------------|
+| &h - | |
 
 
 ___
@@ -466,5 +472,6 @@ BOF BOF.
 
 
 ___
+
 
 
