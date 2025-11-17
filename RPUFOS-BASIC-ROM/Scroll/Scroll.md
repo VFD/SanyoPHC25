@@ -34,7 +34,7 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 
 &h059A
 ```asm
-0000059A:	LD (HL),A		; put val(A) in adress(HL)
+0000059A:	LD (HL),A		; A -> (HL)
 0000059B:	LD E,L			; HL -> DE
 0000059C:	LD D,H
 0000059D:	INC DE			; DE+1
@@ -44,26 +44,31 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 
 &h1BDF
 ```asm
-00001BDF:	LD E,L						; DE = HL
+00001BDF:	LD E,L						; HL -> DE
 00001BE0:	LD D,H
 00001BE1:	INC DE						; DE + 1
 00001BE2:	LD (HL),A					; A -> (HL)
-00001BE3:	LDIR						; (HL)->(DE) BC-1 until BC=0
+00001BE3:	LDIR						; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
 00001BE5:	RET
 ```
 
-Les 2 sont quasi identique, va savoir pourquoi...\
+Les 2 sont quasi identique, si quelqu'un peut expliquer si cela change quelque chose.
 
-Pour scroller l'écran, non, par contre pour RAZ d'une ligne c'est jouable.
+
+Pour RAZ d'une ligne c'est jouable pour economiser quelques octets.
 
 ```
 LD A,20h                        ; SPACE
 LD HL, addr_ligne
-LD B,20h                        ; 32 fois
+LD BC,001Fh                       ; 31 fois - BC=N-1 (32-1)
 DI                                ; no glitch ? or wait VBL ?
 CALL 059Ah
 EI
+RET
 ```
+
+
+
 
 ___
 # Exemple à l'arrache de code de scroll 
@@ -497,6 +502,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
