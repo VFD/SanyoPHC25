@@ -156,6 +156,8 @@ COPYDOWN:           5C3F DEFINED AT LINE 66
 
 A valider pour le type Texte.
 
+En Screen 2, il faudrait faire un test préalable si possible (2 écrans) pour être propre. Mais le programmeur doit aussi savoir ce qu'il mijote...
+
 ___
 
 | Type | Ecran | Call |
@@ -178,6 +180,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
