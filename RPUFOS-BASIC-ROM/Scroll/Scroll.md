@@ -34,9 +34,9 @@ Grosso modo trouver ce que l'on appel des MemSets.
 
 La notation hexadecimale utilise le formalisme du PHC-25.
 
-| Adresse | commentaire |
-|---------|-------------|
-| &h - | |
+| Adresse | Input       | Commentaire |
+|---------|-------------|-------------|
+| &h059A  | A=Char ; B=Count ; HL=Addr start | DE=HL+1 : DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0 |
 
 
 ___
@@ -471,6 +471,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
