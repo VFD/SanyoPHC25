@@ -115,11 +115,11 @@ ___
 5C28   CD 3F 5C               CALL   CopyDown   
 5C2B   C9                     RET   
 5C2C                SCROLLDOWN2:   ; pour VRAM2
-5C2C   21 DF E1               LD   HL,0E1DFh   ; source texte ligne 1
-5C2F   11 FF E1               LD   DE,0E1FFh   ; dest texte ligne 0
+5C2C   21 DF E1               LD   HL,0E1DFh   ; source texte ligne 14
+5C2F   11 FF E1               LD   DE,0E1FFh   ; dest texte ligne 15
 5C32   CD 3F 5C               CALL   CopyDown   
-5C35   21 DF E9               LD   HL,0E9DFh   ; source attributs ligne 1
-5C38   11 FF E9               LD   DE,0E9FFh   ; dest attributs ligne 0
+5C35   21 DF E9               LD   HL,0E9DFh   ; source attributs ligne 14
+5C38   11 FF E9               LD   DE,0E9FFh   ; dest attributs ligne 15
 5C3B   CD 3F 5C               CALL   CopyDown   
 5C3E   C9                     RET   
 5C3F                COPYDOWN:   
@@ -577,6 +577,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
