@@ -19,7 +19,17 @@ Le tout en un minimum d'octets et si possible sans glitch.
 
 Grosso modo on à 1Ko en ROM.
 
+___
+# Analyse de la ROM 1.3
 
+Il s'agit de trouver des sous routines pour simplifier les actions.\
+Grosso modo trouver ce que l'on appel des MemSets.
+
+ça tombe bien il y en a.
+
+
+
+___
 # Optimisation 
 
 
@@ -452,3 +462,4 @@ BOF BOF.
 
 
 ___
+
