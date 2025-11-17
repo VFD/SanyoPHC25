@@ -136,16 +136,15 @@
 000000D0:	defw 4086h	; __SLOAD
 000000D2:	defw 4344h	; __SSAVE
 000000D4:	defw 05E1h	; __ELSE  (-> SN_ERR)
-
 000000D6:	defw 2E43h	; __TAB(
 000000D8:	defw 2E35h	; __TO
 000000DA:	defw 2E49h	; __FN
 000000DC:	defw 1AA6h	; __SPC(
 000000DE:	defw 2483h	; __INKEY$
+; after_kw_adr:
 000000E0:	defw 2475h	; __THEN
 000000E2:	defw 2470h	; __NOT
 000000E4:	defw 246Bh	; __STEP
-
 						; ==== THE DESCRIPTION HERE MUST BE VERIFIED (NOT STATEMENTS!) ====
 000000E6:	defw 302Eh	; +
 000000E8:	defw 2566h	; -
@@ -172,43 +171,23 @@
 00000112:	defw 232Bh	; __COS		(->Error: Illegal Function Call)
 00000114:	defw 232Bh	; __SIN		(->Error: Illegal Function Call)
 ; ----------------------------------------
-; ???
+; data ???
 ; ----------------------------------------
-00000108:	LD H,H
-00000109:	DEC SP
-0000010A:	LD H,D
-0000010B:	INC H
-0000010C:	OR E
-0000010D:	LD B,(HL)
-0000010E:	RET NC
-0000010F:	LD B,(HL)
-00000110:	AND H
-00000111:	INC H
-00000112:	DEC HL
-00000113:	INC HL
-00000114:	DEC HL
-00000115:	INC HL
-00000116:	LD H,D
-00000117:	DI
-00000118:	JR Z,+62h
-0000011A:	NOP
-0000011B:	DEC HL
-0000011C:	LD L,B
-0000011D:	LD H,L
-0000011E:	ADD HL,HL
-0000011F:	LD L,B
-00000120:	CALL NZ,7229h
-00000123:	LD A,B
-00000124:	CPL
-00000125:	LD C,D
-00000126:	JR NC,+24h
-00000128:	LD C,B
-00000129:	DEC L
-0000012A:	INC H
+0116h: DEFW F362h
+0118h: DEFW 6228h
+011Ah: DEFW 2B00h
+011Ch: DEFW 6865h
+011Eh: DEFW 6829h
+0120h: DEFW 29C4h
+0122h: DEFW 7872h
+0124h: DEFW 4A2Fh
+0126h: DEFW 2430h
+0128h: DEFW 2D48h
+012Ah: DEFW 2024h
 ; ----------------------------------------
 ; No code from here - ASCII Messages
 ; ----------------------------------------
-0000012B:	DB " in ", 00h
+0000012C:	DB "in", 20h, 00h
 00000130:	DB "Ready", 0Dh, 0Ah, 00h
 00000138:	DB "Break", 00h
 0000013E:	DB "Next w/o for", 00h
@@ -283,8 +262,7 @@
 ; ----------------------------------------
 ; Start of ASCII BASIC Words
 ; ----------------------------------------
-; I put the separator before, more logical because no one at the end
-; and juste after RET
+; Number before is length [length] [ASCII]
 ; ----------------------------------------
 000002C9:	DB 03h, "END"
 000002CD:	DB 03h, "FOR"
@@ -866,6 +844,7 @@ READY:
 0000078B:	CALL 0790h
 0000078E:	POP HL
 0000078F:	RET
+;
 00000790:	XOR A
 00000791:	SBC HL,DE
 00000793:	INC HL
@@ -4227,29 +4206,28 @@ FORSLP:
 00001C34:	CALL 1C4Fh
 00001C37:	RET Z
 00001C38:	LD BC,1C4Ch
-00001C3B:	PUSH BC
+00001C3B:	PUSH BC			; return after jump in 1C4B
 00001C3C:	CALL 1C56h
 00001C3F:	LD C,A
 00001C40:	LD B,00h
-00001C42:	LD HL,1C65h
+00001C42:	LD HL,1C65h		; Table
 00001C45:	ADD HL,BC
 00001C46:	ADD HL,BC
 00001C47:	LD A,(HL)
 00001C48:	INC HL
 00001C49:	LD H,(HL)
 00001C4A:	LD L,A
-00001C4B:	LD PC,HL
-00001C4C:	RET NZ
-00001C4D:	JR -1Bh
+00001C4B:	LD PC,HL		; jump to HL
 ;
+00001C4C:	DEFW 18C0h
+00001C4E:	DB E5h			; Data ???
+; From 1C34
 00001C4F:	LD HL,FD4Dh
 00001C52:	LD A,(HL)
 00001C53:	INC HL
 00001C54:	CP (HL)
 00001C55:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
+; From 1C3C
 00001C56:	LD A,(HL)
 00001C57:	LD C,A
 00001C58:	INC A
@@ -4261,18 +4239,12 @@ FORSLP:
 00001C62:	ADD HL,BC
 00001C63:	LD A,(HL)
 00001C64:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
-00001C65:	CP A
-00001C66:	INC E
-00001C67:	ADD A
-00001C68:	INC E
-00001C69:	ADC B
-00001C6A:	INC E
-00001C6B:	LD L,L
-00001C6C:	INC E
-;
+; Table from 1C42h
+00001C65:  DEFW 1CBFh		; sub 1
+00001C67:  DEFW 1C87h		; sub 2
+00001C69:  DEFW 1C88h		; sub 3
+00001C6B:  DEFW 1C6Dh		; sub 4
+; sub 4
 00001C6D:	LD HL,(F936h)
 00001C70:	LD DE,FEE2h
 00001C73:	LD BC,0080h
@@ -4283,10 +4255,9 @@ FORSLP:
 00001C82:	LDIR			; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
 00001C84:	LD A,01h
 00001C86:	OR A
+; sub 2
 00001C87:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
+; sub 3
 00001C88:	EX DE,HL
 00001C89:	CALL 1C56h
 00001C8C:	LD (F928h),A
@@ -4299,10 +4270,8 @@ FORSLP:
 00001C9D:	CALL 1CA2h
 00001CA0:	OR A
 00001CA1:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
-00001CA2:	CALL 1CB3h
+; from 1C9D
+00001CA2:	CALL 1CB3h			; MemSet
 00001CA5:	LD HL,F93Dh
 00001CA8:	LD A,(HL)
 00001CA9:	ADD 08h
@@ -4313,17 +4282,13 @@ FORSLP:
 00001CAF:	ADD 08h
 00001CB1:	LD (HL),A
 00001CB2:	RET
-; ----------------------------------------
 ; Memset Memory copy from F93A -> F934 (6 bytes)
-; ----------------------------------------
 00001CB3:	LD HL,F93Ah
 00001CB6:	LD DE,F934h
 00001CB9:	LD BC,0006h
 00001CBC:	LDIR			; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
 00001CBE:	RET
-; ----------------------------------------
-;
-; ----------------------------------------
+; sub 1 from 1C42
 00001CBF:	EX DE,HL
 00001CC0:	CALL 1C56h
 00001CC3:	PUSH AF
@@ -4683,7 +4648,7 @@ FORSLP:
 00001E96:	LD A,(FD55h)
 00001E99:	RRCA
 00001E9A:	JP C,1FE8h
-00001E9D:	LD HL,0116h
+00001E9D:	LD HL,0116h			; Table
 00001EA0:	ADD HL,BC
 00001EA1:	ADD HL,BC
 00001EA2:	ADD HL,BC
