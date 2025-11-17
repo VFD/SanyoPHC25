@@ -40,8 +40,7 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 
 
 ___
-# Optimisation 
-
+# Exemple à l'arrache de code de scroll 
 
 
 ```asm
@@ -472,6 +471,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
