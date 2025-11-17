@@ -72,39 +72,41 @@ ___
 
 
 ```asm
-; ----------------------------------------
-; Scroll texte + attributs Haut (PHC-25)
-; Deux points d'entrée : VRAM1 et VRAM2
-; ----------------------------------------
+0000                          ; ----------------------------------------
+0000                          ; Scroll texte + attributs (PHC-25)
+0000                          ; Deux points d'entrée : VRAM1 et VRAM2
+0000                          ; ----------------------------------------
+5BEC                          .ORG   $5BEC   ; Point d'entrée dans la ROM
+5BEC                SCROLLUP1:   ; pour VRAM1
+5BEC   21 20 60               LD   HL,6020h   ; source texte ligne 1
+5BEF   11 00 60               LD   DE,6000h   ; dest texte ligne 0
+5BF2   CD 12 5C               CALL   Copy   
+5BF5   21 20 68               LD   HL,6820h   ; source attributs ligne 1
+5BF8   11 00 68               LD   DE,6800h   ; dest attributs ligne 0
+5BFB   CD 12 5C               CALL   Copy   
+5BFE   C9                     RET   
+5BFF                SCROLLUP2:   ; pour VRAM2
+5BFF   21 20 E0               LD   HL,0E020h   ; source texte ligne 1
+5C02   11 00 E0               LD   DE,0E000h   ; dest texte ligne 0
+5C05   CD 12 5C               CALL   Copy   
+5C08   21 20 E8               LD   HL,0E820h   ; source attributs ligne 1
+5C0B   11 00 E8               LD   DE,0E800h   ; dest attributs ligne 0
+5C0E   CD 12 5C               CALL   Copy   
+5C11   C9                     RET   
+5C12                COPY:     
+5C12   01 E0 01               LD   BC,480   ; 32*15  1E0h
+5C15   CF                     RST   08h   ; VSYNC
+5C16   ED B0                  LDIR   
+5C18   C9                     RET   
 
-; ORG à 
 
-ScrollUp1:               ; pour VRAM1
-    LD   HL,6000h+32     ; source texte ligne 1
-    LD   DE,6000h        ; dest texte ligne 0
-	CALL Copy
-
-    LD   HL,6800h+32     ; source attributs ligne 1
-    LD   DE,6800h        ; dest attributs ligne 0
-	CALL Copy
-    RET
-
-ScrollUp2:               ; pour VRAM2
-    LD   HL,E000h+32     ; source texte ligne 1
-    LD   DE,E000h        ; dest texte ligne 0
-	CALL Copy
-
-    LD   HL,E800h+32     ; source attributs ligne 1
-    LD   DE,E800h        ; dest attributs ligne 0
-	CALL Copy
-	RET
-
-Copy:
-    LD   BC,32*15
-    RST 08h				; VSYNC
-    LDIR
-    RET
-
+SCROLLUP1:          5BEC DEFINED AT LINE 8
+SCROLLUP2:          5BFF DEFINED AT LINE 18
+COPY:               5C12 DEFINED AT LINE 28
+                    > USED AT LINE 11
+                    > USED AT LINE 15
+                    > USED AT LINE 21
+                    > USED AT LINE 25
 ```
 
 ___
@@ -539,6 +541,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
