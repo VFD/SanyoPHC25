@@ -155,7 +155,10 @@ COPYUP:             5C0E DEFINED AT LINE 36
                     > USED AT LINE 31
 ```
 
-89 octets environ.
+82 octets pour les scrolls up and down.\
+28 octets pour effacer les lignes (utilise une routine MemSet ROM.\
+
+100 octets utilisé.
 
 | Type | Ecran | Call |
 |------|-------|------|
@@ -190,6 +193,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
