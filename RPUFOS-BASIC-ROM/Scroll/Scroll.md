@@ -67,8 +67,45 @@ EI
 RET
 ```
 
+___
+# Tentative avec VSYNC
 
 
+```asm
+; ----------------------------------------
+; Scroll texte + attributs Haut (PHC-25)
+; Deux points d'entrée : VRAM1 et VRAM2
+; ----------------------------------------
+
+; ORG à 
+
+ScrollUp1:               ; pour VRAM1
+    LD   HL,6000h+32     ; source texte ligne 1
+    LD   DE,6000h        ; dest texte ligne 0
+	CALL Copy
+
+    LD   HL,6800h+32     ; source attributs ligne 1
+    LD   DE,6800h        ; dest attributs ligne 0
+	CALL Copy
+    RET
+
+ScrollUp2:               ; pour VRAM2
+    LD   HL,E000h+32     ; source texte ligne 1
+    LD   DE,E000h        ; dest texte ligne 0
+	CALL Copy
+
+    LD   HL,E800h+32     ; source attributs ligne 1
+    LD   DE,E800h        ; dest attributs ligne 0
+	CALL Copy
+	RET
+
+Copy:
+    LD   BC,32*15
+    RST 08h				; VSYNC
+    LDIR
+    RET
+
+```
 
 ___
 # Exemple à l'arrache de code de scroll 
@@ -502,6 +539,7 @@ BOF BOF.
 
 
 ___
+
 
 
 
