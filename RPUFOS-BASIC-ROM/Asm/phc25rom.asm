@@ -218,7 +218,7 @@
 ; ----------------------------------------
 0000028C:	LD HL,(FD8Fh)
 0000028F:	DEC HL
-00000290:	LD (FE51h),HL
+00000290:	LD (FE51h),HL				; see ROM 0B54h
 00000293:	PUSH DE
 00000294:	EX DE,HL
 00000295:	LD HL,(FD57h)
@@ -226,27 +226,27 @@
 00000299:	INC HL
 0000029A:	INC HL
 0000029B:	INC HL
-0000029C:	RST 10h		; compare DE and HL (aka DCOMPR)
+0000029C:	RST 10h						; compare DE and HL (aka DCOMPR)
 0000029D:	POP DE
 0000029E:	JR C,+0Ah
 000002A0:	LD HL,(FD89h)
-000002A3:	LD BC,(FE51h)
+000002A3:	LD BC,(FE51h)				; see ROM 0B54h
 000002A7:	INC BC
 000002A8:	SCF
 000002A9:	RET
 ; ----------------------------------------
 ; 
 ; ----------------------------------------
-000002AA:	CALL FE50h
-000002AD:	RST 10h		; compare DE and HL (aka DCOMPR)
+000002AA:	CALL FE50h					; LD HL,(-) see ROM 0B54h
+000002AD:	RST 10h						; compare DE and HL (aka DCOMPR)
 000002AE:	JR Z,+0Ah
 000002B0:	JR NC,+08h
-000002B2:	LD HL,(FE51h)
+000002B2:	LD HL,(FE51h)				; see ROM 0B54h
 000002B5:	DEC HL
 000002B6:	DEC HL
 000002B7:	DEC HL
 000002B8:	JR -2Bh
-000002BA:	LD HL,(FE51h)
+000002BA:	LD HL,(FE51h)				; see ROM 0B54h
 000002BD:	INC HL
 000002BE:	LD C,L
 000002BF:	LD B,H
@@ -719,8 +719,8 @@ READY:
 000006A9:	DEC BC
 000006AA:	DEC BC
 000006AB:	DEC BC
-000006AC:	LD (FE51h),BC
-000006B0:	CALL FE50h
+000006AC:	LD (FE51h),BC					; see ROM 0B54h
+000006B0:	CALL FE50h						; HL=BC ; LD HL,(-) see ROM 0B54h
 000006B3:	LD A,L
 000006B4:	OR H
 000006B5:	JR NZ,+03h
@@ -812,9 +812,9 @@ READY:
 00000761:	DEC DE
 00000762:	DEC DE
 00000763:	DEC DE
-00000764:	LD (FE55h),DE
+00000764:	LD (FE55h),DE		; DE for HL see ROM 0B54h
 00000768:	EX HL,(SP)
-00000769:	CALL FE54h
+00000769:	CALL FE54h			; LD (-),HL see ROM 0B54h
 0000076C:	XOR A
 0000076D:	LD BC,0000h
 00000770:	CPIR
@@ -1414,7 +1414,7 @@ FORSLP:
 ; ----------------------------------------
 00000B20:	CALL 2553h			; __DATA  (Get next statement address)
 00000B23:	OR A
-00000B24:	JR NZ,+1Fh
+00000B24:	JR NZ,+1Fh			; if Z=0 then 0B45h
 00000B26:	INC HL
 00000B27:	PUSH HL
 00000B28:	LD HL,(FD93h)
@@ -1438,10 +1438,12 @@ FORSLP:
 00000B40:	LD (FD77h),HL
 00000B43:	EX DE,HL
 00000B44:	DEC HL
+;
 00000B45:	RST 18h
 00000B46:	CP 83h
-00000B48:	JR NZ,-2Ah
+00000B48:	JR NZ,-2Ah			; if Z=0 then 0B20h
 00000B4A:	JP 0AAAh
+;
 00000B4D:	POP HL
 00000B4E:	POP HL
 00000B4F:	LD B,03h		; Error: Not enough data
@@ -1452,41 +1454,26 @@ FORSLP:
 ; FE50h to FE9Ah
 ; Simple Data or more ?
 ; ----------------------------------------
-00000B54:	DB 2Ah, 00h, 00h, C9h, 22h, 00h, 00h, C9h, C3h,2Bh,23h
+00000B54:	DB 2Ah, 00h, 00h, C9h, 22h, 00h, 00h, C9h, C3h, 2Bh, 23h
+; This code is inserted in RAM and be modified by program
 ; FE50: 2Ah,00h,00h		; LD HL,(0000h)
 ; FE53: C9h				; RET
-; FE54: 22h,00h,00h		; LD (0000h),HL
+; FE54: 22h,00h,00h		; LD (0000h),HL			; use by ROM in 0764h
 ; FE57: C9h				; RET
-; FE58: C3h,2Bh,23h		; JP 232Bh
+; FE58: C3h,2Bh,23h		; JP 232Bh				; Illegal function Call
 ;
-; Array of strings initially assigned to function keys 8 Char max
-00000B5F:	DB "RUN", 0Dh, 00h, 00h, 00h, 00h
-00000B67:	DB "CLOAD""", 00h, 00h
-00000B6F:	DB "PRINT ", 00h, 00h 
-00000B77:	DB "LIST ", 00h, 00h, 00h 
-00000B7F:	DB "COLOR ", 00h, 00h 
-00000B87:	DB "CSAVE""", 00h, 00h 
-00000B8F:	DB "INPUT ", 00h 
-00000B97:	DB "SCREEN ", 00h 
+; Array of strings initially assigned to function keys 8 Char max (&HFE5B-&HFE9A)
+00000B5F:	DB "RUN", 0Dh, 00h, 00h, 00h, 00h	; &hFE5B
+00000B67:	DB "CLOAD""", 00h, 00h				; &hFE63
+00000B6F:	DB "PRINT ", 00h, 00h				; &hFE6B
+00000B77:	DB "LIST ", 00h, 00h, 00h			; &hFE73
+00000B7F:	DB "COLOR ", 00h, 00h				; &hFE7B
+00000B87:	DB "CSAVE""", 00h, 00h				; &hFE83
+00000B8F:	DB "INPUT ", 00h					; &hFE8B
+00000B97:	DB "SCREEN ", 00h					; &hFE93
+;
 00000B9F:	DB F0h, 4Ah, A6h, 00h, 00h, 9Dh, 6Bh, F0h, FFh, 00h, 9Dh, 6Bh, F0h, FFh, 00h, 00h
-; FE99: DB F0h		RET P
-; FE9A: DB 4Ah		LD C,D
-; FE9B: DB A6h		AND (HL)
-; FE9C: DB 00h		NOP
-; FE9D: DB 00h		NOP
-; FE9E: DB 9Dh		SBC L
-; FE9F: DB 6Bh		LD L,E
-; FEA0: DB F0h		RET P
-; FEA1: DB FFh		RST 38h
-; FEA2: DB 00h		NOP
-; FEA3: DB 9Dh		SBC L
-; FEA4: DB 6Bh		LD L,E
-; FEA5: DB F0h		RET P
-; FEA6: DB FFh		RST 38h
-; FEA7: DB 00h		NOP
-; FEA8: DB 00h		NOP
-;
-; The 16 bytes above are also copied to F973h at START
+; The 16 bytes above are copied to F973h at START
 ;
 
 ; ----------------------------------------
@@ -1527,7 +1514,7 @@ FORSLP:
 00000BFE:	LD (F921h),A				; Set to 14h
 00000C01:	LD (F95Ah),A				; Set to 14h
 00000C04:	LD HL,0B54h					; Prepare copy
-00000C07:	LD DE,FE50h
+00000C07:	LD DE,FE50h					; Where to copy (special code)
 00000C0A:	LD BC,004Bh
 00000C0D:	LDIR						; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0 - 4Bh bytes (75)
 00000C0F:	LD HL,0B9Fh					; Prepare copy
@@ -5369,11 +5356,11 @@ __CINT:
 00002327:	LD DE,8000h
 0000232A:	RET
 ; ----------------------------------------
-; 
+; Error 
 ; ----------------------------------------
 0000232B:	LD B,04h				; Error: Illegal Function Call
 0000232D:	JP 05FBh				; ERROR
-
+;
 00002330:	RST 18h
 
 GETINT:
@@ -8529,9 +8516,9 @@ NXTSTT:
 00003669:	SCF				; C=1
 0000366A:	JR -06h			; goto 3666h
 ; ----------------------------------------
-; screen ?
+; 
 ; ----------------------------------------
-0000366C:	LD A,(FB5Ch)		; screen n
+0000366C:	LD A,(FB5Ch)		; 
 0000366F:	CP 01h
 00003671:	JR Z,+15h			; if 1 then 3688h
 00003673:	PUSH BC
@@ -8546,7 +8533,7 @@ NXTSTT:
 00003684:	CCF
 00003685:	JP 365Ch
 ; ----------------------------------------
-; on screen 1
+; 
 ; ----------------------------------------
 00003688:	LD A,(FEB1h)
 0000368B:	CPL
