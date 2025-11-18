@@ -9355,7 +9355,9 @@ COORD_PARMS_DST:
 00003C0C:	POP HL
 00003C0D:	RET
 ; ----------------------------------------
-;
+; Sets the screen mode.
+; Input:
+; - A: screen mode (from 0 to ?) (CHECK)
 ; ----------------------------------------
 00003C0E:	PUSH HL
 00003C0F:	PUSH BC
@@ -9365,12 +9367,12 @@ COORD_PARMS_DST:
 00003C15:	LD B,A
 00003C16:	LD A,(FB5Ch)
 00003C19:	CP B
-00003C1A:	JR Z,-11h
-00003C1C:	PUSH BC
-00003C1D:	CALL 3DD6h
-00003C20:	POP AF
-00003C21:	LD (FB5Ch),A
-00003C24:	CALL 3DE2h
+00003C1A:	JR Z,-11h			;   If the screen mode has not changed, returns
+00003C1C:	PUSH BC				;   Saves screen mode on stack
+00003C1D:	CALL 3DD6h			;   Stores the previous screen mode configuration
+00003C20:	POP AF				;   Restores screen mode from stack in A
+00003C21:	LD (FB5Ch),A		;   Saves the new screen mode in $FB5C
+00003C24:	CALL 3DE2h			;   Restores the new screen mode configuration
 00003C27:	LD HL,(FB6Ch)
 00003C2A:	EX DE,HL
 00003C2B:	CALL 3F09h
@@ -9381,9 +9383,9 @@ COORD_PARMS_DST:
 00003C38:	CALL 3CD7h
 00003C3B:	CALL 32FFh
 00003C3E:	LD B,10h
-00003C40:	JR Z,+2Ah
-00003C42:	JR C,+04h
-00003C44:	LD B,20h
+00003C40:	JR Z,+2Ah			; Jumps if screen mode 2 (SCREEN 3)
+00003C42:	JR C,+04h			; Jumps if screen mode 0, 1 (SCREEN 1 and 2)
+00003C44:	LD B,20h			; Continues for screen mode 3 (SCREEN 4) (CHECK)
 00003C46:	JR +24h
 00003C48:	LD C,A
 00003C49:	LD A,(FB5Bh)
@@ -9417,7 +9419,7 @@ COORD_PARMS_DST:
 00003C82:	POP HL
 00003C83:	RET
 ; ----------------------------------------
-;
+; Changes the screen mode
 ; ----------------------------------------
 00003C84:	LD A,(F91Fh)
 00003C87:	LD C,A
@@ -9474,8 +9476,8 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 00003CD7:	CALL 32FFh
 00003CDA:	LD A,(FB5Fh)
-00003CDD:	JR NC,+02h
-00003CDF:	RET
+00003CDD:	JR NC,+02h		;   Jumps if the screen is 2 or 3 (graphic screens)
+00003CDF:	RET				;   Else returns
 ; ----------------------------------------
 ;
 ; ----------------------------------------
@@ -9623,7 +9625,7 @@ COORD_PARMS_DST:
 00003DD2:	CALL 0DA6h
 00003DD5:	RET
 ; ----------------------------------------
-;
+; Stores the current screen configuration into the screen configuration buffer.
 ; ----------------------------------------
 00003DD6:	PUSH HL
 00003DD7:	PUSH BC
@@ -9876,11 +9878,11 @@ COORD_PARMS_DST:
 00003F48:	INC D
 00003F49:	JR Z,+04h
 00003F4B:	DEC A
-00003F4C:	CALL 3D98h
+00003F4C:	CALL 3D98h			;   Calls initialization for Active seen screen
 00003F4F:	LD A,B
 00003F50:	INC B
 00003F51:	JR Z,+03h
-00003F53:	CALL 3C0Eh
+00003F53:	CALL 3C0Eh			;   Calls initialization of the Active written screen
 00003F56:	LD A,C
 00003F57:	INC C
 00003F58:	JR Z,+04h
@@ -9958,7 +9960,7 @@ COORD_PARMS_DST:
 00003FB4:	POP BC
 00003FB5:	RET
 ; ----------------------------------------
-;
+; Probably the routine that draw chars in graphic modes
 ; ----------------------------------------
 00003FB6:	CALL 13D6h
 00003FB9:	POP AF
@@ -10020,7 +10022,18 @@ COORD_PARMS_DST:
 00004010:	RLCA
 00004011:	RLCA
 00004012:	JR -1Fh
-00004014:	LD DE,4FECh
+; ----------------------------------------
+;
+; Computes the address for font data for the character in A
+; Input:
+; - A: character to search address for
+; Output:
+; - DE: font data address
+; 
+; HL is preserved
+;
+; ----------------------------------------
+00004014:	LD DE,4FECh			; Beginning of ASCII character set (NUL)
 00004017:	PUSH HL
 00004018:	LD H,00h
 0000401A:	LD L,A
@@ -10170,7 +10183,7 @@ COORD_PARMS_DST:
 ; __CLOAD
 ; ----------------------------------------
 000040F2:	LD SP,F8FFh
-000040F5:	CP 3Fh
+000040F5:	CP 3Fh			; A="?"
 000040F7:	JR NZ,+11h
 000040F9:	RST 18h
 000040FA:	CALL 405Bh		; deal with file name
@@ -10179,31 +10192,17 @@ COORD_PARMS_DST:
 00004102:	LD (FDA1h),A
 00004105:	CALL 45A0h
 00004108:	JR +06h
-
 0000410A:	CALL 405Bh		; deal with file name
 0000410D:	CALL 40EDh
-
 00004110:	CALL 4130h
 00004113:	LD A,(FEDFh)
 00004116:	OR A
 00004117:	JP Z,45CAh
 0000411A:	JP 463Fh
-0000411D:	LD B,D
-0000411E:	LD H,C
-0000411F:	LD H,H
-00004120:	DEC C
-00004121:	LD A,(BC)
-00004122:	NOP
-00004123:	LD B,(HL)
-00004124:	LD L,A
-00004125:	LD (HL),L
-00004126:	LD L,(HL)
-00004127:	LD H,H
-00004128:	LD A,(5300h)
-0000412B:	LD L,E
-0000412C:	LD L,C
-0000412D:	LD (HL),B
-0000412E:	LD A,(AF00h)
+0000411D:	DB 42h, 61h, 64h, 0Dh, 0Ah, 00h			; "Bad\r\n"
+00004123:	DB 46h, 6Fh, 75h, 6Eh, 64h, 3Ah, 00h	; "Found:"
+0000412A:	DB 53h, 6Bh, 69h, 70h, 3Ah, 00h			; "Skip:"
+00004130:   XOR A
 00004131:	CALL 41E5h
 00004134:	CALL 456Bh
 00004137:	JR C,-09h
@@ -10267,18 +10266,18 @@ COORD_PARMS_DST:
 ;
 ; ----------------------------------------
 0000418C:	INA (81h)
-0000418E:	BIT 0,A
-00004190:	RET NZ
+0000418E:	BIT 0,A			; bit 0 = 0 → Z = 1 ; bit 0 = 1 → Z = 0
+00004190:	RET NZ			; if Z=0 then RET
 00004191:	CALL 4555h		; __CTOFF  - Turn off Cassette tape motor
 00004194:	EI
 00004195:	LD A,(FDA1h)
 00004198:	OR A
-00004199:	JR NZ,+13h
+00004199:	JR NZ,+13h		; 41AEh
 0000419B:	CALL 1899h
 0000419E:	CALL 41A4h
 000041A1:	JP 0623h
 ; ----------------------------------------
-;
+; Reset FD87h
 ; ----------------------------------------
 000041A4:	LD HL,0000h
 000041A7:	LD (FD87h),HL		; OLDTXT
@@ -10294,32 +10293,32 @@ COORD_PARMS_DST:
 000041BA:	CALL 10E4h
 000041BD:	JP 463Fh
 ; ----------------------------------------
-;
+; While IN(40h) bit5=1
 ; ----------------------------------------
 000041C0:	CALL 418Ch
 000041C3:	INA (40h)
-000041C5:	BIT 5,A
-000041C7:	JR NZ,-09h
+000041C5:	BIT 5,A			; if bit 5
+000041C7:	JR NZ,-09h		; if Z=0 then 41C0h
 000041C9:	RET
 ; ----------------------------------------
-;
+; While IN(40h) bit5=0
 ; ----------------------------------------
 000041CA:	CALL 418Ch
 000041CD:	INA (40h)
-000041CF:	BIT 5,A
-000041D1:	JR Z,-09h
+000041CF:	BIT 5,A			; if bit 5
+000041D1:	JR Z,-09h		; if Z=1 then 41CAh
 000041D3:	RET
 ; ----------------------------------------
 ;
 ; ----------------------------------------
 000041D4:	LD C,00h
 000041D6:	CALL 4170h
-000041D9:	JR NC,-07h
+000041D9:	JR NC,-07h		; 41D4h;
 000041DB:	CALL 41C0h
 000041DE:	INC C
 000041DF:	LD A,C
 000041E0:	CP 32h
-000041E2:	JR NZ,-0Eh
+000041E2:	JR NZ,-0Eh		; if Z=0 then 41D6h
 000041E4:	RET
 ; ----------------------------------------
 ;
@@ -10410,12 +10409,12 @@ COORD_PARMS_DST:
 00004279:	LD HL,(F98Dh)
 0000427C:	LD (F922h),HL
 0000427F:	LD C,09h
-00004281:	LD A,2Ah
+00004281:	LD A,2Ah					;   The character displayed while loading
 00004283:	JR +09h
 00004285:	POP AF
 00004286:	INC A
 00004287:	JR NZ,+09h
-00004289:	LD A,(601Fh)
+00004289:	LD A,(601Fh)				; Blinking the loading character
 0000428C:	XOR 0Ah
 0000428E:	LD (601Fh),A
 00004291:	XOR A
@@ -11651,10 +11650,11 @@ COORD_PARMS_DST:
 000049F0:	POP HL
 000049F1:	RET
 ; ----------------------------------------
-;
-; ----------------------------------------
 000049F2:	CALL 4753h
 000049F5:	JR -07h
+; ----------------------------------------
+; DATA ?
+; ----------------------------------------
 000049F7:	LD A,C
 000049F8:	SUB 40h
 000049FA:	ADD A
@@ -11894,8 +11894,6 @@ COORD_PARMS_DST:
 00004B5A:	LD (HL),E
 00004B5B:	RET
 ; ----------------------------------------
-;
-; ----------------------------------------
 00004B5C:	JR C,+02h
 00004B5E:	LD E,78h
 00004B60:	LD A,E
@@ -11908,8 +11906,6 @@ COORD_PARMS_DST:
 00004B6B:	CALL 48F1h
 00004B6E:	LD (HL),E
 00004B6F:	RET
-; ----------------------------------------
-;
 ; ----------------------------------------
 00004B70:	JR C,+02h
 00004B72:	LD E,04h
@@ -11930,8 +11926,6 @@ COORD_PARMS_DST:
 00004B8D:	LD (HL),00h
 00004B8F:	JP 4A49h
 ; ----------------------------------------
-;
-; ----------------------------------------
 00004B92:	JR NC,-52h
 00004B94:	LD A,D
 00004B95:	OR A
@@ -11951,13 +11945,15 @@ COORD_PARMS_DST:
 00004BAB:	LD C,A
 00004BAC:	JP 4A24h
 ; ----------------------------------------
-;
-; ----------------------------------------
 00004BAF:	CALL 4812h
 00004BB2:	LD DE,0004h
 00004BB5:	JR Z,-43h
 00004BB7:	CALL 4851h
 00004BBA:	JR -48h
+; END DATA ?
+; ----------------------------------------
+;
+; ----------------------------------------
 00004BBC:	PUSH BC
 00004BBD:	PUSH AF
 00004BBE:	PUSH DE
@@ -12068,7 +12064,7 @@ COORD_PARMS_DST:
 00004C64:	LD (FB1Bh),A
 00004C67:	RET
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00004C68:	LD B,C
 00004C69:	RST 30h		; GETYPR
@@ -12159,6 +12155,10 @@ COORD_PARMS_DST:
 00004CD8:	INC BC
 00004CD9:	NOP
 00004CDA:	LD BC,0005h
+; END DATA ?
+; ----------------------------------------
+; 
+; ----------------------------------------
 00004CDD:	LD A,(F95Ch)
 00004CE0:	AND A
 00004CE1:	RET NZ
@@ -12237,6 +12237,14 @@ COORD_PARMS_DST:
 00004D5B:	POP DE
 00004D5C:	CP FFh
 00004D5E:	RET Z
+; ----------------------------------------
+;
+; Here we got the key scan code in A? (not sure)
+; When pressed or released
+; D contains the port where data was found
+; E contains the value found in the port
+;
+; ----------------------------------------
 00004D5F:	LD HL,F910h
 00004D62:	LD (HL),E
 00004D63:	INC HL
@@ -12303,7 +12311,7 @@ COORD_PARMS_DST:
 00004DC2:	POP BC
 00004DC3:	RET
 ; ----------------------------------------
-;
+; Pushes the character to the circular buffer
 ; ----------------------------------------
 00004DC4:	AND A
 00004DC5:	RET Z
@@ -12345,7 +12353,7 @@ COORD_PARMS_DST:
 00004DF0:	LD (F95Ch),A
 00004DF3:	JP 1B11h
 ; ----------------------------------------
-;
+; Sets Z if both indices of the circular buffer are equals
 ; ----------------------------------------
 00004DF6:	LD HL,F915h
 00004DF9:	LD A,(HL)
@@ -12354,8 +12362,10 @@ COORD_PARMS_DST:
 00004DFC:	CP C
 00004DFD:	RET
 ; ----------------------------------------
-;
+; Indirection table for key scan code decoding.
+; 4 addresses, for no mod, control, shift and graph modifiers.
 ; ----------------------------------------
+; Table, 8 bytes?
 00004DFE:	INC L
 00004DFF:	LD C,(HL)
 00004E00:	LD H,A
@@ -12363,12 +12373,13 @@ COORD_PARMS_DST:
 00004E02:	INC E
 00004E03:	LD C,(HL)
 00004E04:	LD B,4Eh
+;
 00004E06:	CALL 4E22h
 00004E09:	SUB 40h
 00004E0B:	AND 1Fh
 00004E0D:	RET
 ; ----------------------------------------
-;
+; Data ?
 ; ----------------------------------------
 00004E0E:	NOP
 00004E0F:	RET NZ
@@ -12404,7 +12415,7 @@ COORD_PARMS_DST:
 00004E3D:	LD DE,4EACh
 00004E40:	JP 4E35h
 ; ----------------------------------------
-;
+; DATA ?
 ; ----------------------------------------
 00004E43:	LD H,00h
 00004E45:	ADD HL,DE
@@ -12426,6 +12437,7 @@ COORD_PARMS_DST:
 00004E62:	INC DE
 00004E63:	DJNZ +0Fh
 00004E65:	LD C,04h
+;
 00004E67:	LD A,(F914h)
 00004E6A:	AND A
 00004E6B:	JR Z,+02h
@@ -12444,7 +12456,12 @@ COORD_PARMS_DST:
 00004E7D:	POP AF
 00004E7E:	RET
 ; ----------------------------------------
-;
+; Gets data from I/O port and put it into memory
+; C: in port
+; HL: destination memory, gets incremented after
+; 
+; Return value:
+; A: contains the 1-complement data masked with previous data at HL
 ; ----------------------------------------
 00004E7F:	LD E,(HL)
 00004E80:	IN A,(C)
@@ -12483,278 +12500,63 @@ COORD_PARMS_DST:
 00004EA9:	LD A,FFh
 00004EAB:	RET
 ; ----------------------------------------
-;
-; ----------------------------------------
-00004EAC:	LD SP,5357h
-00004EAF:	LD E,B
-00004EB0:	LD E,7Fh
-00004EB2:	LD A,(1B00h)
-00004EB5:	LD D,C
-00004EB6:	LD B,C
-00004EB7:	LD E,D
-00004EB8:	RRA
-00004EB9:	DEC C
-00004EBA:	DEC SP
-00004EBB:	CPL
-00004EBC:	INC SP
-00004EBD:	LD D,D
-00004EBE:	LD B,(HL)
-00004EBF:	LD D,(HL)
-00004EC0:	DEC E
-00004EC1:	LD E,(HL)
-00004EC2:	LD E,E
-00004EC3:	NOP
-00004EC4:	LD (4445h),A
-00004EC7:	LD B,E
-00004EC8:	INC E
-00004EC9:	LD E,H
-00004ECA:	LD E,L
-00004ECB:	JR NZ,+35h
-00004ECD:	LD E,C
-00004ECE:	LD C,B
-00004ECF:	LD C,(HL)
-00004ED0:	RRCA
-00004ED1:	JR NC,+50h
-00004ED3:	NOP
-00004ED4:	INC (HL)
-00004ED5:	LD D,H
-00004ED6:	LD B,A
-00004ED7:	LD B,D
-00004ED8:	DJNZ +2Dh
-00004EDA:	LD B,B
-00004EDB:	NOP
-00004EDC:	LD (HL),55h
-00004EDE:	LD C,D
-00004EDF:	LD C,L
-00004EE0:	LD C,39h
-00004EE2:	LD C,A
-00004EE3:	NOP
-00004EE4:	SCF
-00004EE5:	LD C,C
-00004EE6:	LD C,E
-00004EE7:	INC L
-00004EE8:	INC B
-00004EE9:	JR C,+4Ch
-00004EEB:	LD L,21h
-00004EED:	LD (HL),A
-00004EEE:	LD (HL),E
-00004EEF:	LD A,B
-00004EF0:	LD E,A0h
-00004EF2:	LD HL,(0300h)
-00004EF5:	LD (HL),C
-00004EF6:	LD H,C
-00004EF7:	LD A,D
-00004EF8:	RRA
-00004EF9:	DEC C
-00004EFA:	DEC HL
-00004EFB:	CCF
-00004EFC:	INC HL
-00004EFD:	LD (HL),D
-00004EFE:	LD H,(HL)
-00004EFF:	HALT
+; DATA Table for keyscan decoding
 ; ----------------------------------------
 ;
-; ----------------------------------------
-00004F00:	DEC E
-00004F01:	LD A,(HL)
-00004F02:	NOP
-00004F03:	NOP
-00004F04:	LD (6465h),HL
-00004F07:	LD H,E
-00004F08:	INC E
-00004F09:	LD A,H
-00004F0A:	NOP
-00004F0B:	JR NZ,+25h
-00004F0D:	LD A,C
-00004F0E:	LD L,B
-00004F0F:	LD L,(HL)
-00004F10:	LD D,00h
-00004F12:	LD (HL),B
-00004F13:	NOP
-00004F14:	INC H
-00004F15:	LD (HL),H
-00004F16:	LD H,A
-00004F17:	LD H,D
-00004F18:	RLA
-00004F19:	DEC A
-00004F1A:	LD B,B
-00004F1B:	NOP
-00004F1C:	LD H,75h
-00004F1E:	LD L,D
-00004F1F:	LD L,L
-00004F20:	JR +29h
-00004F22:	LD L,A
-00004F23:	NOP
-00004F24:	DAA
-00004F25:	LD L,C
-00004F26:	LD L,E
-00004F27:	INC A
-00004F28:	INC DE
-00004F29:	JR Z,+6Ch
-00004F2B:	LD A,31h
-00004F2D:	LD (HL),A
-00004F2E:	LD (HL),E
-00004F2F:	LD A,B
-00004F30:	LD E,7Fh
-00004F32:	LD A,(1B00h)
-00004F35:	LD (HL),C
-00004F36:	LD H,C
-00004F37:	LD A,D
-00004F38:	RRA
-00004F39:	DEC C
-00004F3A:	DEC SP
-00004F3B:	CPL
-00004F3C:	INC SP
-00004F3D:	LD (HL),D
-00004F3E:	LD H,(HL)
-00004F3F:	HALT
-; ----------------------------------------
+; Suffix by _u is uppercase
+; 
+00004EAC:  DB 31h, 57h, 53h, 58h, 1Eh, 7Fh, 3Ah , 00h  ; label k_row_0_u
+00004EB4:  DB 1Bh, 51h, 41h, 5Ah, 1Fh, 0Dh, 3Bh , 2Fh  ; label k_row_1_u
+00004EBC:  DB 33h, 52h, 46h, 56h, 1Dh, 5Eh, 5Bh , 00h  ; label k_row_2_u
+00004EC4:  DB 32h, 45h, 44h, 43h, 1Ch, 5Ch, 5Dh , 20h  ; label k_row_3_u
+00004ECC:  DB 35h, 59h, 48h, 4Eh, 0Fh, 30h, 50h , 00h  ; label k_row_4_u
+00004ED4:  DB 34h, 54h, 47h, 42h, 10h, 2Dh, 40h , 00h  ; label k_row_5_u
+00004EDC:  DB 36h, 55h, 4Ah, 4Dh, 0Eh, 39h, 4Fh , 00h  ; label k_row_6_u
+00004EE4:  DB 37h, 49h, 4Bh, 2Ch, 04h, 38h, 4Ch , 2Eh  ; label k_row_7_u
+00004EEC:  DB 21h, 77h, 73h, 78h, 1Eh, A0h, 2Ah , 00h  ; label k_row_0_u (lowercase)
 ;
-; ----------------------------------------
-00004F40:	DEC E
-00004F41:	LD E,(HL)
-00004F42:	LD E,E
-00004F43:	NOP
-00004F44:	LD (6465h),A
-00004F47:	LD H,E
-00004F48:	INC E
-00004F49:	LD E,H
-00004F4A:	LD E,L
-00004F4B:	JR NZ,+35h
-00004F4D:	LD A,C
-00004F4E:	LD L,B
-00004F4F:	LD L,(HL)
-00004F50:	RRCA
-00004F51:	JR NC,+70h
-00004F53:	NOP
-00004F54:	INC (HL)
-00004F55:	LD (HL),H
-00004F56:	LD H,A
-00004F57:	LD H,D
-00004F58:	DJNZ +2Dh
-00004F5A:	LD B,B
-00004F5B:	NOP
-00004F5C:	LD (HL),75h
-00004F5E:	LD L,D
-00004F5F:	LD L,L
-00004F60:	LD C,39h
-00004F62:	LD L,A
-00004F63:	NOP
-00004F64:	SCF
-00004F65:	LD L,C
-00004F66:	LD L,E
-00004F67:	INC L
-00004F68:	INC B
-00004F69:	JR C,+6Ch
-00004F6B:	LD L,21h
-00004F6D:	LD D,A
-00004F6E:	LD D,E
-00004F6F:	LD E,B
-00004F70:	LD E,A0h
-00004F72:	LD HL,(0300h)
-00004F75:	LD D,C
-00004F76:	LD B,C
-00004F77:	LD E,D
-00004F78:	RRA
-00004F79:	DEC C
-00004F7A:	DEC HL
-00004F7B:	CCF
-00004F7C:	INC HL
-00004F7D:	LD D,D
-00004F7E:	LD B,(HL)
-00004F7F:	LD D,(HL)
-00004F80:	DEC E
-00004F81:	LD A,(HL)
-00004F82:	NOP
-00004F83:	NOP
-00004F84:	LD (4445h),HL
-00004F87:	LD B,E
-00004F88:	INC E
-00004F89:	LD A,H
-00004F8A:	NOP
-00004F8B:	JR NZ,+25h
-00004F8D:	LD E,C
-00004F8E:	LD C,B
-00004F8F:	LD C,(HL)
-00004F90:	LD D,00h
-00004F92:	LD D,B
-00004F93:	NOP
-00004F94:	INC H
-00004F95:	LD D,H
-00004F96:	LD B,A
-00004F97:	LD B,D
-00004F98:	RLA
-00004F99:	DEC A
-00004F9A:	LD B,B
-00004F9B:	NOP
-00004F9C:	LD H,55h
-00004F9E:	LD C,D
-00004F9F:	LD C,L
-00004FA0:	JR +29h
-00004FA2:	LD C,A
-00004FA3:	NOP
-00004FA4:	DAA
-00004FA5:	LD C,C
-00004FA6:	LD C,E
-00004FA7:	INC A
-00004FA8:	INC DE
-00004FA9:	JR Z,+4Ch
-00004FAB:	LD A,37h
-00004FAD:	NOP
-00004FAE:	INC A
-00004FAF:	LD C,H
-00004FB0:	NOP
-00004FB1:	NOP
-00004FB2:	OR C
-00004FB3:	OR E
-00004FB4:	NOP
-00004FB5:	NOP
-00004FB6:	NOP
-00004FB7:	NOP
-00004FB8:	NOP
-00004FB9:	NOP
-00004FBA:	OR D
-00004FBB:	OR B
-00004FBC:	LD (4542h),A
-00004FBF:	LD B,C
-00004FC0:	NOP
-00004FC1:	NOP
-00004FC2:	OR H
-00004FC3:	NOP
-00004FC4:	LD SP,4448h
-00004FC7:	LD C,D
-00004FC8:	NOP
-00004FC9:	ADD HL,SP
-00004FCA:	OR L
-00004FCB:	NOP
-00004FCC:	INC (HL)
-00004FCD:	JR C,+3Ah
-00004FCF:	NOP
-00004FD0:	RRCA
-00004FD1:	CCF
-00004FD2:	LD B,B
-00004FD3:	NOP
-00004FD4:	INC SP
-00004FD5:	LD C,C
-00004FD6:	LD B,E
-00004FD7:	LD C,E
-00004FD8:	DJNZ +47h
-00004FDA:	NOP
-00004FDB:	NOP
-00004FDC:	DEC (HL)
-00004FDD:	NOP
-00004FDE:	NOP
-00004FDF:	DEC SP
-00004FE0:	LD C,3Eh
-00004FE2:	NOP
-00004FE3:	NOP
-00004FE4:	LD (HL),46h
-00004FE6:	NOP
-00004FE7:	LD C,A
-00004FE8:	INC B
-00004FE9:	DEC A
-00004FEA:	LD C,(HL)
-00004FEB:	LD C,L
+; Suffix by _c is with CTRL pressed
+;
+00004EF4:  DB 03h, 71h, 61h, 7Ah, 1Fh, 0Dh, 2Bh, 3Fh  ; label k_row_1_c
+00004EFC:  DB 23h, 72h, 66h, 76h, 1Dh, 7Eh, 00h, 00h  ; label k_row_2_c
+00004F04:  DB 22h, 65h, 64h, 63h, 1Ch, 7Ch, 00h, 20h  ; label k_row_3_c
+00004F0C:  DB 25h, 79h, 68h, 6Eh, 16h, 00h, 70h, 00h  ; label k_row_4_c
+00004F14:  DB 24h, 74h, 67h, 62h, 17h, 3Dh, 40h, 00h  ; label k_row_5_c
+00004F1C:  DB 26h, 75h, 6Ah, 6Dh, 18h, 29h, 6Fh, 00h  ; label k_row_6_c
+00004F24:  DB 27h, 69h, 6Bh, 3Ch, 13h, 28h, 6Ch, 3Eh  ; label k_row_7_c
+;
+; Suffix by _l is lowercase
+;
+00004F2C:  DB 31h, 77h, 73h, 78h, 1Eh, 7Fh, 3Ah, 00h  ; label k_row_0_l
+00004F34:  DB 1Bh, 71h, 61h, 7Ah, 1Fh, 0Dh, 3Bh, 2Fh  ; label k_row_1_l
+00004F3C:  DB 33h, 72h, 66h, 76h, 1Dh, 5Eh, 5Bh, 00h  ; label k_row_2_l
+00004F44:  DB 32h, 65h, 64h, 63h, 1Ch, 5Ch, 5Dh, 20h  ; label k_row_3_l
+00004F4C:  DB 35h, 79h, 68h, 6Eh, 0Fh, 30h, 70h, 00h  ; label k_row_4_l
+00004F54:  DB 34h, 74h, 67h, 62h, 10h, 2Dh, 40h, 00h  ; label k_row_5_l
+00004F5C:  DB 36h, 75h, 6Ah, 6Dh, 0Eh, 39h, 6Fh, 00h  ; label k_row_6_l
+00004F64:  DB 37h, 69h, 6Bh, 2Ch, 04h, 38h, 6Ch, 2Eh  ; label k_row_7_l
+;
+; Suffix by _l is with GRAPH pressed
+;
+00004F6C:  DB 21h, 57h, 53h, 58h, 1Eh, A0h, 2Ah, 00h  ; label k_row_0_g
+00004F74:  DB 03h, 51h, 41h, 5Ah, 1Fh, 0Dh, 2Bh, 3Fh  ; label k_row_1_g
+00004F7C:  DB 23h, 52h, 46h, 56h, 1Dh, 7Eh, 00h, 00h  ; label k_row_2_g
+00004F84:  DB 22h, 45h, 44h, 43h, 1Ch, 7Ch, 00h, 20h  ; label k_row_3_g
+00004F8C:  DB 25h, 59h, 48h, 4Eh, 16h, 00h, 50h, 00h  ; label k_row_4_g
+00004F94:  DB 24h, 54h, 47h, 42h, 17h, 3Dh, 40h, 00h  ; label k_row_5_g
+00004F9C:  DB 26h, 55h, 4Ah, 4Dh, 18h, 29h, 4Fh, 00h  ; label k_row_6_g
+00004FA4:  DB 27h, 49h, 4Bh, 3Ch, 13h, 28h, 4Ch, 3Eh  ; label k_row_7_g
+;
+; label after_keys
+;
+00004FAC:  DB 37h, 00h, 3Ch, 4Ch, 00h, 00h, B1h, B3h
+00004FB4:  DB 00h, 00h, 00h, 00h, 00h, 00h, B2h, B0h
+00004FBC:  DB 32h, 42h, 45h, 41h, 00h, 00h, B4h, 00h
+00004FC4:  DB 31h, 48h, 44h, 4Ah, 00h, 39h, B5h, 00h
+00004FCC:  DB 34h, 38h, 3Ah, 00h, 0Fh, 3Fh, 40h, 00h
+00004FD4:  DB 33h, 49h, 43h, 4Bh, 10h, 47h, 00h, 00h
+00004FDC:  DB 35h, 00h, 00h, 3Bh, 0Eh, 3Eh, 00h, 00h
+00004FE4:  DB 36h, 46h, 00h, 4Fh, 04h, 3Dh, 4Eh, 4Dh
 ; ----------------------------------------
 ; Beginning of ASCII character set
 ;
