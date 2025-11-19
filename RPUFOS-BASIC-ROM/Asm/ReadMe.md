@@ -6,6 +6,7 @@ Il y a ici le code source de la ROM en cours de documentation.
 
 Toute participation est bienvenue pour améliorer la connaissance de cette ROM.
 
+La fin de la ROM a été netoyée (mise à 00h des octets). La place restabte servira à ajouter des fonctions utiles.
 
 ## ROM v.1.4.
 
