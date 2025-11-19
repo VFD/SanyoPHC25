@@ -20,6 +20,14 @@ Cette option est en cours de développement.
 
 La ROM finale 1.4 devra être testée sur un Sanyo PHC-25.
 
+### PSG01_Add
+
+Pour le PSG01 reborn, en cours de developpement.
+
+### ScreenChoice_Add
+
+Pour faciliter les bascules entre 1 et 2 écran.\
+Reste la partie CLEAR à décoder.
 ___
 
 
