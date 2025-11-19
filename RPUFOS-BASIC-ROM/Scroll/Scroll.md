@@ -34,12 +34,12 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 
 &h059A
 ```asm
-0000059A:	LD (HL),A		; A -> (HL)
-0000059B:	LD E,L			; HL -> DE
-0000059C:	LD D,H
-0000059D:	INC DE			; DE+1
-0000059E:	LDIR			; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
-000005A0:	RET
+0000   77           0000059A:   LD   (HL),A   ; A -> (HL)
+0001   5D           0000059B:   LD   E,L   ; HL -> DE
+0002   54           0000059C:   LD   D,H   
+0003   13           0000059D:   INC   DE   ; DE+1
+0004   ED B0        0000059E:   LDIR   ; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
+0006   C9           000005A0:   RET
 ```
 
 &h1BDF
@@ -54,21 +54,8 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 
 Les 2 sont quasi identique, si quelqu'un peut expliquer si cela change quelque chose.
 
-
-Pour RAZ d'une ligne c'est jouable pour economiser quelques octets.
-
-```
-LD A,20h                        ; SPACE
-LD HL, addr_ligne
-LD BC,0020h                       ; 32 fois
-RST   08h   ; VSYNC
-CALL 059Ah
-RET
-```
-
 ___
 # Tentative avec VSYNC
-
 
 ```asm
 0000                          ; ----------------------------------------
@@ -184,7 +171,7 @@ FILLLINE:           5C50 DEFINED AT LINE 88
 
 A valider pour le type Texte.
 
-Fillline not working. Debug to do.
+Fillline not working. Debug to do. Debug OK, correction source à faire.
 
 En Screen 2, il faudrait faire un test préalable si possible (2 écrans) pour être propre. Mais le programmeur doit aussi savoir ce qu'il mijote...
 
@@ -210,6 +197,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
