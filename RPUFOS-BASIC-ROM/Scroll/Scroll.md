@@ -183,6 +183,8 @@ FILLLINE:           5C50 DEFINED AT LINE 88
 
 A valider pour le type Texte.
 
+Fillline not working. Debug to do.
+
 En Screen 2, il faudrait faire un test préalable si possible (2 écrans) pour être propre. Mais le programmeur doit aussi savoir ce qu'il mijote...
 
 ___
@@ -207,6 +209,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
