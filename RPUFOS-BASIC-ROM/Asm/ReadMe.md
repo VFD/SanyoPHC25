@@ -20,20 +20,23 @@ Cette option est en cours de développement.
 
 La ROM finale 1.4 devra être testée sur un Sanyo PHC-25.
 
+___
 ### PSG01_Add
 
 Pour le PSG01 reborn, en cours de developpement.
 
+___
 ### ScreenChoice_Add
 
 Pour faciliter les bascules entre 1 et 2 écran.\
 Reste la partie CLEAR à décoder.
 
+___
 ### Scroll_Add
 
 En cours de développement.\
 Faire les scrolls écran dans les 4 directions pour les Screen 1 et 2.\
-Et pour les 4 modes.\
+Et pour les 4 modes.
 
 - Screen mode 1 & 2 ; 4 directions
 - Screen mode 3 ; 4 directions
