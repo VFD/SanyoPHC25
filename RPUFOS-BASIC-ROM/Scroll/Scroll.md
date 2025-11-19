@@ -143,9 +143,10 @@ ___
 5C50   3E 20                  LD   A,20h   
 5C52   01 1F 00               LD   BC,31   
 5C55   CF                     RST   08h   ; VSYNC
-5C56   CD 9A 05               CALL   059Ah   ; MemSet ROM
+5C56   CD 9A 05               CALL   059Ah   ; MemSet ROM -> FAILED
 5C59   C9                     RET   
 
+;5C55 : 5d 54 13 77 cf ed b0 c9  ; CORRECTIF
 
 SCROLLUP2:          5BEC DEFINED AT LINE 18
 SCROLLUP1:          5BFF DEFINED AT LINE 28
@@ -209,6 +210,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
