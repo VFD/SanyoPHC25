@@ -44,12 +44,12 @@ La notation hexadecimale utilise le formalisme du PHC-25.
 
 &h1BDF
 ```asm
-00001BDF:	LD E,L						; HL -> DE
-00001BE0:	LD D,H
-00001BE1:	INC DE						; DE + 1
-00001BE2:	LD (HL),A					; A -> (HL)
-00001BE3:	LDIR						; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
-00001BE5:	RET
+0000   5D           00001BDF:   LD   E,L   ; HL -> DE
+0001   54           00001BE0:   LD   D,H   
+0002   13           00001BE1:   INC   DE   ; DE + 1
+0003   77           00001BE2:   LD   (HL),A   ; A -> (HL)
+0004   ED B0        00001BE3:   LDIR   ; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
+0006   C9           00001BE5:   RET   
 ```
 
 Les 2 sont quasi identique, si quelqu'un peut expliquer si cela change quelque chose.
@@ -207,6 +207,7 @@ Les RAZ sont à étudier de prêt.
 
 
 ___
+
 
 
 
