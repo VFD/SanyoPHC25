@@ -84,3 +84,7 @@ PSGDAT:             00C0 DEFINED AT LINE 2
 ```
 
 ___
+
+Le code est dans la ROM béta 3 est suivantes.
+
+___
