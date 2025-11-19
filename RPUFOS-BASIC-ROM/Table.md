@@ -657,7 +657,7 @@ ASCII étendu : &H55EC à 5BEB.
 | 179   | B3 | ▛    | 5850     | FF FF FF FF FF FF F0 F0 F0 F0 F0 F0 | - bloc                    |
 | 180   | B4 | ▜    | 585C     | FF FF FF FF FF FF 0F 0F 0F 0F 0F 0F | - bloc                    |
 | 181   | B5 | ▙    | 5868     | F0 F0 F0 F0 F0 F0 FF FF FF FF FF FF | - bloc                    |
-| 182   | B6 | ▜    | 5874     | FF FF FF FF FF FF 0F 0F 0F 0F 0F 0F | - bloc                    |
+| 182   | B6 | ▟    | 5874     | 0F 0F 0F 0F 0F 0F FF FF FF FF FF FF | - bloc                    |
 | 183   | B7 | ▊    | 5880     | FF FF FF FF FF FF FF FF FF FF FF FF | - Bloc plein              |
 | 184   | B8 |      | 588C     | 00 00 00 00 00 00 00 00 0F 0F 0F 0F | 4x4                       |
 | 185   | B9 |      | 5898     | 00 00 00 00 00 00 00 00 F0 F0 F0 F0 | 4x4                       |
@@ -819,4 +819,5 @@ Une tentative d'éditeur hexa en javascript.
 
 
 EOF
+
 ___
