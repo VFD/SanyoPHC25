@@ -11,7 +11,9 @@ Code assembleur à ajouter à la ROM 1.4
 ```asm
 PSGREG    .EQU $C1
 PSGDAT    .EQU $C0
-    .ORG $0000
+
+; 29 octets en toute fin de ROM de $5FE2 à 5FFF.
+    .ORG $5FE2
     ; destroy  A, B ,C
     LD A,7
     OUT (PSGREG),A     ; write registre
@@ -37,6 +39,9 @@ PSGDAT    .EQU $C0
 ```
 Il faut changer le ORG pour pointer sur la bonne zone de la ROM.
 
+Prévision en toutes fin de ROM. Code modifié.
+
+Appel par CALL $5FE2.\
 
 
 ___
