@@ -53,6 +53,11 @@ ZX81:
 ___
 ## ZX81 char tables
 
+Les tables du jeu de caractères ZX81.\
+L'idée est de pouvoir les exploiter pour les conversion.
+
+
+
 | Dec | Hex | Glyph | Description                  | Typical interpreted char |
 |-----|-----|-------|------------------------------|--------------------------|
 | 0   | 00  |       | Space                        | (space)                  |
@@ -121,6 +126,8 @@ ___
 | 63  | 3F  | ?     | Question mark                | ?                        |
 
 64-127:\
+Mot clés BASIC.
+
 | Decimal | Hex | Token/Glyph | Description                        | Typical interpreted char |
 |---------|-----|-------------|------------------------------------|--------------------------|
 | 64      | 40  | NEW         | BASIC keyword NEW                  | @                        |
