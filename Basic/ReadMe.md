@@ -10,6 +10,12 @@ La machine la plus proche est le ZX81, qui partage aussi le Z80.\
 Donc les adaptations doivent être facilitées.
 
 ___
+## Convertion .P to .TXT
+
+Un convertisseur experimental de fichier ZX81 .P vers .TXT.\
+Avec possibilité des carteres semi-graphiques du ZX81 qui existent en unicode.
+
+___
 ## Ressources
 
 ZX81:
