@@ -32,7 +32,7 @@ Même principe mais pour extraire le binaire d'un source .P.
 
 Charge le .P et test si il y a du binaire au début.\
 Si oui extraction possible.\
-Sauve sous le m^me non mais avec .bin.
+Sauve sous le même nom mais avec .bin.
 
 Si je ne fait pas d'erreur, le start du binaire est 0x4005 soit décimal 16389.
 
