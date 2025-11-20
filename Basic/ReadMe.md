@@ -26,6 +26,19 @@ Même chose pour améliorer.
 La suite c'est le recodage pour PHC-25 une fois le code extrait.
 
 ___
+## BIN Extractor
+
+Même principe mais pour extraire le binaire d'un source .P.
+
+Charge le .P et test si il y a du binaire au début.\
+Si oui extraction possible.\
+Sauve sous le m^me non mais avec .bin.
+
+Si je ne fait pas d'erreur, le start du binaire est 0x4005 soit décimal 16389.
+
+étape suivante passer le bin au désassembleur en précisant Org 0x4005.
+
+___
 ## Ressources
 
 ZX81:
