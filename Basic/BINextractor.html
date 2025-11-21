@@ -18,7 +18,9 @@
 </head>
 <body>
   <h1>ZX81 REM Binary Extractor</h1>
-  <p>Loads a ZX81 .P file and extracts the binary payload from the first REM line. Shows a hex preview with correct ZX81 memory addresses (starting at 0x4005).</p>
+  <p>Loads a ZX81 .P file and extracts the binary payload from the first REM line.</p>
+  <p>Shows a hex preview with correct ZX81 memory addresses (starting at 0x43A0).</p>
+  <p>5 bytes for Line No 1 byte for REM, 2 bytes for next line. </p>
 
   <div class="bar">
     <input type="file" id="fileInput" accept=".p">
@@ -69,7 +71,7 @@
         } else {
           extractedBin = result.bin;
           saveBtn.disabled = false;
-          const baseAddr = 0x4000 + 4 + 1; // <-- Correct start address: 0x4005
+          const baseAddr = 0x43A0 + 4 + 1; // <-- Correct start address: 0x4005
           status.textContent = `Extracted ${extractedBin.length} bytes from REM line ${result.lineNumber}, starting at ${baseAddr} (0x${baseAddr.toString(16).toUpperCase()}).`;
           output.value =
             `First line number: ${result.lineNumber}\n` +
@@ -124,7 +126,7 @@
       return { lineNumber, isRem, bin: payload };
     }
 
-    function hexPreview(bytes, width = 16, baseAddr = 0x4000) {
+    function hexPreview(bytes, width = 16, baseAddr = 0x43A0) {
       const toHex = (n) => n.toString(16).toUpperCase().padStart(2, "0");
       const toAscii = (n) => {
         const c = n & 0x7F;
