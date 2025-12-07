@@ -7,6 +7,8 @@ Need to split the 24ko ROM in 3 parts.
 
 So PS1 script to cut ROM.
 
+phc25.zip : original rom from Mame.
+
 ___
 # Next Step
 
