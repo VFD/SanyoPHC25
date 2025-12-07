@@ -11,7 +11,14 @@ L'idée est donc de hacker la ROM Basic et d'y loger de nouveaux caractères (13
 Un source pour l'ASM de la ROM Basic :\
 https://github.com/z88dk/techdocs/blob/master/targets/phc25/phc25rom.asm
 
+## Map de la ROM
 
+### Wait Key
+
+&h0CBF\
+Lit le caractère du buffer clavier dans A. Puis reset. Emplacement mémoire &hF95C.
+- CALL &h0CBF (asm)
+- EXEC &h0CBF (basic)
 
 ___
 ## Méthode
