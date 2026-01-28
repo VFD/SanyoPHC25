@@ -52,8 +52,8 @@ Serait à faire.\
 Plusieurs techniques possible :
 
 - 1ère ligne REM avec le code LM
-- 2 premiere ligne avec REM, la 1ère pour transférer des paramètres au LM.
-- Par DATA classique
+- 2 premieres lignes avec REM, la 1ère pour transférer des paramètres et en recevoir par LM.
+- Par DATA, READ classique
 - Par écrasement des DATA
 
 
