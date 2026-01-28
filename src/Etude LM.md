@@ -89,7 +89,7 @@ On fait un PEEK du &hc003 pour obtenir le résultat.
 
 
 ___
-### Technique d'écrasement DATA
+### Technique d'écrasement DATA à expérimenter
 
 Plus complexe.\
 Déterminer la position en mémoire d'une ligne REM.\
@@ -99,6 +99,13 @@ Avec le READ, faire un POKE à partir de la ligne REM.
 Coder par POKE la fin de programme avant, même si celà semble peu pertinant.\
 NB : à cause d'un éventuel CSAVE.
 
+Prévoir un flag P pour éviter le GOSUB 1000.
+
+La ligne 60000 doit contenir pour elle même au moins 16 octets.\
+Octets qui viennent de la première ligne DATA (écrasement).\
+Ensuite c'est bon.
+
+Le LM vient donc se loger à la place des lignes DATA.
 
 ```basic
 ...
@@ -112,16 +119,39 @@ NB : à cause d'un éventuel CSAVE.
 60010 DATA
 ```
 
-Prévoir un flag P pour éviter le GOSUB 1000.
+NDR : Pas encore testé, expérimentations à faire.
+
+
+Si ne fonctionne pas, genre le PHC ne trouve pas la DATA suivante.
+
+Mode inverse.
+
+```basic
+...
+1000 RESTORE 60010
+1010 ...
+...
+1100 READ A$ ...
+1110 POKE &hnnn, valeur
+...
+60900 DATA ....
+61000 REM XXXXXXXXXXXXXXXX
+```
+On part à l'envers, mais nécessite que la série de 16 octets de DATA soit inversée.\
+On lit le paquet de droite à gauche par paire.\
+Compliqué car un RESTORE N; avec N variable ne fonctionne pas.
+Sauf si hack peut-être.
+
+Un poke sur le N du RESTORE ? il faut l'adresse de la ligne.
 
 ___
 
 
 ### NOTES
 
-CHR$(10), passe à la ligne
-CHR$(12), CLS
-CHR$(13), curseur revient à gauche de la ligne
+CHR$(10), passe à la ligne\
+CHR$(12), CLS\
+CHR$(13), curseur revient à gauche de la ligne\
 
 
 ___
