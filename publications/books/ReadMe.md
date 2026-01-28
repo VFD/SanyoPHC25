@@ -11,9 +11,12 @@ Vu la quantité d'info il y un split.
 De plus, la pauvreté du jeu de caractère m'a amené à analyser la ROM et essayer de comprendre où sont passés les caractères.\
 Ne pas oublier qu'à la basse cet ordinateur n'était destiné qu'au marché Japonais.\
 Et puis voilà, il est arrivé par chez nous en version PAL.\
-Puis c'est le drame, SANYO à simmplement mis à 0 tous les octets qui dessinaient les Kanji.\
+Puis c'est le drame, SANYO à simplement mis à 0 tous les octets qui dessinaient les Kanji.\
 Du coup j'ai retrouvé leur emplacement et j'y ai logé les miens.\
-Le PHC-25 peut alors rivaliser avec son collègue le ZX81.
+Le PHC-25 peut alors rivaliser avec son collègue le ZX81 qui lui est proche.
+
+L'idée aussi est de récupérer une partie des Kanji dans la zone hors CHR$.\
+Pour celà il faut analyser la rom japonaise.
 
 NDR : Le jeu graphique du ZX81 est repris, du coup, tous les logiciels devraient pouvoir être adaptés.\
 Le PHC-25 et le ZX81 partageant le même processeur, un Z80.\
@@ -45,6 +48,14 @@ L'idée de le faire existe, il n'y a plus qu'à...
 ___
 ## Programmez en Assembleur
 
-Serait à faire.
+Serait à faire.\
+Plusieurs techniques possible :
+
+- 1ère ligne REM avec le code LM
+- 2 premiere ligne avec REM, la 1ère pour transférer des paramètres au LM.
+- Par DATA classique
+- Par écrasement des DATA
+
+
 
 ___
