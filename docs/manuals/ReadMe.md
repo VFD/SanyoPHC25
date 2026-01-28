@@ -22,7 +22,7 @@ Version plus récente. Corrigée pour VAL et USR, tableau de caractères effacé
 - Sanyo PHC-25 Notice DEmplois (1982)(Sanyo)(FR)[src].zip        archive PNG des images
 
 Cette version est calibrée pour être imprimée en mode livret A4 ou A3.\
-Le nombre de page est ajusté ppour ça.
+Le nombre de page est ajusté pour ça.
 
 
 ___
