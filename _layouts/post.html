@@ -1,0 +1,22 @@
+---
+layout: default
+---
+<!-- the post -->
+<article class="post">
+	<!-- post header -->
+	<header clas="post-header">
+		<!-- date, author, type -->
+		<p class="post-meta">
+			&#128197;<b> <time datetime="{{ page.date | date_to_xmlschema }}"> {{ page.date | date: "%d/%m/%Y" }} </time> </b> - <b>{{ page.author }}</b> - <b>{{ page.type }}</b>
+			{% if page.modified and page.modified != "" and page.modified != nil %}Modified: {{ page.modified | date: "%d/%m/%Y" }}{% endif %}
+		</p>
+		<!-- title -->
+		<h1 class="post-title">{{ page.title }}</h1>
+	</header>
+	<!-- content -->
+	<div class="post-content">
+		{{ content }}
+	</div>
+</article>
+
+{% include blog-link.html %}
