@@ -19,7 +19,7 @@ ___
 
 Sanyo à effacé le jeu de caractère.
 
-1. Rétablir un jeu de caractère significatif pour l'épose, ex: ZX81, ...
+1. Rétablir un jeu de caractère significatif pour l'époque, en exemple parfait, le ZX81.
 2. Place disponible en fin de ROM 1044 octets
 
 La place disponible permet de rajouter des sous-programmes assembleurs appelable par EXEC (Basic) ou CALL (Assembleur).
