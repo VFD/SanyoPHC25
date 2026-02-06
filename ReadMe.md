@@ -24,20 +24,23 @@ Pour la Game JAM de mai 2025 à octobre 2025.
 
 Les travaux reste cependant toujours d'actualités pour être améliorés.
 
-Le repository RPUFOS sert au adaptation de David H. Ahl. Mais pourrait migrer ici.\
+Le repository RPUFOS qui hébergé les source de David H. Ahl. à migré vers un dépôt éponyme.
+
 Compte tenu de la médicrité du jeu de caractères les adaptations en brute force peuvent être ok, mais c'est mieux de faire quelque chose de plus sexy.\
 D'où l'étude de la ROM PAL et de sa modification.
 
 Travaux divers.
 - Documentations
   - Retro doc et compléments pour programmer sur le PHC-25
-- Hack de la ROM Basic PAL 1.3
+- Hack de la ROM Basic PAL 1.3 vers une v1.4
+  - Ajout de caractères en particulier ceux compatibles avec le ZX81
 - ...
 
-La doc Basic devrait spliter.
-- Basic How To
-- Adaptation du bouquin 10 PRINT
-- Pourquoi pas un 102 Programmes pour PHC-25
+Des écrits pour programmer en Basic.
+- Adaptation du bouquin 10 PRINT pour le fun
+- La notice du Basic 1.3 refaite avec exemples et compléments
+- Une étude approfondie du BASIC
+- Prémisse d'étude sur la programmation en assembleur (c'est du Z80 mais on s'interresse spécifiquement au PHC-25)
 - ...
 
 Le code source utilisé est celui du REPO de z88dk.\
@@ -53,6 +56,8 @@ Anciennement sur RPUFOS. Le Report est en cours.
 
 Travail pour améliorer la ROM Basic du PHC 25.\
 Elle est renomée en RPUFOS Basic v1.4.
+
+Techniquement, il s'agit de 3 ROM de 8Ko. Comme on ne touche que la fin, l'upgrade concernerait que la 3ème ROM.
 
 Ajout de caractères semi-graphique sur la plage ASCII étendue effacée par SANYO pour importer l'ordinateur en Europe.\
 Reprise en particulier des caractères semi-graphiques du ZX81, ordinateur le plus proche (résolution et processeur Z80).
