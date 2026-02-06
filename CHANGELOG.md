@@ -6,7 +6,7 @@ ___
 
 Migration de tout vers le dépot David H Ahl.
 
-Transformation en blog pour RPUFOS.
+Transformation en blog pour RPUFOS. Utilisation de Jekyll.
 
 ## 07 December 2025
 
