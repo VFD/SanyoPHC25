@@ -8,24 +8,71 @@
 ; PHC-25 Memory map:
 ;
 ; 0000h - 5FFFh   : BASIC ROM
+;
+;	0E21h			: Calcul adresse écran depuis coordonnée Y
+;	0E34h			: Conversion coordonnées X,Y vers adresse VRAM
+;
+; ----------------------------------------
 ; F800h - FFFFh   : RAM BASIC working area - need to be decoded
-; 	F95Ch : Buffer clavier ?
-;	0E21h : Calcul adresse écran depuis coordonnée Y
-;	0E34h : Conversion coordonnées X,Y vers adresse VRAM
-;	FB5Bh : Page vidéo courante
 ;
+;	F92Eh		:
+;	F944h		:
+;	F948h-F949h
+;	F958h
+; 	F95Ch		: Buffer clavier ?
+;	F983h
+;	F984h
+;	F989h-F98Ah	:
+;	F98Bh-F98Ch	: adr
+;	F98Dh-F98Eh
+;	FB11h
+;	FB14h
+;	FB17h
+;	FB18h
+;	FB1Ah
+;	FB1Bh
+;	FB5Bh		: Page vidéo courante
+;	FB5Ch		: 
+;	FB6Eh		: 
+;	FB6Fh		: 
+;	FB73h
+;	FD55h
+;	FD56h		:
+;	FD57h-FD58h
+;	FD77h-FD78h	: adr
+;	FD89h-FD8Ah	:
+;	FD8Fh-FD90h
+;	FD95h
+;	FD99h
+;	FD9Ah-FD9Bh
+;	FDAEh
+;	FDAFh
+;	FE50h		: sub routine ?
+;	FE51h-FE52h	: 
+;	FE54h		: sub routine ?
+;	FE55h-FE56h
+;	FEA9h-FEAAh
+;	FEABh-FEACh
+;	FEADh-FEAEh
+;	FEB1h		: flag
+;	FEB2h-FEB3h	: store adr (HL)
+;	FEDDh		: 
+;	FEE0h-FEE1h	:
 ;
-;
-; C000h - DFFFh   : Basic Program (8ko)
+; ----------------------------------------
+; C000h - DFFFh		: Basic Program (8ko)
 ; 
+; ----------------------------------------
 ; 6000h - 77FFh   : Video RAM 1 (6ko) - SCREEN 3 & SCREEN 4
 ;   6000h - 61FFh : SCREEN 1 & 2 Text
 ;   6800h - 69FFh : SCREEN 1 & 2 Attibuts
 ; 
+; ----------------------------------------
 ; E000h - F7FFh : Video RAM 2 (6ko) - SCREEN 3 & SCREEN 4
 ;   E000h - E1FFh : SCREEN 1 & 2 Text
 ;   E800h - E9FFh : SCREEN 1 & 2 Attibuts
 ; 
+; ----------------------------------------
 ; 7800h - 7FFFh   : Free (2ko) for ?
 ; 8000h - BFFFh   : Free (16ko) for ?
 ; 
@@ -4919,32 +4966,32 @@ FORSLP:
 0000205D:	POP HL
 0000205E:	RET
 ; ----------------------------------------
-; for USR?
+; for USR? A=1 from 32B4h
 ; ----------------------------------------
-0000205F:	OR A
-00002060:	PUSH AF
+0000205F:	OR A			; A stay
+00002060:	PUSH AF			;
 00002061:	POP AF
 00002062:	PUSH AF
-00002063:	LD DE,(F989h)
-00002067:	LD HL,(FD6Fh)
+00002063:	LD DE,(F989h)	; 
+00002067:	LD HL,(FD6Fh)	;
 0000206A:	LD C,A
 0000206B:	XOR A			; A = 0
 0000206C:	LD B,A			; B = 0
-0000206D:	SBC HL,BC
-0000206F:	JP C,2123h
+0000206D:	SBC HL,BC		; HL = HL - BC - Carry flag
+0000206F:	JP C,2123h		; if C HL<0 then jump
 00002072:	RST 10h			; compare DE and HL (aka DCOMPR)
-00002073:	JR C,+07h
-00002075:	POP AF
-00002076:	LD (FD6Fh),HL
+00002073:	JR C,+07h		; if DE < HL jump 207Ch
+00002075:	POP AF			; Restore AF
+00002076:	LD (FD6Fh),HL	; HL -> FD6Fh
 00002079:	INC HL
-0000207A:	EX DE,HL
+0000207A:	EX DE,HL		; swap DE HL
 0000207B:	RET
 ; ----------------------------------------
-;
+; Continue
 ; ----------------------------------------
-0000207C:	POP AF
-0000207D:	JP C,2123h
-00002080:	SCF
+0000207C:	POP AF			; Restore AF
+0000207D:	JP C,2123h		; jump, Error: Out of string space
+00002080:	SCF				; Set Carry Flag
 00002081:	PUSH AF
 00002082:	LD HL,2061h
 00002085:	PUSH HL
@@ -4956,29 +5003,30 @@ FORSLP:
 00002095:	LD (FD9Eh),HL
 00002098:	LD HL,FD5Dh
 0000209B:	LD DE,(FD5Bh)
-0000209F:	RST 10h		; compare DE and HL (aka DCOMPR)
+0000209F:	RST 10h			; compare DE and HL (aka DCOMPR)
 000020A0:	LD BC,209Bh
-000020A3:	JR C,+38h
+000020A3:	JR C,+38h		; if DE < HL jump to 20DDh!
 000020A5:	LD HL,(FD89h)
 000020A8:	LD DE,(FD8Bh)
-000020AC:	RST 10h		; compare DE and HL (aka DCOMPR)
-000020AD:	JR NC,+09h
+000020AC:	RST 10h			; compare DE and HL (aka DCOMPR)
+000020AD:	JR NC,+09h		; no Carry jump to 20B8h
 000020AF:	INC HL
 000020B0:	LD A,(HL)
 000020B1:	INC HL
 000020B2:	RLCA
 000020B3:	LD BC,20A8h
-000020B6:	JR +25h
+000020B6:	JR +25h			; jump to 20DDh
+; from 20ADh, 20C7h, 20D8h
 000020B8:	LD DE,(FD8Dh)
-000020BC:	RST 10h		; compare DE and HL (aka DCOMPR)
-000020BD:	JR NC,+42h
+000020BC:	RST 10h			; compare DE and HL (aka DCOMPR)
+000020BD:	JR NC,+42h		; no Carry jump to 2101h
 000020BF:	CALL 1E13h
 000020C2:	LD A,D
 000020C3:	LD E,L
 000020C4:	LD D,H
 000020C5:	ADD HL,BC
 000020C6:	RLCA
-000020C7:	JR NC,-11h
+000020C7:	JR NC,-11h		; no Carry jump to 20B8h
 000020C9:	LD (FD73h),HL
 000020CC:	EX DE,HL
 000020CD:	LD C,(HL)
@@ -4987,9 +5035,10 @@ FORSLP:
 000020D1:	ADD HL,BC
 000020D2:	ADD HL,BC
 000020D3:	LD DE,(FD73h)
-000020D7:	RST 10h		; compare DE and HL (aka DCOMPR)
-000020D8:	JR NC,-22h
+000020D7:	RST 10h			; compare DE and HL (aka DCOMPR)
+000020D8:	JR NC,-22h		; no Carry jump to 20B8h
 000020DA:	LD BC,20D3h
+; from 20A3h, 20B6h
 000020DD:	PUSH BC
 000020DE:	LD A,(HL)
 000020DF:	INC HL
@@ -5018,7 +5067,7 @@ FORSLP:
 000020FC:	LD (FD9Ch),DE
 00002100:	RET
 ; ----------------------------------------
-;
+; from 20BDh
 ; ----------------------------------------
 00002101:	LD HL,(FD9Eh)
 00002104:	LD A,L
@@ -5044,7 +5093,7 @@ FORSLP:
 0000211E:	LD L,C
 0000211F:	LD H,B
 00002120:	JP 2089h
-
+; from 207Dh 
 00002123:	LD B,0Dh					; Error: Out of string space
 00002125:	JP 05FBh					; ERROR
 
@@ -5189,7 +5238,7 @@ FORSLP:
 0000220B:	LD HL,(FD8Bh)
 0000220E:	ADD HL,DE
 0000220F:	LD DE,(FD8Dh)
-00002213:	RST 10h		; compare DE and HL (aka DCOMPR)
+00002213:	RST 10h				; compare DE and HL (aka DCOMPR)
 00002214:	JR Z,+1Ah
 00002216:	CALL 1E40h
 00002219:	LD E,(HL)
@@ -5199,7 +5248,7 @@ FORSLP:
 0000221D:	JR NZ,-11h
 0000221F:	LD A,(FD54h)
 00002222:	RRCA
-00002223:	JP C,05E9h		; Error: Duplicate definition
+00002223:	JP C,05E9h			; Error: Duplicate definition
 00002226:	POP AF
 00002227:	CP (HL)
 00002228:	JP Z,228Ch
@@ -5391,7 +5440,7 @@ DEPINT:
 00002344:	PUSH HL
 00002345:	PUSH AF
 00002346:	LD HL,1999h
-00002349:	RST 10h		; compare DE and HL (aka DCOMPR)
+00002349:	RST 10h			; compare DE and HL (aka DCOMPR)
 0000234A:	JP C,05E5h		; Error: Overflow
 0000234D:	LD L,E
 0000234E:	LD H,D
@@ -5468,7 +5517,7 @@ DEPINT:
 000023CB:	CALL 27DDh
 000023CE:	POP HL
 000023CF:	CALL 1E66h		; EVAL_0
-000023D2:	RST 20h		; GETVAR: Get variable address to DE
+000023D2:	RST 20h			; GETVAR: Get variable address to DE
 000023D3:	JP NZ,05E1h		; SN_ERR
 000023D6:	POP HL
 000023D7:	LD (FDA8h),HL
@@ -5703,13 +5752,14 @@ NXTSTT:
 0000254E:	OR A			; End of line?
 0000254F:	RET Z			; Yes - Exit
 00002550:	INC HL			; Next byte
-00002551:	JR -06h
+00002551:	JR -06h			; jump to 254Dh
 ; ----------------------------------------
 ; __DATA  (Get next statement address)
 ; ----------------------------------------
 00002553:	LD C,3Ah
 00002555:	LD B,C
 00002556:	DEC HL
+; from 255Fh, 2564h
 00002557:	INC HL
 00002558:	LD A,(HL)
 00002559:	OR A
@@ -5717,11 +5767,11 @@ NXTSTT:
 0000255B:	CP C
 0000255C:	RET Z
 0000255D:	CP 22h			; Literal string?
-0000255F:	JR NZ,-0Ah
+0000255F:	JR NZ,-0Ah		; jump to 2557h
 00002561:	LD A,C
 00002562:	XOR B
 00002563:	LD C,A
-00002564:	JR -0Fh
+00002564:	JR -0Fh			; jump to 2557h
 ; ----------------------------------------
 ; -
 ; ----------------------------------------
@@ -6035,6 +6085,7 @@ NXTSTT:
 00002794:	LD A,0Dh
 00002796:	CALL 108Ch
 00002799:	JR -19h
+;
 0000279B:	LD A,(F984h)		; PRTFLG
 0000279E:	RLCA
 0000279F:	CALL C,4429h
@@ -7836,7 +7887,7 @@ NXTSTT:
 ; ----------------------------------------
 ; Adr USR() at FD6D-FD6E
 ; ----------------------------------------
-000032B4:	LD A,01h
+000032B4:	LD A,01h		; A = 1
 000032B6:	CALL 205Fh
 000032B9:	LD HL,FD6Eh
 000032BC:	LD (HL),D		; FD6Eh
@@ -12398,20 +12449,20 @@ COORD_PARMS_DST:
 00004E1A:	XOR A
 00004E1B:	RET
 ; ----------------------------------------
-;
+; key scan?
 ; ----------------------------------------
 00004E1C:	LD A,(F914h)
 00004E1F:	AND A
 00004E20:	JR NZ,+05h
-00004E22:	LD DE,4F6Ch
+00004E22:	LD DE,4F6Ch		; pointer to table
 00004E25:	JR +0Eh
-00004E27:	LD DE,4EECh
+00004E27:	LD DE,4EECh		; pointer to table
 00004E2A:	JR +14h
 00004E2C:	LD A,(F914h)
 00004E2F:	AND A
 00004E30:	JR NZ,+0Bh
-00004E32:	LD DE,4F2Ch
-00004E35:	LD HL,(F912h)
+00004E32:	LD DE,4F2Ch		; pointer to table
+00004E35:	LD HL,(F912h)	; 
 00004E38:	LD H,00h
 00004E3A:	ADD HL,DE
 00004E3B:	LD A,(HL)
@@ -12419,7 +12470,7 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00004E3D:	LD DE,4EACh
+00004E3D:	LD DE,4EACh		; pointer to table
 00004E40:	JP 4E35h
 ; ----------------------------------------
 ; DATA ?
@@ -12453,7 +12504,7 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-00004E6F:	LD DE,4FACh
+00004E6F:	LD DE,4FACh			; table below
 00004E72:	CALL 4E35h
 00004E75:	OR A
 00004E76:	RET Z
