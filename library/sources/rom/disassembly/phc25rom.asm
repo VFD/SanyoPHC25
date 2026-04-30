@@ -9,7 +9,13 @@
 ;
 ; 0000h - 5FFFh   : BASIC ROM
 ; F800h - FFFFh   : RAM BASIC working area - need to be decoded
-; 
+; 	F95Ch : Buffer clavier ?
+;	0E21h : Calcul adresse écran depuis coordonnée Y
+;	0E34h : Conversion coordonnées X,Y vers adresse VRAM
+;	FB5Bh : Page vidéo courante
+;
+;
+;
 ; C000h - DFFFh   : Basic Program (8ko)
 ; 
 ; 6000h - 77FFh   : Video RAM 1 (6ko) - SCREEN 3 & SCREEN 4
@@ -803,11 +809,11 @@ READY:
 00000751:	LD HL,(F98Dh)
 00000754:	PUSH DE
 00000755:	LD DE,(FD89h)
-00000759:	RST 10h		; compare DE and HL (aka DCOMPR)
+00000759:	RST 10h				; compare DE and HL (aka DCOMPR)
 0000075A:	POP DE
 0000075B:	JR NC,+18h
 0000075D:	EX HL,(SP)
-0000075E:	RST 10h		; compare DE and HL (aka DCOMPR)
+0000075E:	RST 10h				; compare DE and HL (aka DCOMPR)
 0000075F:	JR NC,+14h
 00000761:	DEC DE
 00000762:	DEC DE
@@ -815,12 +821,12 @@ READY:
 00000764:	LD (FE55h),DE		; DE for HL see ROM 0B54h
 00000768:	EX HL,(SP)
 00000769:	CALL FE54h			; LD (-),HL see ROM 0B54h
-0000076C:	XOR A
-0000076D:	LD BC,0000h
-00000770:	CPIR
+0000076C:	XOR A				; A = 0
+0000076D:	LD BC,0000h			; BC = 0
+00000770:	CPIR				; Compare A with (HL), Increment HL, Repeat until BC=0 or match found
 00000772:	DEC DE
 00000773:	JR -21h
-00000775:	XOR A
+00000775:	XOR A				; A = 0
 00000776:	EX DE,HL
 00000777:	LD (HL),A
 00000778:	DEC HL
@@ -1531,7 +1537,7 @@ FORSLP:
 00000C29:	LD A,2Ch
 00000C2B:	CALL 0D48h
 00000C2E:	CALL 4555h					; __CTOFF  - Turn off Cassette tape motor
-00000C31:	LD SP,F8FFh
+00000C31:	LD SP,F8FFh					; Wait for 1 or 2 screen
 00000C34:	LD A,20h
 00000C36:	LD (F92Eh),A
 00000C39:	CALL 10DFh
@@ -1539,26 +1545,26 @@ FORSLP:
 00000C3E:	LD (F95Ah),A
 00000C41:	LD HL,0051h
 00000C44:	CALL 1DFBh
-00000C47:	CALL 0CBFh
-00000C4A:	CP 31h
-00000C4C:	JR Z,+0Dh
-00000C4E:	CP 32h
-00000C50:	JR Z,+09h
+00000C47:	CALL 0CBFh					; Wait Key
+00000C4A:	CP 31h						; 1 screen
+00000C4C:	JR Z,+0Dh					; 0C5Bh
+00000C4E:	CP 32h						; 2 screens
+00000C50:	JR Z,+09h					; 0C5Bh
 00000C52:	CP 14h
-00000C54:	JR NZ,-25h
-00000C56:	CALL 0CBFh
-00000C59:	JR -2Ah
+00000C54:	JR NZ,-25h					; 0C31h
+00000C56:	CALL 0CBFh					; Wait Key
+00000C59:	JR -2Ah						; 0C31h
 00000C5B:	PUSH AF
 00000C5C:	CALL 108Ch
 00000C5F:	CALL 10DFh
 00000C62:	POP AF
-00000C63:	AND 0Fh
+00000C63:	AND 0Fh						; 00001111 (0-15 value)
 00000C65:	LD (FB56h),A
 00000C68:	DEC A
 00000C69:	LD L,A
 00000C6A:	LD H,00h
 00000C6C:	LD BC,0006h
-00000C6F:	ADD HL,BC
+00000C6F:	ADD HL,BC					; HL = ( (A & 0x0F) - 1 ) + 6
 00000C70:	LD D,(HL)
 00000C71:	LD E,FFh
 00000C73:	LD HL,(FD59h)
@@ -1650,7 +1656,7 @@ FORSLP:
 00000D09:	POP BC
 00000D0A:	RET
 ; ----------------------------------------
-;
+; buffer clavier ?
 ; ----------------------------------------
 00000D0B:	CALL 0D31h
 00000D0E:	RET NZ
@@ -2350,6 +2356,7 @@ FORSLP:
 ; ----------------------------------------
 000010DB:	POP AF
 000010DC:	JP 115Dh
+;
 000010DF:	LD A,(FB73h)
 000010E2:	DEC A
 000010E3:	RET Z
@@ -4912,7 +4919,7 @@ FORSLP:
 0000205D:	POP HL
 0000205E:	RET
 ; ----------------------------------------
-;
+; for USR?
 ; ----------------------------------------
 0000205F:	OR A
 00002060:	PUSH AF
@@ -4921,11 +4928,11 @@ FORSLP:
 00002063:	LD DE,(F989h)
 00002067:	LD HL,(FD6Fh)
 0000206A:	LD C,A
-0000206B:	XOR A
-0000206C:	LD B,A
+0000206B:	XOR A			; A = 0
+0000206C:	LD B,A			; B = 0
 0000206D:	SBC HL,BC
 0000206F:	JP C,2123h
-00002072:	RST 10h		; compare DE and HL (aka DCOMPR)
+00002072:	RST 10h			; compare DE and HL (aka DCOMPR)
 00002073:	JR C,+07h
 00002075:	POP AF
 00002076:	LD (FD6Fh),HL
@@ -7662,10 +7669,10 @@ NXTSTT:
 000031CC:	CALL 2E28h
 000031CF:	JP 2466h
 ; ----------------------------------------
-; __USR
+; __USR () parameter ?  (FD6Dh FD6Eh) address ; FD6Ch flag ; FD6Fh ?
 ; ----------------------------------------
-000031D2:	CALL 32B4h
-000031D5:	CALL 2334h		; DEPINT
+000031D2:	CALL 32B4h		;
+000031D5:	CALL 2334h		; DEPINT - 
 000031D8:	LD HL,(FD6Dh)
 000031DB:	LD (HL),E
 000031DC:	POP BC
@@ -7827,16 +7834,16 @@ NXTSTT:
 000032B0:	LD L,A
 000032B1:	JP 2027h
 ; ----------------------------------------
-;
+; Adr USR() at FD6D-FD6E
 ; ----------------------------------------
 000032B4:	LD A,01h
 000032B6:	CALL 205Fh
 000032B9:	LD HL,FD6Eh
-000032BC:	LD (HL),D
+000032BC:	LD (HL),D		; FD6Eh
 000032BD:	DEC HL
-000032BE:	LD (HL),E
+000032BE:	LD (HL),E		; FD6Dh
 000032BF:	DEC HL
-000032C0:	LD (HL),A
+000032C0:	LD (HL),A		; FD6Ch
 000032C1:	RET
 ; ----------------------------------------
 ;
@@ -10902,10 +10909,10 @@ COORD_PARMS_DST:
 ; ----------------------------------------
 ;
 ; ----------------------------------------
-000045A0:	XOR A
+000045A0:	XOR A			; A=0
 000045A1:	LD BC,(FD89h)
-000045A5:	LD (BC),A
-000045A6:	INC BC
+000045A5:	LD (BC),A		; FD89h = 0
+000045A6:	INC BC			; BC = FD90h
 000045A7:	LD DE,(FD57h)
 000045AB:	INC DE
 000045AC:	INC DE
@@ -10914,7 +10921,7 @@ COORD_PARMS_DST:
 000045AF:	LD HL,(FD8Fh)
 000045B2:	CALL 0790h
 000045B5:	LDIR			; DO (HL)->(DE); HL+1; DE+1; BC-1; UNTIL BC=0
-000045B7:	XOR A
+000045B7:	XOR A			; A=0
 000045B8:	LD (DE),A
 000045B9:	INC DE
 000045BA:	LD A,FFh
@@ -11122,7 +11129,7 @@ COORD_PARMS_DST:
 000046E8:	AND 01h
 000046EA:	JR -0Dh
 000046EC:	CALL 2334h				; DEPINT
-000046EF:	CP 03h
+000046EF:	CP 03h					; check 3 possible values RND LOG
 000046F1:	JP NC,232Bh				; Error: Illegal Function Call
 000046F4:	RET
 ; ----------------------------------------
