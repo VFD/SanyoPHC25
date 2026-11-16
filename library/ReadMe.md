@@ -3,13 +3,11 @@
 ___
 ## Introduction
 
-Livres et article regroupé ici.\
+Livres et article regroupé ici.
 
 Pour les articles, uniquement une extraction des pages concernées dans les revues.\
-OCR des pages.
+OCR des pages. Travaux de recherche en cours.
 
-Travaux de recherche en cours.
-
-Pour les livres, nous n'avons rien trouvé.
+Pour les livres, nous n'avons rien trouvé à date.
 
 ___
