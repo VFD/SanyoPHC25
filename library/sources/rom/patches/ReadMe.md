@@ -53,12 +53,16 @@ ___
 ### Emulteur
 
 Renommer la rom en « phc25rom.bin », puis la placer dans le répertoire de l'émulateur.\
-Pour MAME, je ne sais pas.
+Pour MAME, il faut spliter la ROM en 3.
+
+<p align="center">────────────────────</p>
 
 ### Sur la machine physique
 
-Il faut dumper le BIN sur une ROM 24K et remplacer dans le PHC-25.\
+Il faut dumper le BIN sur trois ROM 8Ko et remplacer dans le PHC-25.\
 N'ayant rien de tout ça, je ne peux pas faire.
+
+<p align="center">────────────────────</p>
 
 ### Affichage des caractères
 
@@ -94,21 +98,6 @@ Reset de la nouvelle ligne à faire.
 
 ___
 ### Idées
-
-#### USR
-
-Il semble que la commande USR se code comme ci-dessous :
-
-```basic
-100 CLEAR 50,&HE000
-110 POKE &HE000,&HC9
-120 X=USR(&HE000)
-```
-
-Mais provoque une erreur qui n'est pas une ereur de syntaxe.\
-"Illegal function call".
-
-
 
 #### Scroll UP de l'écran Texte
 
