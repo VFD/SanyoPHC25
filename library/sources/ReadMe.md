@@ -13,8 +13,15 @@ ___
 
 ```mermaid
 ---
-title: Directories for Sanyo PHC-25 sources
+config:
+  treeView:
+    showIcons: true
+  themeVariables:
+      treeView:
+          labelColor: '#FF0000'
+          lineColor: '#0000FF'
 ---
+
 treeView-beta
 
 sources/
@@ -47,5 +54,11 @@ sources/
     ReadMe.md
   ReadMe.md
 ```
+
+___
+
+## To do
+
+___
 
 
