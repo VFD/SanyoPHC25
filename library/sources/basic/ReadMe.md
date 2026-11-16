@@ -4,7 +4,7 @@ ___
 ## Introduction 
 
 Travaux pour programes BASIC avec la ROM 1.4.\
-Donc usage du jeu de caractères étendus de la ROM.
+Donc usage du jeu de caractères étendus de la ROM 1.4 (toujours en beta).
 
 La machine la plus proche est le ZX81, qui partage aussi le Z80.\
 Donc les adaptations doivent être facilitées.
