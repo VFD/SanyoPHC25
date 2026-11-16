@@ -2,11 +2,9 @@
 
 # Introduction
 
-Nouvelle extension developpé par 6502man.
+Nouvelle extension développé par 6502man. Son et port joystick.
 
-Son et port joystick.
-
-Code assembleur à ajouter à la ROM 1.4
+Code assembleur à ajouter à la ROM :
 
 ```asm
 PSGREG    .EQU $C1
@@ -85,6 +83,6 @@ PSGDAT:             00C0 DEFINED AT LINE 2
 
 ___
 
-Le code est dans la ROM béta 3 est suivantes.
+Le code est dans la ROM béta 3 et versions suivantes.
 
 ___
