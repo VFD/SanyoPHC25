@@ -18,8 +18,8 @@ config:
     showIcons: true
   themeVariables:
       treeView:
-          labelColor: '#FF0000'
-          lineColor: '#0000FF'
+      labelColor: '#D55E00'   # vermillion: readable on white and black
+      lineColor: '#0072B2'    # blue: distinct from the label for all common color blindness types
 ---
 
 treeView-beta
