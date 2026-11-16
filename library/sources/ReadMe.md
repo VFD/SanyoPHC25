@@ -18,8 +18,8 @@ config:
     showIcons: true
   themeVariables:
       treeView:
-      labelColor: '#ffff00'
-      lineColor: '#ffffE9'
+      labelColor: '#ff00ff'
+      lineColor: '#ff00E9'
 ---
 
 treeView-beta
