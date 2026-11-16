@@ -45,12 +45,25 @@
 ;	FD95h
 ;	FD99h
 ;	FD9Ah-FD9Bh
-;	FDAEh
-;	FDAFh
+;
+; PHC-25 BASIC floating point accumulator (FAC), RAM layout
+; Verified from ROM listing (routines $2B7A, $2BC9, $2C01, $2AF3)
+;	FDAAh		: FAC - Lowest mantissa byte (guard/rounding)
+;	FDABh		: FAC - Mantissa byte 1 (low byte of 32-bit integer)
+;	FDACh		: FAC - Mantissa byte 2 (FACLOW, word at FDAC..FDAD)
+;	FDADh		: FAC - Mantissa byte 3
+;	FDAEh		: FAC - Mantissa high byte (bit 7 = sign when packed)
+;	FDAFh		: FAC - Exponent (0 = value is zero)
+;   FDB0h       : FAC - Work sign (80h = positive, 00h = negative)
+; Secondary floating point register (operand)
+;   FDB1h       : FDB1..FDB5, FDB5 = high byte
+;   FDB6h       : Exponent
+;
 ;	FE50h		: sub routine ?
 ;	FE51h-FE52h	: 
 ;	FE54h		: sub routine ?
 ;	FE55h-FE56h
+;   FE59h-FE5Ah : USR vector adress (entry point of user asm)
 ;	FEA9h-FEAAh
 ;	FEABh-FEACh
 ;	FEADh-FEAEh
@@ -78,8 +91,8 @@
 ; 
 ; ----------------------------------------
 ; Based on work by:
-;	Z88dk
-;	Mokona
+;	Z88dk; Mokona; VincentD;
+;   IA: Claude, Copilot
 ; ----------------------------------------
 ; ----------------------------------------
 ; Z80 RST
@@ -875,7 +888,7 @@ READY:
 00000773:	JR -21h
 00000775:	XOR A				; A = 0
 00000776:	EX DE,HL
-00000777:	LD (HL),A
+00000777:	LD (HL),A			; addr to 0, 
 00000778:	DEC HL
 00000779:	LD (HL),A
 0000077A:	DEC HL
@@ -883,7 +896,7 @@ READY:
 0000077C:	DEC HL
 0000077D:	LD (HL),A
 0000077E:	DEC HL
-0000077F:	LD (FD57h),HL
+0000077F:	LD (FD57h),HL		; FD57h <- HL
 00000782:	PUSH BC
 00000783:	CALL 185Bh
 00000786:	POP BC
@@ -915,17 +928,17 @@ READY:
 0000079E:	PUSH DE
 0000079F:	JR Z,+0Ch
 000007A1:	POP DE
-000007A2:	CALL 233Eh		; LNUM_PARM
+000007A2:	CALL 233Eh			; LNUM_PARM
 000007A5:	PUSH DE
 000007A6:	JR Z,+0Eh
-000007A8:	RST 20h		; GETVAR: Get variable address to DE
+000007A8:	RST 20h				; GETVAR: Get variable address to DE
 000007A9:	CALL 1D21h
 000007AC:	RL C
 000007AE:	RST 38h
 000007AF:	RST 38h
 000007B0:	CALL NZ,233Eh		; LNUM_PARM
-000007B3:	JP NZ,05E1h		; SN_ERR
-000007B6:	RST 20h		; GETVAR: Get variable address to DE
+000007B3:	JP NZ,05E1h			; SN_ERR
+000007B6:	RST 20h				; GETVAR: Get variable address to DE
 000007B7:	EX DE,HL
 000007B8:	POP DE
 000007B9:	LD (FEA7h),HL
