@@ -6,7 +6,7 @@ Il y a ici le code source de la ROM en cours de documentation.
 
 Toute participation est bienvenue pour améliorer la connaissance de cette ROM.
 
-La fin de la ROM a été netoyée (mise à 00h des octets). La place restabte servira à ajouter des fonctions utiles.
+La fin de la ROM a été nettoyée (mise à 00h des octets). La place restante servira à ajouter des fonctions utiles.
 
 ## ROM v.1.4.
 
@@ -23,13 +23,18 @@ La ROM finale 1.4 devra être testée sur un Sanyo PHC-25.
 ___
 ### PSG01_Add
 
-Pour le PSG01 reborn, en cours de developpement.
+Pour le PSG01 reborn, en cours de developpement.\
+Un bout de code est ajouté à la fin.\
+Serait possiblement enlevé si le reborn devient 100% fonctionnel.
 
 ___
 ### ScreenChoice_Add
 
 Pour faciliter les bascules entre 1 et 2 écran.\
-Reste la partie CLEAR à décoder.
+Reste la partie CLEAR à décoder.\
+C'est une option et fin de projet car le faire directement ne change pas vraiment la donne.\
+
+To do, mettre le code ici.
 
 ___
 ### Scroll_Add
