@@ -19,7 +19,7 @@ config:
   themeVariables:
       treeView:
       labelColor: '#ff00ff'
-      lineColor: '#ff00E9'
+      lineColor: '#0000EE'
 ---
 
 treeView-beta
