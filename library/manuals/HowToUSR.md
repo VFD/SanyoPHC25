@@ -7,7 +7,7 @@ Le but ici est de documenter la fonction avec les différentes méthodes de reto
 
 Il faut aussi savoir que le Basic PHC n'a pas de fonction DEFUSR qui positionne le point d'entrée du programme assembleur.
 
-Rédaction d'un markdown avant intégration dans le nouveau documment du basic.
+Rédaction d'un markdown avant intégration dans le nouveau document du basic.
 
 ___
 # Utiliser USR
@@ -15,6 +15,7 @@ ___
 ## Faire le DEFUSR
 
 DEFUSR n'étant pas présent, il faut donc tout faire.
+
 
 ### Définir la zone mémoire
 
@@ -27,9 +28,11 @@ En principe c'est un classique des machines de l'époque.
 Le code assembleur débutera à l'adresse &HF700.\
 Par principe en mémoire haute. Ici le postulat est 1 seul écran.
 
+<p align="center">────────────────────</p>
+
 ### Donner le point d'entrée
 
-Il faut poker l'adresse dans la mémoire de travail du basic.\
+Il faut poker l'adresse dans la mémoire de travail du basic.
 
 * &HFE59: adresse de poid faible
 * &HFE5A: adresse de poid fort
@@ -40,7 +43,7 @@ Il faut poker l'adresse dans la mémoire de travail du basic.\
 
 Le PHC-25 est prêt pour exécuter du code via USR.
 
-
+___
 ## Retour de la valeur
 
 ### Retour de la valeur via HL
@@ -61,7 +64,7 @@ Sinon:
 
 ```asm
 F706: CD 56 24    CALL 2456h     ; return HL through the FAC
-F709: C9                         ; Retour
+F709: C9                         ; Return
 ```
 
 
@@ -76,6 +79,8 @@ F709: C9                         ; Retour
 80 X=USR(42)
 90 PRINT:PRINT X
 ```
+
+<p align="center">────────────────────</p>
 
 ### Retour par écriture dans la FAC
 
@@ -105,12 +110,12 @@ Sinon:
 
 ```asm
 F709: CD 7A 2B    CALL 2B7Ah     ; load FAC from B,C,D,E and return to the dispatcher
-F70C: C9                         ; Retour
+F70C: C9                         ; Return
 ```
 
 
 ```basic
-10 REM Load the machine code routine (US English comments)
+10 REM Load the machine code routine
 20 CLEAR 200,&HF700
 30 FOR J=0 TO 11
 40 READ B:POKE &HF700+J,B
