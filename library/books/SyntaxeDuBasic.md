@@ -44,15 +44,21 @@ Espaces <- " "* ;
 
 Pour chaque instruction on va tenter un schema de type PEG.
 
-On défini par ailleurs ce qu'est un caractère ASCII.
 
+
+## On défini par ailleurs ce qu'est un caractère ASCII.
+
+### Une séquence ASCII
 
 ```mermaid
 railroad-peg-beta
 
-ASCII <- ((Majuscule? Minuscule? Chiffre? )?)+ ;
+ASCII <- ( Majuscule? Minuscule? Chiffre? Autre? )+ ; 
+
+ASCII2 <- Majuscule / Minuscule / Chiffre / Autre ;
 ```
 
+#### Les Majuscules
 
 ```mermaid
 railroad-peg-beta
@@ -61,11 +67,23 @@ Majuscule <- "A" / "B" / "C" / "D" / "E" / "F" / "G" / "H" / "I" / "J" / "K" / "
         / "N" / "O" / "P" / "Q" / "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" ;
 ```
 
+#### Les Minuscules
+
 ```mermaid
 railroad-peg-beta
 
 Minuscule <- "a" / "b" / "c" / "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "l" / "m"
         / "n" / "o" / "p" / "q" / "r" / "s" / "t" / "u" / "v" / "w" / "x" / "y" / "z" ;
+```
+
+#### Les Autres
+
+```mermaid
+railroad-peg-beta
+
+Autre <- " " / "!" / '"' / "#" / "$" / "%" / "&" / "'" / "(" / ")" / "*" / "+" / ","
+       / "-" / "." / "/" / ":" / ";" / "<" / "=" / ">" / "?" / "@" / "[" / "\\" / "]"
+       / "^" / "_" / "`" / "{" / "|" / "}" / "~" ;
 ```
 
 ___
