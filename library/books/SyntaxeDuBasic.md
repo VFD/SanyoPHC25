@@ -50,7 +50,7 @@ On défini par ailleurs ce qu'est un caractère ASCII.
 ```mermaid
 railroad-peg-beta
 
-ASCII <- (Majuscule? Minuscule? Chiffre? )? ; 
+ASCII <- ((Majuscule? Minuscule? Chiffre? )?)+ ;
 ```
 
 
