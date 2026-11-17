@@ -86,6 +86,14 @@ Autre <- " " / "!" / '"' / "#" / "$" / "%" / "&" / "'" / "(" / ")" / "*" / "+" /
 
 
 ___
+## Opérateur
+
+```mermaid
+Operateur <- "+" / "-" / "*" / "/" / "AND" / "OR" / "NOT";
+```
+
+
+___
 ## Variable Numérique
 
 Une variable doit être constituée de 2 caractères maximum. Tous caractère suplémentaire n'est pas pertinent.
@@ -94,6 +102,12 @@ Une variable doit être constituée de 2 caractères maximum. Tous caractère su
 railroad-peg-beta
 
 VarNum <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
+
+ExprNum <- TermeNum (Espaces Operateur Espaces TermeNum)* ;
+
+TermeNum <- Numero / VarNum ;
+
+
 ```
 
 Exemples : i, I, a, CC, X1, y0.
@@ -108,9 +122,16 @@ Suivi du caractère $.
 railroad-peg-beta
 
 VarChar <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
+
+ExprChaine <- TermeChaine (Espaces "+" Espaces TermeChaine)* ;
+
+TermeChaine <- Chaine / VarChaine ;
+
+
 ```
 
 Exemples : a$, XX$, etc.
+
 
 ___
 ## Instruction LET
