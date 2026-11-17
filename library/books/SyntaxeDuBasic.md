@@ -141,7 +141,12 @@ ___
 ```mermaid
 railroad-peg-beta
 
-LET <- "LET"? ( ( VarNum "=" ( Chiffre+ / VarNum ) ) / ( VarChar "=" (( '"' ASCII+ '"' ) / ( VarChar )) ) );
+
+Let <- ("LET" Espaces)? (Affectation_Num / Affectation_Chaine) ;
+
+Affectation_Num <- VarNum Espaces "=" Espaces ExprNum ;
+
+Affectation_Chaine <- VarChaine Espaces "=" Espaces ExprChaine ;
 
 ```
 
