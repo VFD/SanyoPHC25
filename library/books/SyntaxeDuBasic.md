@@ -95,7 +95,7 @@ Une variable doit être constituée de 2 caractères maximum. Tous caractère su
 ```mermaid
 railroad-peg-beta
 
-Variable <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )?
+Variable <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
 ```
 
 ___
@@ -107,7 +107,7 @@ Suivi du caractère $.
 ```mermaid
 railroad-peg-beta
 
-Variable <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$"
+Variable <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
 ```
 
 
@@ -117,7 +117,7 @@ ___
 Les éléments définis précédement restent valide (chiffre, espace, etc.)
 
 ```mermaid
-
+info
 ```
 
 ___
