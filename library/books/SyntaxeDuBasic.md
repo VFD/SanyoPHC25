@@ -89,6 +89,8 @@ ___
 ## Opérateur
 
 ```mermaid
+railroad-peg-beta
+
 Operateur <- "+" / "-" / "*" / "/" / "AND" / "OR" / "NOT";
 ```
 
