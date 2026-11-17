@@ -45,7 +45,7 @@ Espaces <- " "* ;
 Pour chaque instruction on va tenter un schema de type PEG.
 
 
-
+___
 ## On défini par ailleurs ce qu'est un caractère ASCII.
 
 ### Une séquence ASCII
@@ -53,9 +53,7 @@ Pour chaque instruction on va tenter un schema de type PEG.
 ```mermaid
 railroad-peg-beta
 
-ASCII <- ( Majuscule? Minuscule? Chiffre? Autre? )+ ; 
-
-ASCII2 <- ( Majuscule / Minuscule / Chiffre / Autre )+ ;
+ASCII <- ( Majuscule / Minuscule / Chiffre / Autre )+ ;
 ```
 
 #### Les Majuscules
@@ -95,7 +93,7 @@ Une variable doit être constituée de 2 caractères maximum. Tous caractère su
 ```mermaid
 railroad-peg-beta
 
-Variable <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
+Variable Numérique <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
 ```
 
 ___
@@ -107,7 +105,7 @@ Suivi du caractère $.
 ```mermaid
 railroad-peg-beta
 
-Variable <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
+Variable Chaîne <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
 ```
 
 
