@@ -55,7 +55,7 @@ railroad-peg-beta
 
 ASCII <- ( Majuscule? Minuscule? Chiffre? Autre? )+ ; 
 
-ASCII2 <- Majuscule / Minuscule / Chiffre / Autre ;
+ASCII2 <- ( Majuscule / Minuscule / Chiffre / Autre )+ ;
 ```
 
 #### Les Majuscules
