@@ -8,7 +8,7 @@ Le but est de montrer la syntaxe d'une ligne du BASIC.
 Il sera étudier de mettre ou non ceci dans la documentation (rtf et PDF).
 
 ___
-## Schéma
+## Syntaxe d'une ligne BASIC
 
 Le schéma ci-dessous est fait avec Mermaid.\
 Il utilise le railroad-peg.
@@ -37,13 +37,45 @@ Espaces <- " "* ;
 ```
 
 * Une ligne du BASIC commence par un numéro, de 0 à 65535.
-* Le signe ":" peut apparaître pour séparer les instruction.
+* Le signe ":" peut apparaître plusieurs fois en début de ligne
+* Le signe ":" sert à séparer les instructions, il peut en exister plusieurs
 * L'espace est toujours facultatif
-
 * L'instruction du Basic sera définie en fonction de l'avancée de ce document.
 
 Pour chaque instruction on va tenter un schema de type PEG.
 
+On défini par ailleurs ce qu'est un caractère ASCII.
 
-__
+
+```mermaid
+railroad-peg-beta
+
+ASCII <- (Majuscule? Minuscule? Chiffre? )? ; 
+```
+
+
+```mermaid
+railroad-peg-beta
+
+Majuscule <- "A" / "B" / "C" / "D" / "E" / "F" / "G" / "H" / "I" / "J" / "K" / "L" / "M"
+        / "N" / "O" / "P" / "Q" / "R" / "S" / "T" / "U" / "V" / "W" / "X" / "Y" / "Z" ;
+```
+
+```mermaid
+railroad-peg-beta
+
+Minuscule <- "a" / "b" / "c" / "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "l" / "m"
+        / "n" / "o" / "p" / "q" / "r" / "s" / "t" / "u" / "v" / "w" / "x" / "y" / "z" ;
+```
+
+___
+## Instruction PRINT
+
+Les éléments définis précédement restent valide (chiffre, espace, etc.)
+
+```mermaid
+
+```
+
+___
 
