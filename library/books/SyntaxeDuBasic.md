@@ -80,7 +80,7 @@ Minuscule <- "a" / "b" / "c" / "d" / "e" / "f" / "g" / "h" / "i" / "j" / "k" / "
 railroad-peg-beta
 
 Autre <- " " / "!" / '"' / "#" / "$" / "%" / "&" / "'" / "(" / ")" / "*" / "+" / ","
-       / "-" / "." / "/" / ":" / ";" / "\<" / "=" / ">" / "?" / "@" / "[" / "\\" / "]"
+       / "-" / "." / "/" / ":" / ";" / "&lt;" / "=" / ">" / "?" / "@" / "[" / "\\" / "]"
        / "^" / "_" / "`" / "{" / "|" / "}" / "~" ;
 ```
 
@@ -93,7 +93,7 @@ Une variable doit être constituée de 2 caractères maximum. Tous caractère su
 ```mermaid
 railroad-peg-beta
 
-Variable Numérique <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
+VarNum <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
 ```
 
 ___
@@ -105,7 +105,7 @@ Suivi du caractère $.
 ```mermaid
 railroad-peg-beta
 
-Variable Chaîne <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
+VarChar <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
 ```
 
 
