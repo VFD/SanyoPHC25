@@ -96,6 +96,8 @@ railroad-peg-beta
 VarNum <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? ;
 ```
 
+Exemples : i, I, a, CC, X1, y0.
+
 ___
 ## Variable Chaine de caractère
 
@@ -108,6 +110,28 @@ railroad-peg-beta
 VarChar <- ( Majuscule / Minuscule )+ (Majuscule / Minuscule / Chiffre )? "$" ;
 ```
 
+Exemples : a$, XX$, etc.
+
+___
+## Instruction LET
+
+```mermaid
+railroad-peg-beta
+
+LET <- "LET"? ( ( VarNum "=" ( Chiffre+ / VarNum ) ) / ( VarChar "=" (( '"' ASCII+ '"' ) / ( VarChar )) ) );
+
+```
+
+Exemple :
+
+```basic
+10 LET a$="Hello World!"
+```
+
+```basic
+10 LET a=1
+20 b=a
+```
 
 ___
 ## Instruction PRINT
